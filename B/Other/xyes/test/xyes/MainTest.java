@@ -1,6 +1,7 @@
 package xyes;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
+import static junit.framework.TestCase.assertEquals;
 import static xyes.Main.twentyOrInfinitePrints;
 
 import java.io.ByteArrayOutputStream;
