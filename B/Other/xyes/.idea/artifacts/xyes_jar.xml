@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="xyes:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/xyes_jar</output-path>
+    <root id="archive" name="xyes.jar">
+      <element id="module-output" name="xyes" />
+    </root>
+  </artifact>
+</component>

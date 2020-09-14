@@ -1,66 +1,65 @@
 package xyes;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static xyes.Main.main;
 import static xyes.Main.twentyOrInfinitePrints;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 /**
  * A class with test cases for the main class of xyes program.
  */
-class MainTest {
+public class MainTest {
 
   @Test
-  void noCommand() {
+  public void noCommand() {
     assertEquals("hello world", Main.argsToString(new String[]{}));
   }
 
   @Test
-  void emptyStringCommand() {
+  public void emptyStringCommand() {
     assertEquals("hello world", Main.argsToString(new String[]{""}));
   }
 
   @Test
-  void spaceCommand() {
+  public void spaceCommand() {
     assertEquals("hello world", Main.argsToString(new String[]{" "}));
   }
 
   @Test
-  void oneStringCommandNoLimit() {
+  public void oneStringCommandNoLimit() {
     assertEquals("one", Main.argsToString(new String[]{"one"}));
   }
 
   @Test
-  void twoStringsCommandNoLimit() {
+  public void twoStringsCommandNoLimit() {
     assertEquals("one two", Main.argsToString(new String[]{"one two"}));
   }
 
 
   @Test
-  void onlyLimit() {
+  public void onlyLimit() {
     assertEquals("hello world", Main.argsToString(new String[]{"-limit"}));
   }
 
   @Test
-  void spaceAfterLimit() {
+  public void spaceAfterLimit() {
     assertEquals("hello world", Main.argsToString(new String[]{"-limit", " "}));
   }
 
   @Test
-  void oneStringAfterLimit() {
+  public void oneStringAfterLimit() {
     assertEquals("one", Main.argsToString(new String[]{"-limit", "one"}));
   }
 
   @Test
-  void twoStringsAfterLimit() {
+  public void twoStringsAfterLimit() {
     assertEquals("one two", Main.argsToString(new String[]{"-limit", "one", "two"}));
   }
 
   @Test
-  void printEmptyCommandWithLimit() {
+  public void printEmptyCommandWithLimit() {
     Main.isLimit = true;
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
@@ -100,7 +99,7 @@ class MainTest {
   }
 
   @Test
-  void printSpaceCommandWithLimit() {
+  public void printSpaceCommandWithLimit() {
     Main.isLimit = true;
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
@@ -140,7 +139,7 @@ class MainTest {
   }
 
   @Test
-  void printOneCommandWithLimit() {
+  public void printOneCommandWithLimit() {
     Main.isLimit = true;
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
@@ -180,7 +179,7 @@ class MainTest {
   }
 
   @Test
-  void printTwoCommandsWithLimit() {
+  public void printTwoCommandsWithLimit() {
     Main.isLimit = true;
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
