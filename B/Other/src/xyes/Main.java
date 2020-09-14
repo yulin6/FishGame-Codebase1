@@ -1,46 +1,60 @@
 package xyes;
 
 //Main class of program xyes, which will execute commands repeatedly.
-//For more details, please reference the README file
+//For more details, please reference the README file.
 public class Main {
 
-    public static void main(String[] args) {
 
-        String cmd = "hello world";
+  protected static boolean isLimit = false;
 
-        //when the command is empty, repeatedly print "hello world"
-        if(args.length == 0) {
-            infinitePrint(cmd);
-        } else {//when the command is not empty
-            StringBuilder builder = new StringBuilder();
-            //when the first command line argument is -limit, repeatedly print
-            // the rest arguments or "hello world" (when the rest is empty)
-            // for 20 times.
-            if(args[0].equals("-limit")){
-                for (int i = 1; i < args.length; ++i){
-                    builder.append(args[i]);
-                    builder.append(" ");
-                }
-                String newCmd = builder.toString().trim();
-                cmd = newCmd.equals("") ? "hello world" : newCmd;
-                for (int i = 0; i < 20; ++i) {
-                    System.out.println(cmd);
-                }
-            } else {//when the first command line argument is NOT -limit
-                //repeatedly print the rest arguments
-                for (String arg : args) {
-                    builder.append(arg);
-                    builder.append(" ");
-                }
-                cmd = builder.toString().trim();
-                infinitePrint(cmd);
-            }
-        }
+  public static void main(String[] args) {
+
+    String cmd = argsToString(args);
+    twentyOrInfinitePrints(cmd);
+
+  }
+
+  /**
+   * When the boolean isLimit is true, repeatedly print the input String for 20 times. Otherwise
+   * infinitely printing the String.
+   *
+   * @param cmd the input String that going to be printed.
+   */
+  protected static void twentyOrInfinitePrints(String cmd) {
+    if (isLimit) {
+      for (int i = 0; i < 20; ++i) {
+        System.out.println(cmd);
+      }
+    } else {
+      while (true) {
+        System.out.println(cmd);
+      }
     }
+  }
 
-    private static void infinitePrint(String cmd){
-        while (true) {
-            System.out.println(cmd);
-        }
+  /**
+   * Turns input list of strings into one String. If the input list is empty, return "hello world".
+   * If the first String is -limit, skip the first String. Otherwise, concatenate all Strings with a
+   * space between each Strings.
+   *
+   * @param args a list of String that came from commands.
+   * @return a single concatenated String.
+   */
+  protected static String argsToString(String[] args) {
+    if (args.length == 0) {
+      return "hello world";
     }
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < args.length; ++i) {
+      if (i == 0 && args[i].equals("-limit")) {
+        isLimit = true;
+        continue;
+      } else {
+        builder.append(args[i]);
+        builder.append(" ");
+      }
+    }
+    String cmd = builder.toString().trim();
+    return cmd;
+  }
 }
