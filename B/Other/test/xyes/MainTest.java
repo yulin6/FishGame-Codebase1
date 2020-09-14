@@ -20,12 +20,12 @@ class MainTest {
 
   @Test
   void emptyStringCommand() {
-    assertEquals("", Main.argsToString(new String[]{""}));
+    assertEquals("hello world", Main.argsToString(new String[]{""}));
   }
 
   @Test
   void spaceCommand() {
-    assertEquals("", Main.argsToString(new String[]{" "}));
+    assertEquals("hello world", Main.argsToString(new String[]{" "}));
   }
 
   @Test
@@ -41,12 +41,12 @@ class MainTest {
 
   @Test
   void onlyLimit() {
-    assertEquals("", Main.argsToString(new String[]{"-limit"}));
+    assertEquals("hello world", Main.argsToString(new String[]{"-limit"}));
   }
 
   @Test
   void spaceAfterLimit() {
-    assertEquals("", Main.argsToString(new String[]{"-limit", " "}));
+    assertEquals("hello world", Main.argsToString(new String[]{"-limit", " "}));
   }
 
   @Test

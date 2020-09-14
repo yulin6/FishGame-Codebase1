@@ -35,7 +35,7 @@ public class Main {
   /**
    * Turns input list of strings into one String. If the input list is empty, return "hello world".
    * If the first String is -limit, skip the first String. Otherwise, concatenate all Strings with a
-   * space between each Strings.
+   * space between each Strings. If the concatenated String is empty, return hello world instead.
    *
    * @param args a list of String that came from commands.
    * @return a single concatenated String.
@@ -54,7 +54,8 @@ public class Main {
         builder.append(" ");
       }
     }
-    String cmd = builder.toString().trim();
+
+    String cmd = builder.toString().trim().equals("") ? "hello world" : builder.toString().trim();
     return cmd;
   }
 }
