@@ -11,9 +11,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/** A main class for the xgui program.
+ **/
+
 public class Main {
 
-
+  /**A main method that consumes a string with an integer value and creates
+   * a JPanel with a hexagon shape inside.
+   * @param args a string input from the linux command line.
+   **/
   public static void main(String[] args) {
 
     if (args.length == 1) {
@@ -45,7 +51,12 @@ public class Main {
     }
   }
 
-  private static boolean isPosInt(String s) {
+  /** isPosInt determines whether a string of input is an integer that is more than 0.
+   *
+   * @param s a string input from the main class or from the user.
+   * @return a boolean value that determine if the string is a valid argument for main.
+   **/
+  public static boolean isPosInt(String s) {
     int i;
     try {
       i = Integer.parseInt(s);
@@ -54,6 +65,11 @@ public class Main {
     }
     return i > 0;
   }
+
+  /** addMouseListenerToPanel determines whether there is a mouseClicked event within the
+   * JPanel.
+   * @param hexagonPanel a panel generated from main.
+   **/
 
   public static void addMouseListenerToPanel(JPanel hexagonPanel) {
     final Polygon hexagon = ((HexagonPanel) hexagonPanel).getPolygon();
@@ -69,7 +85,6 @@ public class Main {
 
       @Override
       public void mousePressed(MouseEvent e) {
-
       }
 
       @Override
@@ -83,6 +98,7 @@ public class Main {
       @Override
       public void mouseExited(MouseEvent e) {
       }
+
     });
   }
 }
