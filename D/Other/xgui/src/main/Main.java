@@ -60,13 +60,14 @@ public class Main {
     hexagonPanel.addMouseListener(new MouseListener() {
       @Override
       public void mouseClicked(MouseEvent e) {
+        if (hexagon.contains(e.getX(), e.getY())) {
+          exit(0);
+        }
       }
 
       @Override
       public void mousePressed(MouseEvent e) {
-        if (hexagon.contains(e.getX(), e.getY())) {
-          exit(0);
-        }
+
       }
 
       @Override
