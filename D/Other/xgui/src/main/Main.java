@@ -62,6 +62,8 @@ public class Main {
       public void mouseClicked(MouseEvent e) {
         if (hexagon.contains(e.getX(), e.getY())) {
           exit(0);
+        } else {
+          System.out.println("Missed");
         }
       }
 
