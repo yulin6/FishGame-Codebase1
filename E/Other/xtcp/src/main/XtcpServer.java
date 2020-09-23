@@ -72,12 +72,15 @@ public class XtcpServer {
 
     while (scanner.hasNextLine()) {
       builder.append(scanner.nextLine());
-      JsonStreamParser parser = new JsonStreamParser(builder.toString());
-      while (parser.hasNext()) {
-        element = parser.next();
-        jsonArray.add(element);
+      // When the input of client user is not empty.
+      if(!builder.toString().equals("")){
+        JsonStreamParser parser = new JsonStreamParser(builder.toString());
+        while (parser.hasNext()) {
+          element = parser.next();
+          jsonArray.add(element);
+        }
+        builder = new StringBuilder();
       }
-      builder = new StringBuilder();
     }
     return jsonArray;
   }
