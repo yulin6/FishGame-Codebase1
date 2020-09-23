@@ -102,6 +102,7 @@ public class XtcpServer {
       serverOutput.writeChars(firstOutput.toString());
       serverOutput.writeChars("\n");
       serverOutput.writeChars(secondOutput.toString());
+      serverOutput.writeChars("\n");
     } catch (IOException e) {
       e.printStackTrace();
     }
