@@ -32,6 +32,11 @@ public class XtcpServer {
       }
     }
 
+    serverOperations(serverPort);
+
+  }
+
+  public static void serverOperations(int serverPort) {
     try {
       ServerSocket server = new ServerSocket(serverPort);
       System.out.println("*** Server running, current port is: " + serverPort + " ***");
@@ -45,7 +50,7 @@ public class XtcpServer {
       System.out.println("Client connected.");
 
       Scanner scanner = new Scanner(clientInput);
-      JsonArray jsonArray = jsonArrayGenerator(scanner);
+      JsonArray jsonArray = generateJsonArray(scanner);
       generateOutputs(jsonArray, serverOutput);
 
       clientConnection.close(); //close the connection with client.
@@ -65,7 +70,7 @@ public class XtcpServer {
     return i >= 0 && i <= 65535;
   }
 
-  public static JsonArray jsonArrayGenerator(Scanner scanner) {
+  public static JsonArray generateJsonArray(Scanner scanner) {
     StringBuilder builder = new StringBuilder();
     JsonArray jsonArray = new JsonArray();
     JsonElement element;
@@ -73,7 +78,7 @@ public class XtcpServer {
     while (scanner.hasNextLine()) {
       builder.append(scanner.nextLine());
       // When the input of client user is not empty.
-      if(!builder.toString().equals("")){
+      if (!builder.toString().equals("")) {
         JsonStreamParser parser = new JsonStreamParser(builder.toString());
         while (parser.hasNext()) {
           element = parser.next();
