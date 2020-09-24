@@ -13,8 +13,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+/** An XtcpServer is a class that consumes a well-formed JSON values
+ * from the input side of a TCP connection and delivers JSON to the output side of a TCP
+ * connection after the input side is closed.
+ **/
+
 public class XtcpServer {
 
+  /** A main class that communicates with linux server through inputting a server.
+   *
+   * @param args a server port number.
+   **/
   public static void main(String[] args) {
 
     int serverPort = 4567;
@@ -36,6 +45,12 @@ public class XtcpServer {
 
   }
 
+  /** serverOperations takes in a serverPort and creates a connection from client that stores
+   * the clientInput and serverOutput data and then outputs a JSON values to the console based on
+   * the clientInput.
+   *
+   * @param serverPort the server port number.
+   **/
   public static void serverOperations(int serverPort) {
     try {
       ServerSocket server = new ServerSocket(serverPort);
@@ -60,6 +75,12 @@ public class XtcpServer {
     }
   }
 
+  /** isValidPortNum determines whether a string is a valid server port number and check whether
+   * its and integer and its values are between 0 to 65535.
+   *
+   * @param s server port number from console input.
+   * @return a boolean value to determine if the port number is valid.
+   **/
   public static boolean isValidPortNum(String s) {
     int i;
     try {
@@ -70,6 +91,11 @@ public class XtcpServer {
     return i >= 0 && i <= 65535;
   }
 
+  /** generateJsonArray builds a JsonArray object based on the parsed data that is scanned from
+   * the user file.
+   *
+   * @param scanner is a scanned values from the user file.
+   **/
   public static JsonArray generateJsonArray(Scanner scanner) {
     StringBuilder builder = new StringBuilder();
     JsonArray jsonArray = new JsonArray();
@@ -90,6 +116,12 @@ public class XtcpServer {
     return jsonArray;
   }
 
+  /** generateOutputs fills the DataOutputStream with the populated JsonArray into
+   * the appropriate JSON output.
+   *
+   * @param jsonArray populated JsonArray from the clientInputData.
+   * @param serverOutput an empty DataOutputStream.
+   **/
   public static void generateOutputs(JsonArray jsonArray, DataOutputStream serverOutput) {
     JsonElement jsonArraySize = new JsonPrimitive(jsonArray.size());
 
