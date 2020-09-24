@@ -43,10 +43,10 @@ The xjson is a program that consumes a sequence of well-formed JSON values from 
     |  | Other/xjson
     |  |  | .idea
     |  |  | out
-    |  |  | xyes.iml
+    |  |  | xjson.iml
     |  |  | src/xjson
     |  |  |      | Main.java
-    |  |  | test/xyes
+    |  |  | test/xjson
     |  |  |      | MainTest.java
 
 ## Assignment 4: xgui
@@ -58,10 +58,32 @@ The xgui is a program that consumes an string from the command line with an inte
     |  | Other/xgui
     |  |  | .idea
     |  |  | out
-    |  |  | xyes.iml
-    |  |  | src/xjson
+    |  |  | xgui.iml
+    |  |  | src/xgui
     |  |  |      | Main.java
     |  |  |      | HexagonPanel.java
-    |  |  | test/xyes
+    |  |  | test/xgui
     |  |  |      | MainTest.java
     
+## Assignment 5: xtcp
+The xgui is a program that consumes a sequence of well-formed JSON values from the input side of TCP connection and deliver JSON to the output side of a TCP connection after the input side is closed. The argument that the program takes is a server port number and if the user does not inpt a server port number, a default port number of 4567 is used instead. The netcat program is then used to send the JSON information that is then transimitted via TCP to the computer with the IP address. The program works through inputting a server port number through the main method that is then filtered by the isVlidPortNum method to determine its validity. After the validity of the server port number is checked, the serverOperations method connects with the server and collects the DataInputStream that is then turned to JsonArray objcet through the use of the generateJsonArray method. serverOperations also calls the generateOutputs method to populated the DataOutputStream with the populated JsonArray from the DataInputStream which then outputs DataOutputStream to the console.  There are tree integration tests that are located in the xtcp directory Test/. 
+
+#### Roadmap:
+    |  E
+    |  | xtcp
+    |  | assessment.pdf
+    |  | experience.pdf
+    |  | Other/xtcp
+    |  |  | .idea
+    |  |  | out
+    |  |  | pom.xml
+    |  |  | xtcp.iml
+    |  |  | src/xtcp
+    |  |  |      | XtcpServer.java
+    |  |  | test/xtcp
+    |  |  |      | 1-in.json
+    |  |  |      | 1-out.json
+    |  |  |      | 2-in.json
+    |  |  |      | 2-out.json
+    |  |  |      | 3-in.json
+    |  |  |      | 3-out.json
