@@ -104,7 +104,7 @@ public class XtcpServer {
     while (scanner.hasNextLine()) {
       builder.append(scanner.nextLine());
       // When the input of client user is not empty.
-      if (!builder.toString().equals("")) {
+      if (!builder.toString().trim().equals("")) {
         JsonStreamParser parser = new JsonStreamParser(builder.toString());
         while (parser.hasNext()) {
           element = parser.next();
