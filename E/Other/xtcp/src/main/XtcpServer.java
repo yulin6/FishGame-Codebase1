@@ -88,7 +88,7 @@ public class XtcpServer {
     } catch (NumberFormatException e) {
       return false;
     }
-    return i >= 0 && i <= 65535;
+    return i > 0 && i <= 65535;
   }
 
   /** generateJsonArray builds a JsonArray object based on the parsed data that is scanned from
