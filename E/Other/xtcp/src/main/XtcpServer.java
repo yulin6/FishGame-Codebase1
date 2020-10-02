@@ -21,11 +21,7 @@ import java.util.Scanner;
 
 public class XtcpServer {
 
-  /**
-   * A main class that communicates with linux server through inputting a server.
-   *
-   * @param args a server port number.
-   **/
+
   public static void main(String[] args) {
 
     int serverPort = 4567;
