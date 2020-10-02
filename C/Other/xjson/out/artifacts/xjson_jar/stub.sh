@@ -8,4 +8,3 @@ fi
 java_args=-Xmx1g
 exec "$java" $java_args -jar $MYSELF "$@"
 exit 1 
-

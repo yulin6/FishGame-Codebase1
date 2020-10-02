@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 /** A main class for the xgui program.
  **/
@@ -17,30 +18,15 @@ import javax.swing.JPanel;
 public class Main {
 
   /**A main method that consumes a string with an integer value and creates
-   * a JPanel with a hexagon shape inside.
+   * a JPanel with a hexagon shape inside. If a mouse click event happened
+   * inside of the hexagon, terminate the program. Otherwise, print missed.
+   *
    * @param args a string input from the linux command line.
    **/
   public static void main(String[] args) {
-
     if (args.length == 1) {
       if (isPosInt(args[0])) {
-        int size = Integer.parseInt(args[0]);
-
-        JFrame frame = new JFrame();
-        frame.getContentPane().setBackground(Color.white);
-        frame.setTitle("XGUI");
-        frame.setSize(size * 3, size * 2 + 23);
-        frame.addWindowListener(new WindowAdapter() {
-          public void windowClosing(WindowEvent e) {
-            exit(0);
-          }
-        });
-
-        JPanel hexagonPanel = new HexagonPanel(size);
-        addMouseListenerToPanel(hexagonPanel);
-
-        frame.add(hexagonPanel);
-        frame.setVisible(true);
+        frameCreation(args[0]);
       } else {
         System.out.println("Invalid input: " + args[0]
             + ". Please input a positive integer instead.");
@@ -49,6 +35,33 @@ public class Main {
       System.out.println("Invalid number of input arguments. "
           + "Please input one positive integer instead.");
     }
+  }
+
+  /**
+   * creating a JFrame based on the inputting arg, the String arg is checked to be valid for
+   * converting into a positive integer. Also, adding the hexagonPanel to the frame.
+   *
+   * @param arg String arg is checked to be valid for converting into a positive integer.
+   */
+  public static void frameCreation(String arg){
+    int hexagonSize = Integer.parseInt(arg);
+    String windowTitle = "XGUI";
+    int windowWidth = hexagonSize * 3;
+    int windowHeight = hexagonSize * 2 + 23;
+
+    JFrame frame = new JFrame();
+    frame.setTitle(windowTitle);
+    frame.setSize(windowWidth, windowHeight);
+
+    //Sets the operation that will happen by default when the user initiates a "close" on this frame.
+    //EXIT_ON_CLOSE (defined in JFrame): Exit the application using the System exit method.
+    //In short, kill the program when the window is closed.
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel hexagonPanel = new HexagonPanel(hexagonSize);
+
+    frame.add(hexagonPanel);
+    frame.setVisible(true);
   }
 
   /** isPosInt determines whether a string of input is an integer that is more than 0.
@@ -64,41 +77,5 @@ public class Main {
       return false;
     }
     return i > 0;
-  }
-
-  /** addMouseListenerToPanel determines whether there is a mouseClicked event within the
-   * JPanel.
-   * @param hexagonPanel a panel generated from main.
-   **/
-
-  public static void addMouseListenerToPanel(JPanel hexagonPanel) {
-    final Polygon hexagon = ((HexagonPanel) hexagonPanel).getPolygon();
-    hexagonPanel.addMouseListener(new MouseListener() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        if (hexagon.contains(e.getX(), e.getY())) {
-          exit(0);
-        } else {
-          System.out.println("Missed");
-        }
-      }
-
-      @Override
-      public void mousePressed(MouseEvent e) {
-      }
-
-      @Override
-      public void mouseReleased(MouseEvent e) {
-      }
-
-      @Override
-      public void mouseEntered(MouseEvent e) {
-      }
-
-      @Override
-      public void mouseExited(MouseEvent e) {
-      }
-
-    });
   }
 }

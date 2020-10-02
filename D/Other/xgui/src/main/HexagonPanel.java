@@ -1,31 +1,68 @@
 package main;
 
+import static java.lang.System.exit;
+
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
-/** A HexagonPanel that extends JPanel that contains a Polygon shape and a
- * final int that determines the size of the panel.
+/** A HexagonPanel that extends JPanel that contains a Polygon shape and an
+ *  int that determines the size of the panel.
  **/
 public class HexagonPanel extends JPanel {
-  private Polygon polygon = new Polygon();
-  private final int size;
+
+  Polygon polygon = new Polygon();
+  int size;
+
+  //an mouseListener that will be added to the current HexagonPanel.
+  MouseListener mouseListener = new MouseListener() {
+    //If a mouse click event happened  inside of the hexagon,
+    // terminate the program. Otherwise, print missed.
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      if (polygon.contains(e.getX(), e.getY())) {
+        exit(0);
+      } else {
+        System.out.println("Missed");
+      }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+  };
 
   /**
-   * The hexagonpanel that is given an int to create a JPanel.
+   * Constructor that constructs the HexagonPanel class by defining the size
+   * and adding mouseListener.
    *
    * @param size the size of the JPanel.
    * */
   public HexagonPanel(int size) {
     this.size = size;
+    addMouseListener(mouseListener);
   }
 
   /**
-   * It draws the hexagon based on the given graphics.
+   * an overridden method that will be called automatically for
+   * drawing the defined polygon to the panel.
    *
-   * @param g the graphic used to design interface
+   * @param g a Graphics object
    */
-
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
@@ -38,12 +75,4 @@ public class HexagonPanel extends JPanel {
 
     g.drawPolygon(polygon);
   }
-
-  /** gets the polygon shape.
-   * @return the polygon shape.
-   **/
-  public Polygon getPolygon(){
-    return this.polygon;
-  }
-
 }
