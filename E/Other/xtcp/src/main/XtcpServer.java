@@ -39,9 +39,7 @@ public class XtcpServer {
         return;
       }
     }
-
     serverOperations(serverPort);
-
   }
 
   /**
@@ -100,9 +98,9 @@ public class XtcpServer {
 
   /**
    * generateJsonArray builds a JsonArray object based on the parsed data that is scanned from the
-   * user file.
+   * user input.
    *
-   * @param scanner is a scanned values from the user file.
+   * @param scanner is a scanned values from the user input.
    **/
   public static JsonArray generateJsonArray(Scanner scanner) {
     StringBuilder builder = new StringBuilder();
