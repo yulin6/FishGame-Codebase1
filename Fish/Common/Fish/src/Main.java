@@ -1,6 +1,8 @@
+import controllers.FishController;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.FishModel;
+import views.FishView;
 
 public class Main {
 
@@ -10,7 +12,8 @@ public class Main {
 
     Scanner scanner = new Scanner(System.in);
     createFishModel(scanner);
-    emptyTilesFromFishModel(scanner);
+    emptyTilesAndSetUpGui(scanner);
+
 
   }
 
@@ -71,24 +74,24 @@ public class Main {
    *
    * @param scanner
    */
-  public static void emptyTilesFromFishModel(Scanner scanner){
+  public static void emptyTilesAndSetUpGui(Scanner scanner){
     System.out.println("To empty a tile, "
         + "enter x and y positions (Positive Integers) of the tile; To run the GUI, enter \"-run\":");
     ArrayList<String> argsList = new ArrayList<String>();
-    boolean isScanning = true;
+    boolean isGuiReady = false;
 
     while (scanner.hasNext()){
       argsList.add(scanner.next());
 
       for(String arg: argsList){
         if(arg.equals("-run")){
-          isScanning = false;
-          System.out.println("running");
+          isGuiReady= true;
+          generateView();
           break;
         }
       }
 
-      if(!isScanning) {
+      if(isGuiReady) {
         break;
       } else if(argsList.size() == 2){
         String xPosStr = argsList.get(0);
@@ -106,6 +109,13 @@ public class Main {
         }
       }
     }
+  }
+
+  public static void generateView(){
+    FishView fishView = new FishView();
+    FishController fishController = new FishController(fishModel, fishView);
+    fishController.generateView();
+    System.out.println("GUI is running.");
   }
 
   /** isPosInt determines whether a string of input is an integer that is larger than 0.

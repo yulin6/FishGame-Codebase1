@@ -6,14 +6,14 @@ public class FishTile {
 
   private boolean isEmpty;
   private int fishNum;
-  private int xPos;
-  private int yPos;
+//  private int xPos;
+//  private int yPos;
 
-  public FishTile(int fishNum, int xPos, int yPos){
+  public FishTile(int fishNum){
     isEmpty = false;
     this.fishNum = fishNum;
-    this.xPos = xPos;
-    this.yPos = yPos;
+//    this.xPos = xPos;
+//    this.yPos = yPos;
   }
 
   public boolean isEmpty() {
@@ -28,13 +28,13 @@ public class FishTile {
     return fishNum;
   }
 
-  public int getxPos() {
-    return xPos;
-  }
-
-  public int getyPos() {
-    return yPos;
-  }
+//  public int getxPos() {
+//    return xPos;
+//  }
+//
+//  public int getyPos() {
+//    return yPos;
+//  }
 
 
 
