@@ -36,14 +36,14 @@
 
 
 ## 2 — The Game Pieces
-In the first assignment we designed and implemented data representations of tiles and boards plus visual representations of fish and penguins. The board representaion now has the following pieces of functionality:
+In the first assignment we designed and implemented data representations of tiles and boards plus visual representations of fish and penguins (penguins are represent as circles). The board representaion now has the following pieces of functionality:
 * creating a board that has holes in specific places and is set up with a minimum number of 1-fish tiles;
 * creating a board that has the same number of fish on every tile and has no holes
 * determining the positions reachable via straight lines from a given position
 * removing a tile from a board; and
 * rendering a the tiles graphically.
 
-#### GUI & Running in Console
+### GUI & Running in Console
 Main method can take in the inputs for generating the model, the valid sequence of inputs are: 
 1. Width - Positive integer.
 2. Height - Positive integer larger than 1.
@@ -60,15 +60,32 @@ When finished emptying the tiles, input the following command to show the GUI:
 
 GUI is generated through our Model/View/Controller (MVC) design pattern, which the controller takes care of the work between model and view, the model handles the logic, and the view draws the GUI components.
 
-#### Test
-JUnit tests are under directory:
-    
-    Fish/Common/Fish/test 
+### Test
 
-To run the tests, you can do the following steps:
-1. Clone the project & set up the SDK in your favorite.
+##### JUnit tests directory:
+
+    Fish/Common/Fish/test/
+
+##### Testing with Maven:
+To install Maven:
+
+    mvn clean install
+
+To run entire test suite:
+
+    mvn test
+
+To run single/specific test(s):
+
+    mvn -Dtest=TestClassName test
+
+##### Manual testing in a IDE:
+1. Clone the project & set up the SDK in your favorite IDE.
 2. Run conmmand: $ mvn clean install
 3. Locate the test files where you can run single tests or the entire classes of tests.
+
+##### Test Result:
+Tests run: 62, Failures: 0, Errors: 0, Skipped: 0
 
 
 # - TAHBPL
