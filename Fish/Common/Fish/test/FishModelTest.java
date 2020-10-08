@@ -1,10 +1,10 @@
-package models;
-
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import models.FishModel;
+import models.FishTile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,23 +31,23 @@ public class FishModelTest {
   }
 
   @Test
-  public void emptyTileValid1(){
-    fishModel.emptyTile(0,0);
+  public void emptyTileValid1() {
+    fishModel.emptyTile(0, 0);
     ArrayList<ArrayList<FishTile>> boardCopy = fishModel.getBoardCopy();
     boolean isEmpty = boardCopy.get(0).get(0).isEmpty();
     assertEquals(true, isEmpty);
   }
 
   @Test
-  public void emptyTileValid2(){
-    fishModel.emptyTile(2,4);
+  public void emptyTileValid2() {
+    fishModel.emptyTile(2, 4);
     ArrayList<ArrayList<FishTile>> boardCopy = fishModel.getBoardCopy();
     boolean isEmpty = boardCopy.get(4).get(2).isEmpty();
     assertEquals(true, isEmpty);
   }
 
   @Test
-  public void emptyTileInvalid1(){
+  public void emptyTileInvalid1() {
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
      */
@@ -59,7 +59,7 @@ public class FishModelTest {
     // Tell Java to use your special stream
     System.setOut(ps);
     // Print
-    fishModel.emptyTile(-1,-1);
+    fishModel.emptyTile(-1, -1);
     // Put things back
     System.out.flush();
     System.setOut(old);
@@ -68,7 +68,7 @@ public class FishModelTest {
   }
 
   @Test
-  public void emptyTileInvalid2(){
+  public void emptyTileInvalid2() {
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
      */
@@ -80,7 +80,7 @@ public class FishModelTest {
     // Tell Java to use your special stream
     System.setOut(ps);
     // Print
-    fishModel.emptyTile(1000,1000);
+    fishModel.emptyTile(1000, 1000);
     // Put things back
     System.out.flush();
     System.setOut(old);
@@ -89,7 +89,7 @@ public class FishModelTest {
   }
 
   @Test
-  public void emptyTileInvalid3(){
+  public void emptyTileInvalid3() {
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
      */
@@ -101,7 +101,7 @@ public class FishModelTest {
     // Tell Java to use your special stream
     System.setOut(ps);
     // Print
-    fishModel.emptyTile(-10,1);
+    fishModel.emptyTile(-10, 1);
     // Put things back
     System.out.flush();
     System.setOut(old);
@@ -110,7 +110,7 @@ public class FishModelTest {
   }
 
   @Test
-  public void emptyTileInvalid4(){
+  public void emptyTileInvalid4() {
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
      */
@@ -122,7 +122,7 @@ public class FishModelTest {
     // Tell Java to use your special stream
     System.setOut(ps);
     // Print
-    fishModel.emptyTile(1,-10);
+    fishModel.emptyTile(1, -10);
     // Put things back
     System.out.flush();
     System.setOut(old);
@@ -131,7 +131,7 @@ public class FishModelTest {
   }
 
   @Test
-  public void emptyTileInvalid5(){
+  public void emptyTileInvalid5() {
     /** Code Source of converting system.out.println to String:
      *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
      */
@@ -143,7 +143,7 @@ public class FishModelTest {
     // Tell Java to use your special stream
     System.setOut(ps);
     // Print
-    emptyFishModel.emptyTile(1,1);
+    emptyFishModel.emptyTile(1, 1);
     // Put things back
     System.out.flush();
     System.setOut(old);
@@ -152,308 +152,308 @@ public class FishModelTest {
   }
 
   @Test
-  public void moveUpValid1(){
+  public void moveUpValid1() {
     boolean ans = fishModel.isValidMove(1, 4, 1, 2);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveUpValid2(){
+  public void moveUpValid2() {
     boolean ans = fishModel.isValidMove(1, 4, 1, 0);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveUpValid3(){
+  public void moveUpValid3() {
     boolean ans = fishModel.isValidMove(1, 5, 1, 3);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveUpValid4(){
+  public void moveUpValid4() {
     boolean ans = fishModel.isValidMove(1, 5, 1, 1);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveDownValid1(){
+  public void moveDownValid1() {
     boolean ans = fishModel.isValidMove(1, 2, 1, 4);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveDownValid2(){
+  public void moveDownValid2() {
     boolean ans = fishModel.isValidMove(1, 2, 1, 6);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveDownValid3(){
+  public void moveDownValid3() {
     boolean ans = fishModel.isValidMove(1, 3, 1, 5);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveDownValid4(){
+  public void moveDownValid4() {
     boolean ans = fishModel.isValidMove(1, 3, 1, 7);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToTopLeftValid1(){
+  public void moveToTopLeftValid1() {
     boolean ans = fishModel.isValidMove(1, 2, 0, 0);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToTopLeftValid2(){
+  public void moveToTopLeftValid2() {
     boolean ans = fishModel.isValidMove(1, 2, 0, 1);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToBottomLeftValid1(){
+  public void moveToBottomLeftValid1() {
     boolean ans = fishModel.isValidMove(1, 2, 0, 4);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToBottomLeftValid2(){
+  public void moveToBottomLeftValid2() {
     boolean ans = fishModel.isValidMove(1, 2, 0, 3);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToBottomRightValid1(){
+  public void moveToBottomRightValid1() {
     boolean ans = fishModel.isValidMove(1, 2, 2, 4);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToBottomRightValid2(){
+  public void moveToBottomRightValid2() {
     boolean ans = fishModel.isValidMove(1, 2, 1, 3);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToTopRightValid1(){
+  public void moveToTopRightValid1() {
     boolean ans = fishModel.isValidMove(1, 2, 2, 0);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveToTopRightValid2(){
+  public void moveToTopRightValid2() {
     boolean ans = fishModel.isValidMove(1, 2, 1, 1);
     assertEquals(true, ans);
   }
 
   @Test
-  public void moveLeftInvalid(){
+  public void moveLeftInvalid() {
     boolean ans = fishModel.isValidMove(1, 3, 0, 3);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveRightInvalid(){
+  public void moveRightInvalid() {
     boolean ans = fishModel.isValidMove(1, 3, 2, 3);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToTopLeftInvalid1(){
+  public void moveToTopLeftInvalid1() {
     boolean ans = fishModel.isValidMove(1, 7, 1, 2);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToTopLeftInvalid2(){
+  public void moveToTopLeftInvalid2() {
     boolean ans = fishModel.isValidMove(1, 4, 0, 1);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToBottomLeftInvalid1(){
+  public void moveToBottomLeftInvalid1() {
     boolean ans = fishModel.isValidMove(1, 3, 0, 7);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToBottomLeftInvalid2(){
+  public void moveToBottomLeftInvalid2() {
     boolean ans = fishModel.isValidMove(1, 3, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToBottomRightInvalid1(){
+  public void moveToBottomRightInvalid1() {
     boolean ans = fishModel.isValidMove(2, 0, 3, 1);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToBottomRightInvalid2(){
+  public void moveToBottomRightInvalid2() {
     boolean ans = fishModel.isValidMove(2, 1, 3, 6);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToTopRightInvalid1(){
+  public void moveToTopRightInvalid1() {
     boolean ans = fishModel.isValidMove(2, 4, 3, 0);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToTopRightInvalid2(){
+  public void moveToTopRightInvalid2() {
     boolean ans = fishModel.isValidMove(2, 4, 3, 3);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveUpWithEmptyInvalid1(){
+  public void moveUpWithEmptyInvalid1() {
     fishModel.emptyTile(0, 4);
     boolean ans = fishModel.isValidMove(0, 6, 0, 2);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveUpWithEmptyInvalid2(){
+  public void moveUpWithEmptyInvalid2() {
     fishModel.emptyTile(0, 4);
     boolean ans = fishModel.isValidMove(0, 6, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveUpWithEmptyInvalid3(){
+  public void moveUpWithEmptyInvalid3() {
     fishModel.emptyTile(0, 6);
     boolean ans = fishModel.isValidMove(0, 6, 0, 2);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveDownWithEmptyInvalid1(){
+  public void moveDownWithEmptyInvalid1() {
     fishModel.emptyTile(0, 2);
     boolean ans = fishModel.isValidMove(0, 0, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveDownWithEmptyInvalid2(){
+  public void moveDownWithEmptyInvalid2() {
     fishModel.emptyTile(0, 2);
     boolean ans = fishModel.isValidMove(0, 0, 0, 2);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveDownWithEmptyInvalid3(){
+  public void moveDownWithEmptyInvalid3() {
     fishModel.emptyTile(0, 0);
     boolean ans = fishModel.isValidMove(0, 0, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopLeftWithEmptyInvalid1(){
+  public void moveTopLeftWithEmptyInvalid1() {
     fishModel.emptyTile(0, 1);
     boolean ans = fishModel.isValidMove(1, 3, 0, 0);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopLeftWithEmptyInvalid2(){
+  public void moveTopLeftWithEmptyInvalid2() {
     fishModel.emptyTile(0, 1);
     boolean ans = fishModel.isValidMove(1, 3, 0, 1);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopLeftWithEmptyInvalid3(){
+  public void moveTopLeftWithEmptyInvalid3() {
     fishModel.emptyTile(1, 3);
     boolean ans = fishModel.isValidMove(1, 3, 0, 1);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomLeftWithEmptyInvalid1(){
+  public void moveBottomLeftWithEmptyInvalid1() {
     fishModel.emptyTile(0, 3);
     boolean ans = fishModel.isValidMove(1, 2, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomLeftWithEmptyInvalid2(){
+  public void moveBottomLeftWithEmptyInvalid2() {
     fishModel.emptyTile(0, 4);
     boolean ans = fishModel.isValidMove(1, 2, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomLeftWithEmptyInvalid3(){
+  public void moveBottomLeftWithEmptyInvalid3() {
     fishModel.emptyTile(1, 2);
     boolean ans = fishModel.isValidMove(1, 2, 0, 4);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopRightWithEmptyInvalid1(){
+  public void moveTopRightWithEmptyInvalid1() {
     fishModel.emptyTile(2, 1);
     boolean ans = fishModel.isValidMove(2, 2, 3, 0);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopRightWithEmptyInvalid2(){
+  public void moveTopRightWithEmptyInvalid2() {
     fishModel.emptyTile(2, 2);
     boolean ans = fishModel.isValidMove(2, 2, 3, 0);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveTopRightWithEmptyInvalid3(){
+  public void moveTopRightWithEmptyInvalid3() {
     fishModel.emptyTile(3, 0);
     boolean ans = fishModel.isValidMove(2, 2, 3, 0);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomRightWithEmptyInvalid1(){
+  public void moveBottomRightWithEmptyInvalid1() {
     fishModel.emptyTile(3, 4);
     boolean ans = fishModel.isValidMove(2, 3, 3, 5);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomRightWithEmptyInvalid2(){
+  public void moveBottomRightWithEmptyInvalid2() {
     fishModel.emptyTile(2, 3);
     boolean ans = fishModel.isValidMove(2, 3, 3, 5);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveBottomRightWithEmptyInvalid3(){
+  public void moveBottomRightWithEmptyInvalid3() {
     fishModel.emptyTile(3, 5);
     boolean ans = fishModel.isValidMove(2, 3, 3, 5);
     assertEquals(false, ans);
   }
 
   @Test
-  public void moveToSelfInvalid(){
+  public void moveToSelfInvalid() {
     boolean ans = fishModel.isValidMove(2, 3, 2, 3);
     assertEquals(false, ans);
   }
 
   @Test
-  public void emptyBoardMoves(){
+  public void emptyBoardMoves() {
     boolean ans = emptyFishModel.isValidMove(2, 3, 3, 5);
     assertEquals(false, ans);
   }
 
   @Test
-  public void getEmptyBoardCopy(){
+  public void getEmptyBoardCopy() {
     ArrayList<ArrayList<FishTile>> emptyBoard = emptyFishModel.getBoardCopy();
     ArrayList<ArrayList<FishTile>> newBoard = new ArrayList<ArrayList<FishTile>>();
     assertEquals(newBoard, emptyBoard);
   }
 
   @Test
-  public void getBoardCopy(){
+  public void getBoardCopy() {
     ArrayList<ArrayList<FishTile>> boardBefore = fishModel.getBoardCopy();
     boolean tileOneIsEmptyBefore = boardBefore.get(0).get(0).isEmpty();
     assertEquals(false, tileOneIsEmptyBefore);
@@ -462,7 +462,6 @@ public class FishModelTest {
     boolean tileOneIsEmptyAfter = boardAfter.get(0).get(0).isEmpty();
     assertEquals(true, tileOneIsEmptyAfter);
   }
-
 
 
 }

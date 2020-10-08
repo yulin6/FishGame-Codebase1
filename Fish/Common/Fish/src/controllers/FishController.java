@@ -21,7 +21,7 @@ public class FishController {
    * @param model FishModel
    * @param view FishView
    */
-  public FishController(FishModel model, FishView view){
+  public FishController(FishModel model, FishView view) {
     this.model = model;
     this.view = view;
   }
@@ -29,7 +29,7 @@ public class FishController {
   /**
    * Getting a copy of the board from the model, and use it  for generating view.
    */
-  public void generateView(){
+  public void generateView() {
     board = model.getBoardCopy();
     view.addBoardToPanel(board);
     view.makeVisible();

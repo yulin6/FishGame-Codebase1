@@ -1,10 +1,8 @@
-package models;
-
 import static org.junit.Assert.*;
 
-import controllers.FishController;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import models.FishModel;
 import org.junit.Before;
 import org.junit.Test;
 import views.FishView;

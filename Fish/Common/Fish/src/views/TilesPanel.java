@@ -29,11 +29,12 @@ public class TilesPanel extends JPanel {
     super();
     int scaledWidth = 40;
     int scaledHeight = 80;
-    try{
+    try {
       //SCALE_FAST:
       // Choose an image-scaling algorithm that gives higher priority to scaling speed than smoothness of the scaled image.
-      fishImage = ImageIO.read(new File("fish.png")).getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST);
-    } catch (IOException e){
+      fishImage = ImageIO.read(new File("fish.png"))
+          .getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_FAST);
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -77,7 +78,7 @@ public class TilesPanel extends JPanel {
         g2d.fillPolygon(polygon);
         g2d.setColor(Color.white);
         g2d.drawPolygon(polygon);
-        if(!isEmpty) {
+        if (!isEmpty) {
           for (int k = 0; k < fishNum; ++k) {
             int xPos = mostLeftX + k * 18 + 35;
             int yPos = mostLeftY - 35;

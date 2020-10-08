@@ -1,7 +1,6 @@
-package models;
-
 import static org.junit.Assert.*;
 
+import models.FishTile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,6 +8,7 @@ import org.junit.Test;
  * a class for testing the FishTile.
  */
 public class FishTileTest {
+
   private FishTile fishTile;
 
   @Before

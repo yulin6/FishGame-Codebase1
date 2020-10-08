@@ -14,14 +14,14 @@ public class FishView extends JFrame {
   private TilesPanel tilesPanel;
 
   /**
-   * The constructor of the FishView class, which will set up the size of the frame,
-   * and add a tile panel to it.
+   * The constructor of the FishView class, which will set up the size of the frame, and add a tile
+   * panel to it.
    */
-  public FishView(){
+  public FishView() {
     super();
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    setBounds(0,0,screenSize.width, screenSize.height);
+    setBounds(0, 0, screenSize.width, screenSize.height);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     tilesPanel = new TilesPanel();

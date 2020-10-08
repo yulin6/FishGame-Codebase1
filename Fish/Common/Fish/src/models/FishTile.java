@@ -11,11 +11,12 @@ public class FishTile {
 //  private int yPos;
 
   /**
-   * Constructor of the FishTile class, takes in the fish number that will be displayed on the tile.
+   * Constructor of the FishTile class, takes in the fish number that will be displayed on the
+   * tile.
    *
    * @param fishNum a integer of fish number that will be displayed on the tile.
    */
-  public FishTile(int fishNum){
+  public FishTile(int fishNum) {
     isEmpty = false;
     this.fishNum = fishNum;
 //    this.xPos = xPos;
@@ -54,7 +55,6 @@ public class FishTile {
 //  public int getyPos() {
 //    return yPos;
 //  }
-
 
 
 }
