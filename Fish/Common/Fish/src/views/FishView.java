@@ -6,10 +6,17 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import models.FishTile;
 
+/**
+ * The main view class extends JFrame, will work as a frame for displaying the game.
+ */
 public class FishView extends JFrame {
 
-  private FishPanel fishPanel;
+  private TilesPanel tilesPanel;
 
+  /**
+   * The constructor of the FishView class, which will set up the size of the frame,
+   * and add a tile panel to it.
+   */
   public FishView(){
     super();
 
@@ -17,23 +24,34 @@ public class FishView extends JFrame {
     setBounds(0,0,screenSize.width, screenSize.height);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    fishPanel = new FishPanel();
-    this.add(fishPanel);
+    tilesPanel = new TilesPanel();
+    this.add(tilesPanel);
 
 //    JScrollPane scrollPane = new JScrollPane(fishPanel);
 //    this.add(scrollPane);
   }
 
+  /**
+   * Repaint the current JFrame.
+   */
   public void refresh() {
     this.repaint();
   }
 
+  /**
+   * Pops up the window showing the this view.
+   */
   public void makeVisible() {
     this.setVisible(true);
   }
 
-  public void addBoardAndMaxFishNum(ArrayList<ArrayList<FishTile>> board, int maxFishNum) {
-    this.fishPanel.addDataToPanel(board, maxFishNum);
+  /**
+   * Add 2d ArrayList of fish tiles to the tile panel, which will be used for drawing.
+   *
+   * @param board 2d ArrayList of fish tiles.
+   */
+  public void addBoardToPanel(ArrayList<ArrayList<FishTile>> board) {
+    this.tilesPanel.addBoard(board);
   }
 
 }
