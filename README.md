@@ -1,5 +1,5 @@
 *Dadiel Hantoro & Yu Lin*
-#- Project Milestones
+# - Project Milestones
 ## Roadmap:
     | Fish
     | Planning
