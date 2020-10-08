@@ -7,6 +7,8 @@ public class FishTile {
 
   private boolean isEmpty;
   private int fishNum;
+
+  private Penguin penguin;
 //  private int xPos;
 //  private int yPos;
 
@@ -46,6 +48,23 @@ public class FishTile {
    */
   public int getFishNum() {
     return fishNum;
+  }
+
+  /**
+   * Setting the penguin that's currently on the tile
+   *
+   * @param penguin a Penguin.
+   */
+  public void setPenguin(Penguin penguin){
+    this.penguin = penguin;
+  }
+
+
+  /**
+   * getting the penguin that's currently on the tile
+   */
+  public Penguin getPenguin() {
+    return penguin;
   }
 
 //  public int getxPos() {

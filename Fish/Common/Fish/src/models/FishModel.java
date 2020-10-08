@@ -57,8 +57,7 @@ public class FishModel {
   /**
    * Takes in a x position and a y position, which will be used for emptying the tile in the board,
    * setting its isEmpty attribute to true.
-   *
-   * @param xPos x position of the tile to be emptied.
+   *  @param xPos x position of the tile to be emptied.
    * @param yPos y position of the tile to be emptied.
    */
   public void emptyTile(int xPos, int yPos) {

@@ -1,5 +1,7 @@
 package views;
 
+import static models.PenguinColor.*;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import models.FishTile;
+import models.Penguin;
+import models.PenguinColor;
 
 /**
  * the panel class that will be used for displaying the view of all tiles from the game.
@@ -47,10 +51,12 @@ public class TilesPanel extends JPanel {
     for (int i = 0; i < board.size(); ++i) {
       ArrayList<FishTile> row = board.get(i);
       for (int j = 0; j < row.size(); ++j) {
+
         Polygon polygon = new Polygon();
         FishTile fishTile = board.get(i).get(j);
         boolean isEmpty = fishTile.isEmpty();
         int fishNum = fishTile.getFishNum();
+        Penguin penguin = fishTile.getPenguin();
 
         if (isEmpty) {
           g2d.setColor(Color.gray);
@@ -79,15 +85,37 @@ public class TilesPanel extends JPanel {
         g2d.setColor(Color.white);
         g2d.drawPolygon(polygon);
         if (!isEmpty) {
+          if (penguin == null) {
           for (int k = 0; k < fishNum; ++k) {
-            int xPos = mostLeftX + k * 18 + 35;
+
+              int xPos = mostLeftX + k * 18 + 35;
+              int yPos = mostLeftY - 35;
+              //ImageObserver:
+              //An asynchronous update interface for receiving notifications about Image information
+              // as the Image is constructed.
+              g2d.drawImage(fishImage, xPos, yPos, null);
+            }
+          } else {
+            PenguinColor penguinColor = penguin.getColor();
+            PenguinColor red = PenguinColor.red;
+            PenguinColor white = PenguinColor.white;
+            PenguinColor brown = PenguinColor.brown;
+            PenguinColor black = PenguinColor.black;
+
+            if(penguinColor.equals(red)) g2d.setColor(Color.red);
+            else if (penguinColor.equals(white)) g2d.setColor(Color.white);
+            else if (penguinColor.equals(brown)) g2d.setColor(Color.GRAY);
+            else if (penguinColor.equals(black)) g2d.setColor(Color.black);
+
+            int xPos = mostLeftX + 55;
             int yPos = mostLeftY - 35;
-            //ImageObserver:
-            //An asynchronous update interface for receiving notifications about Image information
-            // as the Image is constructed.
-            g2d.drawImage(fishImage, xPos, yPos, null);
+            int width = 70;
+            int height = 70;
+            g2d.fillOval(xPos, yPos, width, height);
           }
         }
+
+//        if(penguinColor.equals(PenguinColor.red))
 
 //        polygons.add(polygon);
 
