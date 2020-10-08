@@ -62,11 +62,11 @@ GUI is generated through our Model/View/Controller (MVC) design pattern, which t
 
 ### Test
 
-##### JUnit tests directory:
+#### JUnit tests directory:
 
     Fish/Common/Fish/test/
 
-##### Testing with Maven:
+#### Testing with Maven:
 To install Maven:
 
     mvn clean install
@@ -79,12 +79,12 @@ To run single/specific test(s):
 
     mvn -Dtest=TestClassName test
 
-##### Manual testing in a IDE:
+#### Manual testing in a IDE:
 1. Clone the project & set up the SDK in your favorite IDE.
 2. Run conmmand: $ mvn clean install
 3. Locate the test files where you can run single tests or the entire classes of tests.
 
-##### Test Result:
+#### Test Result:
 Tests run: 62, Failures: 0, Errors: 0, Skipped: 0
 
 
