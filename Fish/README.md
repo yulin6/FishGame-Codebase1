@@ -14,25 +14,23 @@
     |   |   | Pom.xml 
     |   |   | target/
     |   |   | src
-    |   |   |   |
-    |   |   | Main.java    
+    |   |   |   | Main.java    
     |   |   | controllers
-    |   |   |   |
-    |   |   | FishController.java
+    |   |   |   | FishController.java
     |   |   | models
-    |   |   |   |
-    |   |   | FishModel.java 
-    |   |   | FishTile.java
+    |   |   |   | FishModel.java 
+    |   |   |   | FishTile.java
+    |   |   |   | Penguin.java 
+    |   |   |   | PenguinColor.java
     |   |   | views
-    |   |   |   |
-    |   |   | FishView.java 
-    |   |   | TilesPanel.java   
+    |   |   |   | FishView.java 
+    |   |   |   | TilesPanel.java   
     |   |   | test
-    |   |   |   |
-    |   |   | FishControllerMock.java 
-    |   |   | FishControllerMockTest.java 
-    |   |   | FishModelTest.java 
-    |   |   | FishTileTest.java 
+    |   |   |   | FishControllerMock.java 
+    |   |   |   | FishControllerMockTest.java 
+    |   |   |   | FishModelTest.java 
+    |   |   |   | FishTileTest.java 
+    |   |   |   | PenguinTest.java 
 
 ## Milestones
 ### 2 — The Game Pieces
