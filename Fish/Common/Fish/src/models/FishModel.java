@@ -97,36 +97,35 @@ public class FishModel {
     if (startX == targetX && startY == targetY) {
       return false; //true or false, depends on design choice.
     }
-    //
-    if (board.size() != 0) {
+    if (board.size() != 0) {//When the board is not empty
       int height = board.size();
       int width = board.get(0).size();
       if (startX < 0 || startY < 0 || startX > width - 1 || startY > height - 1 ||
-          targetX < 0 || targetY < 0 || targetX > width - 1 || targetY > height - 1) {
+          targetX < 0 || targetY < 0 || targetX > width - 1 || targetY > height - 1) {//outside of the board
         return false;
       } else {
-        if (startX == targetX) {
-          boolean isBothEvenOrOdd =
+        if (startX == targetX) {//In the same column
+          boolean isNotBothEvenOrOdd =
               (startY % 2 == 0 && targetY % 2 != 0) || (startY % 2 != 0 && targetY % 2 == 0);
-          if (startY > targetY) {//Moving to same x lower y, example: 0 1 0 0
-            if (startY - targetY == 1) {
+          if (startY > targetY) {//Moving to same x smaller y, example: 0 1 0 0
+            if (startY - targetY == 1) {//example: 0 1 0 0
               FishTile fishTile = board.get(targetY).get(targetX);
               possibleMoveTiles.add(fishTile);
-            } else if (isBothEvenOrOdd) {//example: 1 5 1 0
+            } else if (isNotBothEvenOrOdd) {//example: 1 5 1 0
               return false;
-            } else {//Moving up, example: 0 2 0 0
+            } else {//Moving straight up, example: 0 2 0 0
               for (int i = targetY; i <= startY; i += 2) {
                 FishTile fishTile = board.get(i).get(targetX);
                 possibleMoveTiles.add(fishTile);
               }
             }
-          } else {//Moving to same x higher y, example: 0 0 0 1
-            if (targetY - startY == 1) {
+          } else {//Moving to same x larger y, example: 0 0 0 1
+            if (targetY - startY == 1) {//example: 0 1 0 2
               FishTile fishTile = board.get(targetY).get(targetX);
               possibleMoveTiles.add(fishTile);
-            } else if (isBothEvenOrOdd) {//example: 1 0 1 5
+            } else if (isNotBothEvenOrOdd) {//example: 1 0 1 5
               return false;
-            } else {//Moving down, example: 0 0 0 2
+            } else {//Moving straight down, example: 0 0 0 2
               for (int i = startY; i <= targetY; i += 2) {
                 FishTile fishTile = board.get(i).get(targetX);
                 possibleMoveTiles.add(fishTile);
@@ -156,7 +155,7 @@ public class FishModel {
                 FishTile fishTile = board.get(i).get(startX - counter);
                 possibleMoveTiles.add(fishTile);
                 ++counter;
-              } else {//example: 1 3 0 4
+              } else {//example: 0 3 0 4
                 FishTile fishTile = board.get(i).get(startX - counter);
                 possibleMoveTiles.add(fishTile);
               }
@@ -164,8 +163,7 @@ public class FishModel {
           }
         } else if (startX < targetX && startY < targetY) {//Moving to bottom right, example: 1 2 2 4
           for (int i = startY; i <= targetY; ++i) {
-            if (startX + counter
-                < width) {//Avoid indexOutOfBoundException, example: 2 3 3 6, width 4 height 8
+            if (startX + counter < width) {//Avoid indexOutOfBoundException, example: 2 3 3 6, width 4 height 8
               if (i % 2 == 0) {//example: 1 2 2 4
                 FishTile fishTile = board.get(i).get(startX + counter);
                 possibleMoveTiles.add(fishTile);
@@ -179,7 +177,7 @@ public class FishModel {
         } else if (startX < targetX && startY > targetY) {//Moving to top right, example: 1 2 2 0
           for (int i = startY; i >= targetY; --i) {
             if (startX + counter
-                < width) {//Avoid indexOutOfBoundException, example: 2 4 3 0, width 4 height 8
+                < width) {//Avoid indexOutOfBoundException, example: 1 6 2 0, width 4 height 8
               if (i % 2 == 0) {//example: 1 2 2 0
                 FishTile fishTile = board.get(i).get(startX + counter);
                 possibleMoveTiles.add(fishTile);
