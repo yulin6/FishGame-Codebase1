@@ -50,6 +50,10 @@ public class FishTile {
     return fishNum;
   }
 
+  public void setFishNum(int fishNum){
+    this.fishNum = fishNum;
+  }
+
   /**
    * Setting the penguin that's currently on the tile
    *

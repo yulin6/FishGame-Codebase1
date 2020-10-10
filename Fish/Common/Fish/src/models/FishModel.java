@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The model class of the fish game. Main methods are emptyTile, isPossibleMove and getBoardCopy.
@@ -9,43 +10,79 @@ import java.util.Random;
 public class FishModel {
 
   private ArrayList<ArrayList<FishTile>> board = new ArrayList<ArrayList<FishTile>>();
-  private boolean isRandomized;
-  private int maxFishNum;
+  private int maxFishNum = 5;
+  private int minFishNum = 1;
 
 
-  /**
-   * The constructor of FishModel class, takes in width, height, maxFishNum and a boolean
-   * isRandomized to generate the board.
-   *
-   * @param width width of the game board.
-   * @param height height of the game board.
-   * @param maxFishNum max fish number of a tile.
-   * @param isRandomized should the number of fishes on a tile be randomized from 1 to maxFishNum.
-   */
-  public FishModel(int width, int height, int maxFishNum, boolean isRandomized) {
-    this.isRandomized = isRandomized;
-    this.maxFishNum = maxFishNum;
+  public FishModel(int width, int height, int setMinOneFishOrFishNum, boolean isRandomized) {
 
     for (int i = 0; i < height; ++i) {
       ArrayList<FishTile> row = new ArrayList<FishTile>();
       board.add(row);
       for (int j = 0; j < width; ++j) {
         if (!isRandomized) {
-          FishTile tile = new FishTile(maxFishNum);
+          FishTile tile = new FishTile(setMinOneFishOrFishNum);
           row.add(tile);
         } else {
-          //
-          Random ran = new Random();
-          int low = 1;
-          int high = maxFishNum + 1;
-          int randomFishNum = ran.nextInt(high - 1) + low;
+          int tilesNumOnBoard = width * height;
+          if (setMinOneFishOrFishNum > tilesNumOnBoard) {
+            System.out.println("Minimum fish number cannot be greater than the total board tiles.");
+            return;
+          } else if(setMinOneFishOrFishNum < 0){
+            System.out.println("Minimum fish number cannot be less than 0.");
+          } else{
+            Random ran = new Random();
+            int low = 2;
+            int high = maxFishNum + 1;
+            int randomFishNum = ran.nextInt(high - low) + low;
 
-          FishTile tile = new FishTile(randomFishNum);
-          row.add(tile);
+            FishTile tile = new FishTile(randomFishNum);
+            row.add(tile);
+          }
         }
       }
     }
+
+    if(isRandomized) {
+      int oneFishTilesNum = setMinOneFishOrFishNum;
+      setOneFishTiles(oneFishTilesNum);
+    }
 //    System.out.println(board.size());
+  }
+
+  public void setOneFishTiles(int oneFishTilesNum){
+    if(board.size() != 0) {
+      int boardHeight = board.size();
+      int boardWidth = board.get(0).size();
+//      ArrayList<FishTile> oneFishTiles = new ArrayList<FishTile>();
+
+      int xPos;
+      int yPos;
+
+      Random ran = new Random();
+      xPos = ran.nextInt(boardWidth);
+      yPos = ran.nextInt(boardHeight);
+
+      FishTile oneFishTile = board.get(yPos).get(xPos);
+      oneFishTile.setFishNum(minFishNum);
+//      oneFishTiles.add(oneFishTile);
+
+
+      for (int i = 1; i < oneFishTilesNum; ++i) {
+        int newX = ran.nextInt(boardWidth);
+        int newY = ran.nextInt(boardHeight);
+        FishTile fishTile = board.get(newY).get(newX);
+
+        while(fishTile.getFishNum() == 1){
+          newX = ran.nextInt(boardWidth);
+          newY = ran.nextInt(boardHeight);
+          fishTile = board.get(newY).get(newX);
+        }
+
+        fishTile = board.get(newY).get(newX);
+        fishTile.setFishNum(minFishNum);
+      }
+    }
   }
 
   /**

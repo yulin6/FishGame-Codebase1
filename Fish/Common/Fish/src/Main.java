@@ -56,11 +56,11 @@ public class Main {
           int maxFishNum = Integer.parseInt(maxFishNumStr);
           boolean isRandomized;
 
-          if (width < 1 || height < 2 || maxFishNum < 1 || maxFishNum > 5) {
-            System.out.println("Error: One or more of the first three arguments are invalid.");
-            argsList = new ArrayList<String>();
-            continue;
-          }
+//          if (width < 1 || height < 2 || maxFishNum < 1 || maxFishNum > 5) {
+//            System.out.println("Error: One or more of the first three arguments are invalid.");
+//            argsList = new ArrayList<String>();
+//            continue;
+//          }
 
           String random = "random";
           String nonRandom = "nonrandom";
