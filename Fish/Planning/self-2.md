@@ -10,7 +10,10 @@ TAs can find:
 
 - the data description of tiles, including an interpretation:
     - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/src/models/FishTile.java#L6> 
-    - FishTile class is an interpretaion of the game board tile, it contains three parameters: isEmpty - a boolean that is used for checking if the tile is a hole or not, fishNum - an int that represents the number of the fishes on the tile, penguin - a Penguin class which can be null, representing no penguin on the tile, or if it is not null, then there is a penguin on the tile. We also have setters and getters for each parameter.
+    - FishTile class is an interpretaion of the game board tile, it contains three parameters: 
+        - isEmpty - a boolean that is used for checking if the tile is a hole or not
+        - fishNum - an int that represents the number of the fishes on the tile
+        - penguin - a Penguin class which can be null, representing no penguin on the tile, or if it is not null, then there is a penguin on the tile. We also have setters and getters for each parameter.
 
 - the data description of boards, include an interpretation:
     - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/src/models/FishModel.java#L11> 
@@ -21,8 +24,8 @@ TAs can find:
   - purpose: The method will take in a x position and a y position (ints), which will be used for emptying the tile in the board, setting the isEmpty attribute of the tile to true. An empty tile represents a hole on the game board.
   
   - signature: 
-        - @param xPos: x position (int) of the tile to be emptied.
-        - @param yPos: y position (int) of the tile to be emptied.
+    - @param xPos: x position (int) of the tile to be emptied.
+    - @param yPos: y position (int) of the tile to be emptied.
   
   - unit tests: <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/test/FishModelTest.java#L33-L152>
 
@@ -31,11 +34,11 @@ TAs can find:
   - purpose: Takes in the x and y positions (ints) of starting tile and targeting tile, and determine if they are in a "straight line", which means the line connects the two tiles can only be crossing borders; and if they or any of the tiles in between them are empty, return false. Otherwise, return true.
   
   - signature: 
-        - @param startX: x position (int) of the starting tile.
-        - @param startY: y position (int) of the starting tile.
-        - @param targetX: x position (int) of the targeting tile.
-        - @param targetY: y position (int) of the targeting tile.
-        - @return boolean that represents if the move attempt from the start tile to the target tile is valid or not.
+    - @param startX: x position (int) of the starting tile.
+    - @param startY: y position (int) of the starting tile.
+    - @param targetX: x position (int) of the targeting tile.
+    - @param targetY: y position (int) of the targeting tile.
+    - @return boolean that represents if the move attempt from the start tile to the target tile is valid or not.
   
   - unit tests:<https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/test/FishModelTest.java#L154-L446>
 
