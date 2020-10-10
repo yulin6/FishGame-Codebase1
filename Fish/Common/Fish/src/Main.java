@@ -34,10 +34,14 @@ public class Main {
    */
   public static void createFishModel(Scanner scanner) {
     String boardCreateInstruction = "To create a initial board, please enter four arguments: \n"
-        + "1. Width - Positive integer, \n"
-        + "2. Height - Positive integer larger than 1, \n"
-        + "3. Maximum number of fish on a tile - Positive integer range from 1 to 5, \n"
-        + "4. Is number of fishes randomly distributed - \"random\" or \"nonrandom\". \n"
+        + "1. Width - Positive integer. \n"
+        + "2. Height - Positive integer larger than 1. \n"
+        + "3. MinOneFishNumOrFishNumOnTiles (stands different thing depends on the fourth argument): \n"
+        + "   Minimum number of one-fish tiles - Positive integer range from 0 to Width * Height. (Random Mode);\n"
+        + "   Number of fishes on each tiles - Positive integer range from 1 to 5. (Nonrandom Mode).\n"
+        + "4. RandomModeOrNonRandom: \n"
+        + "   Random mode will have a minimum number of one-fish tiles, fish number on other tiles are randomly distributed from 2 to 5 - \"random\"; \n"
+        + "   Nonrandom mode will have each tiles containing the same fish number. - \"nonrandom\". \n"
         + "Input your arguments below: ";
     System.out.println(boardCreateInstruction);
 
@@ -64,14 +68,17 @@ public class Main {
           if (isRandomizedStr.equals(random)) {
             isRandomized = true;
             if(minOneFishNumOrFishNumOnTiles < 0 || minOneFishNumOrFishNumOnTiles > tilesNumOnBoard){
-              System.out.println("Error: invalid minimum number of one fish tiles.");
+              System.out.println("Error: Third argument is invalid. In random mode, "
+                  + "the minimum number of one fish tiles should be greater than zero "
+                  + "or less than or equal to the number of tiles on the board.");
               argsList = new ArrayList<String>();
               continue;
             }
           } else if (isRandomizedStr.equals(nonRandom)) {
             isRandomized = false;
             if(minOneFishNumOrFishNumOnTiles < 1 || minOneFishNumOrFishNumOnTiles > 5){
-              System.out.println("Error: maximum fish number should >= 1 or <= 5");
+              System.out.println("Error: Third argument is invalid. In nonrandom mode, "
+                  + "maximum fish number should be larger than 0 or less than 6");
               argsList = new ArrayList<String>();
               continue;
             }
@@ -87,21 +94,11 @@ public class Main {
             continue;
           }
 
-          if (minOneFishNumOrFishNumOnTiles > tilesNumOnBoard) {
-            System.out.println("Minimum fish number cannot be greater than the total board tiles.");
-            return;
-          } else if(minOneFishNumOrFishNumOnTiles < 0){
-            System.out.println("Minimum fish number cannot be less than 0.");
-          }
-
-
-
           fishModel = new FishModel(width, height, minOneFishNumOrFishNumOnTiles, isRandomized);
           break;
         } else {
           argsList = new ArrayList<String>();
           System.out.println("Error: First three arguments should be natural numbers.");
-
         }
       }
     }

@@ -18,6 +18,7 @@ TAs can find:
 - the data description of boards, include an interpretation:
     - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/src/models/FishModel.java#L11> 
     - Our board is a ArrayList of ArrayList of FishTiles in the FishModel, in which the inner ArrayList is a row, and each FishTiles in the same row represents a different colomn. You can picture that the origin of game board is located on top-left corner, positive x goes to the right, positive y goes to the bottom. Since we thought the entry point of our program should be in the main method, so we did some of the input checking of the FishModel constructor inside of Main class, things like width, height cannot be less than 0. - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/src/Main.java#L33-L85>
+    - We misinterpreted the assignment requirement, we thought a the fish number on each tiles should be larger than or equal to 1 fish. After the code walk, we realized that, instead, there should be a minimum number of fish tiles that has only 1 fish. Therefore, we missed a constructor for creating board with minimum 1-fish tiles.
 
 - the functionality for removing a tile:
    - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/a9b77648d31afcb0de664401b6d59446c52c65ae/Fish/Common/Fish/src/models/FishModel.java#L57-L78>
