@@ -2,6 +2,8 @@ import controllers.FishController;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.FishModel;
+import models.Penguin;
+import models.PenguinColor;
 import views.FishView;
 
 /**
@@ -47,33 +49,54 @@ public class Main {
 
         String widthStr = argsList.get(0);
         String heightStr = argsList.get(1);
-        String maxFishNumStr = argsList.get(2);
+        String minOneFishNumOrFishNumOnTilesStr = argsList.get(2);
         String isRandomizedStr = argsList.get(3);
 
-        if (isNaturalNum(widthStr) && isNaturalNum(heightStr) && isNaturalNum(maxFishNumStr)) {
+        if (isNaturalNum(widthStr) && isNaturalNum(heightStr) && isNaturalNum(minOneFishNumOrFishNumOnTilesStr)) {
           int width = Integer.parseInt(widthStr);
           int height = Integer.parseInt(heightStr);
-          int maxFishNum = Integer.parseInt(maxFishNumStr);
+          int minOneFishNumOrFishNumOnTiles = Integer.parseInt(minOneFishNumOrFishNumOnTilesStr);
           boolean isRandomized;
-
-//          if (width < 1 || height < 2 || maxFishNum < 1 || maxFishNum > 5) {
-//            System.out.println("Error: One or more of the first three arguments are invalid.");
-//            argsList = new ArrayList<String>();
-//            continue;
-//          }
+          int tilesNumOnBoard = width * height;
 
           String random = "random";
           String nonRandom = "nonrandom";
           if (isRandomizedStr.equals(random)) {
             isRandomized = true;
+            if(minOneFishNumOrFishNumOnTiles < 0 || minOneFishNumOrFishNumOnTiles > tilesNumOnBoard){
+              System.out.println("Error: invalid minimum number of one fish tiles.");
+              argsList = new ArrayList<String>();
+              continue;
+            }
           } else if (isRandomizedStr.equals(nonRandom)) {
             isRandomized = false;
+            if(minOneFishNumOrFishNumOnTiles < 1 || minOneFishNumOrFishNumOnTiles > 5){
+              System.out.println("Error: maximum fish number should >= 1 or <= 5");
+              argsList = new ArrayList<String>();
+              continue;
+            }
           } else {
             System.out.println("Error: Forth argument should be random or nonrandom.");
             argsList = new ArrayList<String>();
             continue;
           }
-          fishModel = new FishModel(width, height, maxFishNum, isRandomized);
+
+          if (width < 1 || height < 2) {
+            System.out.println("Error: One or both of the first two arguments are invalid.");
+            argsList = new ArrayList<String>();
+            continue;
+          }
+
+          if (minOneFishNumOrFishNumOnTiles > tilesNumOnBoard) {
+            System.out.println("Minimum fish number cannot be greater than the total board tiles.");
+            return;
+          } else if(minOneFishNumOrFishNumOnTiles < 0){
+            System.out.println("Minimum fish number cannot be less than 0.");
+          }
+
+
+
+          fishModel = new FishModel(width, height, minOneFishNumOrFishNumOnTiles, isRandomized);
           break;
         } else {
           argsList = new ArrayList<String>();

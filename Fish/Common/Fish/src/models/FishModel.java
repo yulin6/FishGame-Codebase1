@@ -2,35 +2,35 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The model class of the fish game. Main methods are emptyTile, isPossibleMove and getBoardCopy.
  */
 public class FishModel {
 
-  private ArrayList<ArrayList<FishTile>> board = new ArrayList<ArrayList<FishTile>>();
+  private ArrayList<ArrayList<FishTile>> board;
   private int maxFishNum = 5;
   private int minFishNum = 1;
 
+  /**
+   * A constructor that construct a empty game board for testing.
+   */
+  public FishModel() {
+  }
 
-  public FishModel(int width, int height, int setMinOneFishOrFishNum, boolean isRandomized) {
+  public FishModel(int width, int height, int minOneFishNumOrFishNumOnTiles, boolean isRandomized) {
+
+    maxFishNum = minOneFishNumOrFishNumOnTiles;
+    board = new ArrayList<ArrayList<FishTile>>();
 
     for (int i = 0; i < height; ++i) {
       ArrayList<FishTile> row = new ArrayList<FishTile>();
       board.add(row);
       for (int j = 0; j < width; ++j) {
         if (!isRandomized) {
-          FishTile tile = new FishTile(setMinOneFishOrFishNum);
+          FishTile tile = new FishTile(maxFishNum);
           row.add(tile);
         } else {
-          int tilesNumOnBoard = width * height;
-          if (setMinOneFishOrFishNum > tilesNumOnBoard) {
-            System.out.println("Minimum fish number cannot be greater than the total board tiles.");
-            return;
-          } else if(setMinOneFishOrFishNum < 0){
-            System.out.println("Minimum fish number cannot be less than 0.");
-          } else{
             Random ran = new Random();
             int low = 2;
             int high = maxFishNum + 1;
@@ -39,19 +39,18 @@ public class FishModel {
             FishTile tile = new FishTile(randomFishNum);
             row.add(tile);
           }
-        }
       }
     }
 
     if(isRandomized) {
-      int oneFishTilesNum = setMinOneFishOrFishNum;
+      int oneFishTilesNum = minOneFishNumOrFishNumOnTiles;
       setOneFishTiles(oneFishTilesNum);
     }
 //    System.out.println(board.size());
   }
 
   public void setOneFishTiles(int oneFishTilesNum){
-    if(board.size() != 0) {
+    if(board != null) {
       int boardHeight = board.size();
       int boardWidth = board.get(0).size();
 //      ArrayList<FishTile> oneFishTiles = new ArrayList<FishTile>();
@@ -85,11 +84,7 @@ public class FishModel {
     }
   }
 
-  /**
-   * A constructor that construct a empty game board for testing.
-   */
-  public FishModel() {
-  }
+
 
   /**
    * Takes in a x position and a y position, which will be used for emptying the tile in the board,
@@ -99,7 +94,7 @@ public class FishModel {
    */
   public void emptyTile(int xPos, int yPos) {
     //when the game board is not empty
-    if (board.size() != 0) {
+    if (board != null) {
       int boardWidth = board.get(0).size();
       int boardHeight = board.size();
 
@@ -134,7 +129,7 @@ public class FishModel {
     if (startX == targetX && startY == targetY) {
       return false; //true or false, depends on design choice.
     }
-    if (board.size() != 0) {//When the board is not empty
+    if (board != null) {//When the board is not empty
       int height = board.size();
       int width = board.get(0).size();
       if (startX < 0 || startY < 0 || startX > width - 1 || startY > height - 1 ||
