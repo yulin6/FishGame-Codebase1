@@ -18,26 +18,26 @@ public class PenguinTest {
 
   @Before
   public void init(){
-    red = PenguinColor.red;
-    white = PenguinColor.white;
-    brown = PenguinColor.brown;
-    black = PenguinColor.black;
+    red = PenguinColor.RED;
+    white = PenguinColor.WHITE;
+    brown = PenguinColor.BROWN;
+    black = PenguinColor.BLACK;
     penguin = new Penguin(1, red);
   }
 
   @Test
   public void getColor() {
-    assertEquals(PenguinColor.red, penguin.getColor());
+    assertEquals(PenguinColor.RED, penguin.getColor());
   }
 
   @Test
   public void setColor() {
-    assertEquals(PenguinColor.red, penguin.getColor());
-    penguin.setColor(PenguinColor.white);
-    assertEquals(PenguinColor.white, penguin.getColor());
-    penguin.setColor(PenguinColor.brown);
-    assertEquals(PenguinColor.brown, penguin.getColor());
-    penguin.setColor(PenguinColor.black);
-    assertEquals(PenguinColor.black, penguin.getColor());
+    assertEquals(PenguinColor.RED, penguin.getColor());
+    penguin.setColor(PenguinColor.WHITE);
+    assertEquals(PenguinColor.WHITE, penguin.getColor());
+    penguin.setColor(PenguinColor.BROWN);
+    assertEquals(PenguinColor.BROWN, penguin.getColor());
+    penguin.setColor(PenguinColor.BLACK);
+    assertEquals(PenguinColor.BLACK, penguin.getColor());
   }
 }

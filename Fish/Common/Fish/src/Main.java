@@ -27,8 +27,8 @@ public class Main {
   }
 
   /**
-   * Accept four inputs from user: width, height, maxFishNum, isRandomized boolean, and use them to
-   * generate a model if they are valid inputs.
+   * Accept four inputs from user: width, height, MinOneFishNumOrFishNumOnTiles, isRandomized boolean,
+   * and use them to generate a model if they are valid inputs.
    *
    * @param scanner a scanner.
    */

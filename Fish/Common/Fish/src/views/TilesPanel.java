@@ -1,7 +1,5 @@
 package views;
 
-import static models.PenguinColor.*;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -97,10 +95,10 @@ public class TilesPanel extends JPanel {
             }
           } else {
             PenguinColor penguinColor = penguin.getColor();
-            PenguinColor red = PenguinColor.red;
-            PenguinColor white = PenguinColor.white;
-            PenguinColor brown = PenguinColor.brown;
-            PenguinColor black = PenguinColor.black;
+            PenguinColor red = PenguinColor.RED;
+            PenguinColor white = PenguinColor.WHITE;
+            PenguinColor brown = PenguinColor.BROWN;
+            PenguinColor black = PenguinColor.BLACK;
 
             if(penguinColor.equals(red)) g2d.setColor(Color.red);
             else if (penguinColor.equals(white)) g2d.setColor(Color.white);
@@ -115,7 +113,6 @@ public class TilesPanel extends JPanel {
           }
         }
 
-//        if(penguinColor.equals(PenguinColor.red))
 
 //        polygons.add(polygon);
 
