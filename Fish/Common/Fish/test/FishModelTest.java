@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import models.FishModel;
-import models.FishTile;
+import models.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class FishModelTest {
   @Test
   public void emptyTileValid1() {
     fishModel.emptyTile(0, 0);
-    ArrayList<ArrayList<FishTile>> boardCopy = fishModel.getBoardCopy();
+    ArrayList<ArrayList<Tile>> boardCopy = fishModel.getBoard();
     boolean isEmpty = boardCopy.get(0).get(0).isEmpty();
     assertEquals(true, isEmpty);
   }
@@ -41,7 +41,7 @@ public class FishModelTest {
   @Test
   public void emptyTileValid2() {
     fishModel.emptyTile(2, 4);
-    ArrayList<ArrayList<FishTile>> boardCopy = fishModel.getBoardCopy();
+    ArrayList<ArrayList<Tile>> boardCopy = fishModel.getBoard();
     boolean isEmpty = boardCopy.get(4).get(2).isEmpty();
     assertEquals(true, isEmpty);
   }
@@ -151,33 +151,33 @@ public class FishModelTest {
     assertEquals("Error: Game board is empty.\n", baos.toString());
   }
 
-//  @Test
-//  public void possibleMoves() {
+  @Test
+  public void possibleMoves() {
 //    fishModel.emptyTile(1, 5);
 //    fishModel.emptyTile(1, 4);
 //    fishModel.emptyTile(1, 2);
 //    fishModel.emptyTile(2, 2);
 //    fishModel.emptyTile(1, 1);
 //    fishModel.emptyTile(3, 6);
-//    ArrayList<FishTile> possibleMoves = fishModel.getPossibleMoves(1, 3);
-//
-//    assertEquals(10, possibleMoves.size());
-//  }
+    ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(0, 0);
+
+    assertEquals(10, possibleMoves.size());
+  }
 
   @Test
   public void getEmptyBoardCopy() {
-    ArrayList<ArrayList<FishTile>> emptyBoard = emptyFishModel.getBoardCopy();
-    ArrayList<ArrayList<FishTile>> newBoard = new ArrayList<ArrayList<FishTile>>();
+    ArrayList<ArrayList<Tile>> emptyBoard = emptyFishModel.getBoard();
+    ArrayList<ArrayList<Tile>> newBoard = new ArrayList<ArrayList<Tile>>();
     assertEquals(newBoard, emptyBoard);
   }
 
   @Test
   public void getBoardCopy() {
-    ArrayList<ArrayList<FishTile>> boardBefore = fishModel.getBoardCopy();
+    ArrayList<ArrayList<Tile>> boardBefore = fishModel.getBoard();
     boolean tileOneIsEmptyBefore = boardBefore.get(0).get(0).isEmpty();
     assertEquals(false, tileOneIsEmptyBefore);
     fishModel.emptyTile(0, 0);
-    ArrayList<ArrayList<FishTile>> boardAfter = fishModel.getBoardCopy();
+    ArrayList<ArrayList<Tile>> boardAfter = fishModel.getBoard();
     boolean tileOneIsEmptyAfter = boardAfter.get(0).get(0).isEmpty();
     assertEquals(true, tileOneIsEmptyAfter);
   }

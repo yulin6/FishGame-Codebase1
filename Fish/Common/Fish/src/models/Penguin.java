@@ -5,20 +5,24 @@ package models;
  */
 public class Penguin {
 
-  int playerId;
+  Player player;
   PenguinColor color;
+  int xPos;
+  int yPos;
 
   /**
    * Create a penguin based on the input playerId and penguinColor.
    *
-   * @param playerId int that represents the playerId
    * @param color color of the penguin.
    */
-  public Penguin(int playerId, PenguinColor color) {
-    this.playerId = playerId;
+  public Penguin(Player player, PenguinColor color) {
+    this.player = player;
     this.color = color;
   }
 
+  public Player getPlayer() {
+    return player;
+  }
 
   /**
    * get the color of the penguin.
@@ -36,6 +40,22 @@ public class Penguin {
    */
   public void setColor(PenguinColor color) {
     this.color = color;
+  }
+
+  public int getXPos() {
+    return xPos;
+  }
+
+  public void setXPos(int xPos) {
+    this.xPos = xPos;
+  }
+
+  public int getYPos() {
+    return yPos;
+  }
+
+  public void setYPos(int yPos) {
+    this.yPos = yPos;
   }
 
 }

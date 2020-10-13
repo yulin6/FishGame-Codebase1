@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import models.FishTile;
+import models.Tile;
 
 /**
  * The main view class extends JFrame, will work as a frame for displaying the game.
@@ -50,7 +50,7 @@ public class FishView extends JFrame {
    *
    * @param board 2d ArrayList of fish tiles.
    */
-  public void addBoardToPanel(ArrayList<ArrayList<FishTile>> board) {
+  public void addBoardToPanel(ArrayList<ArrayList<Tile>> board) {
     this.tilesPanel.addBoard(board);
   }
 

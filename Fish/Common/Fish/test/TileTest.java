@@ -1,44 +1,44 @@
 import static org.junit.Assert.*;
 
-import models.FishTile;
+import models.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * a class for testing the FishTile.
+ * a class for testing the Tile.
  */
-public class FishTileTest {
+public class TileTest {
 
-  private FishTile fishTile;
+  private Tile tile;
 
   @Before
   public void init() {
-    fishTile = new FishTile(4);
+    tile = new Tile(4);
   }
 
   @Test
   public void isEmptyTrue() {
-    fishTile.setEmpty();
-    boolean isEmpty = fishTile.isEmpty();
+    tile.setEmpty();
+    boolean isEmpty = tile.isEmpty();
     assertEquals(true, isEmpty);
   }
 
   @Test
   public void isEmptyFalse() {
-    boolean isEmpty = fishTile.isEmpty();
+    boolean isEmpty = tile.isEmpty();
     assertEquals(false, isEmpty);
   }
 
   @Test
   public void setEmpty() {
-    fishTile.setEmpty();
-    boolean isEmpty = fishTile.isEmpty();
+    tile.setEmpty();
+    boolean isEmpty = tile.isEmpty();
     assertEquals(true, isEmpty);
   }
 
   @Test
   public void getFishNum() {
-    int fishNum = fishTile.getFishNum();
+    int fishNum = tile.getFishNum();
     assertEquals(4, fishNum);
   }
 }

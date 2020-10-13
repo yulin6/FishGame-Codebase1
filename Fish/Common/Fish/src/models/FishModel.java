@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * The model class of the fish game. It stores the game board representation, which is a
+ * The game board class of the fish game. It stores the game board representation, which is a
  * ArrayList of ArrayList of Fish Tiles. There are two types (modes) of game board, one (RANDOM)is
  * having randomly number of fishes on each tiles with a minimum number of 1-fish tiles.
  * Another one (NONRANDOM) has each tiles with the same number of fish numbers.
@@ -12,9 +12,9 @@ import java.util.Random;
  */
 public class FishModel {
 
-  private ArrayList<ArrayList<FishTile>> board;
-//  private int maxFishNum = 5;
-  private int minFishNum = 1;
+  private ArrayList<ArrayList<Tile>> board;
+  private int maxFishNumOnOneTile = 5;
+  private int minFishNumOnOneTile = 1;
 
   /**
    * A constructor that construct a empty game board for testing.
@@ -37,26 +37,26 @@ public class FishModel {
    */
   public FishModel(int width, int height, int minOneFishNumOrFishNumOnTiles, boolean isRandomized) {
 
-    int fishNumOnTiles = minOneFishNumOrFishNumOnTiles;
-    board = new ArrayList<ArrayList<FishTile>>();
+    board = new ArrayList<ArrayList<Tile>>();
 
     for (int i = 0; i < height; ++i) {
-      ArrayList<FishTile> row = new ArrayList<FishTile>();
+      ArrayList<Tile> row = new ArrayList<Tile>();
       board.add(row);
       for (int j = 0; j < width; ++j) {
         if (!isRandomized) {
           //In nonrandom mode, every tile has the same number of fish based on the input number.
-          FishTile tile = new FishTile(fishNumOnTiles);
+          int fishNumOnTiles = minOneFishNumOrFishNumOnTiles;
+          Tile tile = new Tile(fishNumOnTiles);
           row.add(tile);
         } else {
           //In random mode, first setting the all fish tiles with 2 to 5 fishes randomly, and
           //1-fish tiles will be set later.
             Random ran = new Random();
             int low = 2;
-            int high = fishNumOnTiles + 1;
+            int high = maxFishNumOnOneTile + 1;
             int randomFishNum = ran.nextInt(high - low) + low;
 
-            FishTile tile = new FishTile(randomFishNum);
+            Tile tile = new Tile(randomFishNum);
             row.add(tile);
           }
       }
@@ -79,7 +79,7 @@ public class FishModel {
     if(board != null) {
       int boardHeight = board.size();
       int boardWidth = board.get(0).size();
-//      ArrayList<FishTile> oneFishTiles = new ArrayList<FishTile>();
+//      ArrayList<Tile> oneFishTiles = new ArrayList<Tile>();
 
       int xPos;
       int yPos;
@@ -88,24 +88,24 @@ public class FishModel {
       xPos = ran.nextInt(boardWidth);
       yPos = ran.nextInt(boardHeight);
 
-      FishTile oneFishTile = board.get(yPos).get(xPos);
-      oneFishTile.setFishNum(minFishNum);
+      Tile oneFishTile = board.get(yPos).get(xPos);
+      oneFishTile.setFishNum(minFishNumOnOneTile);
 //      oneFishTiles.add(oneFishTile);
 
 
       for (int i = 1; i < oneFishTilesNum; ++i) {
         int newX = ran.nextInt(boardWidth);
         int newY = ran.nextInt(boardHeight);
-        FishTile fishTile = board.get(newY).get(newX);
+        Tile tile = board.get(newY).get(newX);
 
-        while(fishTile.getFishNum() == minFishNum){
+        while(tile.getFishNum() == minFishNumOnOneTile){
           newX = ran.nextInt(boardWidth);
           newY = ran.nextInt(boardHeight);
-          fishTile = board.get(newY).get(newX);
+          tile = board.get(newY).get(newX);
         }
 
-        fishTile = board.get(newY).get(newX);
-        fishTile.setFishNum(minFishNum);
+        tile = board.get(newY).get(newX);
+        tile.setFishNum(minFishNumOnOneTile);
       }
     }
   }
@@ -144,33 +144,32 @@ public class FishModel {
    * @param startY y position of the starting tile.
    * @return a arraylist of FishTiles on the board that the current tile can move to.
    */
-  public ArrayList<FishTile> getPossibleMoves(int startX, int startY){
-    ArrayList<FishTile> possibleMoveTiles = new ArrayList<FishTile>();
+  public ArrayList<Tile> getPossibleMoves(int startX, int startY){
+    ArrayList<Tile> possibleMoveTiles = new ArrayList<Tile>();
 
     if(board != null) {
       int boardHeight = board.size();
       int boardWidth = board.get(0).size();
 
-      FishTile fishTile = board.get(startY).get(startX);
-      boolean isEmpty = fishTile.isEmpty();
+      Tile tile = board.get(startY).get(startX);
+      boolean isEmpty = tile.isEmpty();
       if(isEmpty) return possibleMoveTiles;
 
       //moving up & down
       boolean isStartYEven = startY % 2 == 0;
       int startYForLoop = isStartYEven ? 0 : 1;
-      int endYForLoop = isStartYEven ? boardHeight - 2 : boardHeight - 1;
+      boolean isHeightEven = boardHeight % 2 == 0;
+      int endYForLoop = isStartYEven && isHeightEven ? boardHeight - 2 : boardHeight - 1;
       for (int i = startYForLoop; i <= endYForLoop; i += 2){
         if(startY != i){
-          fishTile = board.get(i).get(startX);
-          isEmpty = fishTile.isEmpty();
-          if(!isEmpty) {
-            possibleMoveTiles.add(fishTile);
-            System.out.println("Up & down: ");
-            System.out.println(startX + " " + i);
+          tile = board.get(i).get(startX);
+          isEmpty = tile.isEmpty();
+          boolean hasPenguin = tile.getPenguin() != null;
+          if(!isEmpty && !hasPenguin) {
+            possibleMoveTiles.add(tile);
           } else break;
         }
       }
-
 
       int counter = 0;
 
@@ -179,12 +178,11 @@ public class FishModel {
         boolean isYEven = i % 2 == 0;
         counter = isYEven ? counter : counter + 1;
         if (startX - counter >= 0) {
-          fishTile = board.get(i).get(startX - counter);
-          isEmpty = fishTile.isEmpty();
-          if(!isEmpty) {
-            possibleMoveTiles.add(fishTile);
-            System.out.println("Top Left:");
-            System.out.println(startX - counter + " " + i);
+          tile = board.get(i).get(startX - counter);
+          isEmpty = tile.isEmpty();
+          boolean hasPenguin = tile.getPenguin() != null;
+          if(!isEmpty && !hasPenguin) {
+            possibleMoveTiles.add(tile);
           } else break;
         } else break;
       }
@@ -195,12 +193,11 @@ public class FishModel {
         boolean isYEven = i % 2 == 0;
         counter = isYEven ? counter : counter + 1;
         if(startX - counter >= 0){
-          fishTile = board.get(i).get(startX - counter);
-          isEmpty = fishTile.isEmpty();
-          if(!isEmpty) {
-            possibleMoveTiles.add(fishTile);
-            System.out.println("Bottom Left:");
-            System.out.println(startX - counter + " " + i);
+          tile = board.get(i).get(startX - counter);
+          isEmpty = tile.isEmpty();
+          boolean hasPenguin = tile.getPenguin() != null;
+          if(!isEmpty && !hasPenguin) {
+            possibleMoveTiles.add(tile);
           } else break;
         } else break;
       }
@@ -211,12 +208,11 @@ public class FishModel {
         boolean isYEven = i % 2 == 0;
         counter = !isYEven ? counter : counter + 1;
         if(startX + counter <= boardWidth - 1){
-          fishTile = board.get(i).get(startX + counter);
-          isEmpty = fishTile.isEmpty();
-          if(!isEmpty) {
-            possibleMoveTiles.add(fishTile);
-            System.out.println("Bottom Right:");
-            System.out.println(startX + counter + " " + i);
+          tile = board.get(i).get(startX + counter);
+          isEmpty = tile.isEmpty();
+          boolean hasPenguin = tile.getPenguin() != null;
+          if(!isEmpty && !hasPenguin) {
+            possibleMoveTiles.add(tile);
           } else break;;
         } else break;
       }
@@ -227,12 +223,11 @@ public class FishModel {
         boolean isYEven = i % 2 == 0;
         counter = !isYEven ? counter : counter + 1;
         if(startX + counter <= boardWidth - 1){
-          fishTile = board.get(i).get(startX + counter);
-          isEmpty = fishTile.isEmpty();
-          if(!isEmpty) {
-            possibleMoveTiles.add(fishTile);
-            System.out.println("Top Right:");
-            System.out.println(startX + counter + " " + i);
+          tile = board.get(i).get(startX + counter);
+          isEmpty = tile.isEmpty();
+          boolean hasPenguin = tile.getPenguin() != null;
+          if(!isEmpty && !hasPenguin) {
+            possibleMoveTiles.add(tile);
           } else break;
         } else break;
       }
@@ -248,15 +243,16 @@ public class FishModel {
    *
    * @return a 2d ArrayList, a copy of the the current game board.
    */
-  public ArrayList<ArrayList<FishTile>> getBoardCopy() {
-    ArrayList<ArrayList<FishTile>> boardCopy = new ArrayList<ArrayList<FishTile>>();
-    if (board != null) {
-      for (ArrayList<FishTile> row : board) {
-        ArrayList<FishTile> rowClone = (ArrayList<FishTile>) row.clone();
-        boardCopy.add(rowClone);
-      }
-    }
-    return boardCopy;
+  public ArrayList<ArrayList<Tile>> getBoard() {
+    return this.board;
+//    ArrayList<ArrayList<Tile>> boardCopy = new ArrayList<ArrayList<Tile>>();
+//    if (board != null) {
+//      for (ArrayList<Tile> row : board) {
+//        ArrayList<Tile> rowClone = (ArrayList<Tile>) row.clone();
+//        boardCopy.add(rowClone);
+//      }
+//    }
+//    return boardCopy;
   }
 
 }

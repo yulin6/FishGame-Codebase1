@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import models.FishModel;
-import models.FishTile;
+import models.Tile;
 import views.FishView;
 
 /**
@@ -10,7 +10,7 @@ public class FishControllerMock {
 
   private FishModel model;
   private FishView view;
-  private ArrayList<ArrayList<FishTile>> board;
+  private ArrayList<ArrayList<Tile>> board;
 
 
   /**
@@ -29,7 +29,7 @@ public class FishControllerMock {
    * generated." in this mock class.
    */
   public void generateView() {
-    board = model.getBoardCopy();
+    board = model.getBoard();
     view.addBoardToPanel(board);
     view.makeVisible();
     System.out.println("View generated.");

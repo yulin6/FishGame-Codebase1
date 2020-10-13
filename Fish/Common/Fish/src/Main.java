@@ -4,6 +4,7 @@ import java.util.Scanner;
 import models.FishModel;
 import models.Penguin;
 import models.PenguinColor;
+import models.Player;
 import views.FishView;
 
 /**
@@ -19,6 +20,17 @@ public class Main {
    * @param args string of input arguments.
    */
   public static void main(String[] args) {
+//
+//    Player player = new Player(4);
+//    ArrayList<Player> players = new ArrayList<Player>();
+//    Penguin penguin = new Penguin(player, PenguinColor.BLACK);
+//    player.addPenguin(penguin);
+//    players.add(player);
+//    Player player1 = player;
+//    System.out.println(player1.getPenguins().get(0).getColor());
+//    penguin.setColor(PenguinColor.RED);
+//    System.out.println(player.getPenguins().get(0).getColor());
+//    System.out.println(player1.getPenguins().get(0).getColor());
 
     Scanner scanner = new Scanner(System.in);
     createFishModel(scanner);

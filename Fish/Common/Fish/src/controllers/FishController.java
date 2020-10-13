@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import models.FishModel;
-import models.FishTile;
+import models.Tile;
 import views.FishView;
 
 /**
@@ -12,7 +12,7 @@ public class FishController {
 
   private FishModel model;
   private FishView view;
-  private ArrayList<ArrayList<FishTile>> board;
+  private ArrayList<ArrayList<Tile>> board;
 
 
   /**
@@ -30,7 +30,7 @@ public class FishController {
    * Getting a copy of the board from the model, and use it  for generating view.
    */
   public void generateView() {
-    board = model.getBoardCopy();
+    board = model.getBoard();
     view.addBoardToPanel(board);
     view.makeVisible();
   }

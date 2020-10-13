@@ -1,28 +1,24 @@
 package models;
 
 /**
- * Class of FishTile, which contains how a fish tile is constructed.
+ * Class of Tile, which contains how a fish tile is constructed.
  */
-public class FishTile {
+public class Tile {
 
   private boolean isEmpty;
   private int fishNum;
-
   private Penguin penguin;
-//  private int xPos;
-//  private int yPos;
+
 
   /**
-   * Constructor of the FishTile class, takes in the fish number that will be displayed on the
+   * Constructor of the Tile class, takes in the fish number that will be displayed on the
    * tile.
    *
    * @param fishNum a integer of fish number that will be displayed on the tile.
    */
-  public FishTile(int fishNum) {
+  public Tile(int fishNum) {
     isEmpty = false;
     this.fishNum = fishNum;
-//    this.xPos = xPos;
-//    this.yPos = yPos;
   }
 
   /**
@@ -50,17 +46,13 @@ public class FishTile {
     return fishNum;
   }
 
+  /**
+   * set the number of fish on the tile.
+   *
+   * @param fishNum the number of fish to be set on the tile.
+   */
   public void setFishNum(int fishNum){
     this.fishNum = fishNum;
-  }
-
-  /**
-   * Setting the penguin that's currently on the tile
-   *
-   * @param penguin a Penguin.
-   */
-  public void setPenguin(Penguin penguin){
-    this.penguin = penguin;
   }
 
 
@@ -71,13 +63,13 @@ public class FishTile {
     return penguin;
   }
 
-//  public int getxPos() {
-//    return xPos;
-//  }
-//
-//  public int getyPos() {
-//    return yPos;
-//  }
-
+  /**
+   * Setting the penguin that's currently on the tile
+   *
+   * @param penguin a Penguin.
+   */
+  public void setPenguin(Penguin penguin){
+    this.penguin = penguin;
+  }
 
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import models.FishTile;
+import models.Tile;
 import models.Penguin;
 import models.PenguinColor;
 
@@ -19,7 +19,7 @@ import models.PenguinColor;
  */
 public class TilesPanel extends JPanel {
 
-  private ArrayList<ArrayList<FishTile>> board;
+  private ArrayList<ArrayList<Tile>> board;
   //  private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
   private Image fishImage;
   int tileSize = 60;
@@ -47,14 +47,14 @@ public class TilesPanel extends JPanel {
     Graphics2D g2d = (Graphics2D) g;
 
     for (int i = 0; i < board.size(); ++i) {
-      ArrayList<FishTile> row = board.get(i);
+      ArrayList<Tile> row = board.get(i);
       for (int j = 0; j < row.size(); ++j) {
 
         Polygon polygon = new Polygon();
-        FishTile fishTile = board.get(i).get(j);
-        boolean isEmpty = fishTile.isEmpty();
-        int fishNum = fishTile.getFishNum();
-        Penguin penguin = fishTile.getPenguin();
+        Tile tile = board.get(i).get(j);
+        boolean isEmpty = tile.isEmpty();
+        int fishNum = tile.getFishNum();
+        Penguin penguin = tile.getPenguin();
 
         if (isEmpty) {
           g2d.setColor(Color.gray);
@@ -125,7 +125,7 @@ public class TilesPanel extends JPanel {
    *
    * @param board 2d ArrayList of fish tiles.
    */
-  public void addBoard(ArrayList<ArrayList<FishTile>> board) {
+  public void addBoard(ArrayList<ArrayList<Tile>> board) {
     this.board = board;
   }
 }
