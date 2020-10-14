@@ -12,6 +12,10 @@ import models.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
+
+/** FishGameTest for the FishGameState class.
+ **/
+
 public class FishGameStateTest {
 
   private int width1;

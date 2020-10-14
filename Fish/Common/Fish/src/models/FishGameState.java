@@ -3,6 +3,13 @@ package models;
 import java.util.ArrayList;
 
 
+/** The game state of the fish game tournament. It stores the FishModel, which is a
+ * game board class of the fish game. Board is an ArrayList of ArrayList of Tile that is
+ * taken from the FishModel. playersSortedByAgeAscend is the sorted array of Player by age.
+ * penguinsOnBoard is an empty ArrayList of Penguin that will be populated in the FishGameState.
+ * currentPlayerNum is the current index of the player, which is 0. totalPlayerNum is the total
+ * number of players that will be playing in this tournament.
+ **/
 public class FishGameState {
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
@@ -11,6 +18,11 @@ public class FishGameState {
   private int currentPlayerNum;
   private int totalPlayerNum;
 
+  /** The constructor of the FishGameState takes in a FishModel and an ArrayList of Player.
+   *
+   * @param fishModel is the current model that the tournament will be using.
+   * @param players is the ArrayList of Player that will be playing in the tournament.
+   **/
   public FishGameState(FishModel fishModel, ArrayList<Player> players){
     this.fishModel = fishModel;
     this.board = fishModel.getBoard();
@@ -22,6 +34,13 @@ public class FishGameState {
   }
 
 
+  /** placeInitPenguin places the initial position of the penguin based on the specific
+   * row and column.
+   *
+   * @param targetX the target x position or column of the board.
+   * @param targetY the target y position or the row of the board.
+   * @param penguin the penguin that will be placed.
+   **/
   public void placeInitPenguin(int targetX, int targetY, Penguin penguin){
       Player player = penguin.getPlayer();
       if (isPlayerTurn(player)) {
@@ -34,6 +53,13 @@ public class FishGameState {
   }
 
 
+  /** makeMovement moves an existing penguin on the board to a specified row and column within the
+   * board.
+   *
+   * @param targetX the target x position or column of the board.
+   * @param targetY the target y position or row of the board.
+   * @param penguin the existing penguin on the board.
+   **/
   public void makeMovement(int targetX, int targetY, Penguin penguin){
       Player player = penguin.getPlayer();
       int startX = penguin.getXPos();
@@ -57,6 +83,11 @@ public class FishGameState {
         System.out.println("Error: Not your turn.");
   }
 
+  /**isGameOver determines whether the fish game tournament is over or not. This is determined
+   * only if there are no penguins in the board that can move.
+   *
+   * @return a boolean value that determines if a game is over or not.
+   **/
   public boolean isGameOver(){
       boolean isGameOver = true;
       if(penguinsOnBoard.size() == 0) return false;
@@ -75,7 +106,13 @@ public class FishGameState {
     }
 
 
-
+  /**isPosOutOfBoard is a helper function that checks whether a chosen position is out of the
+   * range of the board or not.
+   *
+   * @param xPos the x position or the column of the board.
+   * @param yPos the y position or the row of the board.
+   * @return a boolean value that determines if a position is out of the board or not.
+   **/
   private boolean isPosOutOfBoard(int xPos, int yPos){
     if(board != null) {
       int boardHeight = board.size();
@@ -88,16 +125,30 @@ public class FishGameState {
     }
   }
 
+  /** isPlayerTurn is a helper function that checks whether the current player should be
+   * the one moving its penguin.
+   *
+   * @param player the player that is trying to move a penguin.
+   * @return boolean value that determines whether its actually a player's turn.
+   **/
   private boolean isPlayerTurn(Player player){
     Player currentPlayer = playersSortedByAgeAscend.get(currentPlayerNum);
     return currentPlayer.equals(player);
   }
 
+  /** nextPlayerTurn is a helper function that increments the currentPlayerNum.
+   **/
   private void nextPlayerTurn(){
     if(currentPlayerNum >= totalPlayerNum - 1) currentPlayerNum = 0;
     else ++currentPlayerNum;
   }
 
+  /** updatePenguinPos is a helper function that updates the penguin's position within the board.
+   *
+   * @param targetX the x position or the column of the board.
+   * @param targetY the y position or the row of the board.
+   * @param penguin the penguin that is being updated.
+   **/
   private void updatePenguinPos(int targetX, int targetY, Penguin penguin){
 
     Tile targetTile = board.get(targetY).get(targetX);
@@ -119,6 +170,11 @@ public class FishGameState {
 
   }
 
+  /** updatePlayerFish is helper function that adds the total number of fish gathered by a penguin.
+   *
+   * @param targetTile the tile that the penguin is moving to.
+   * @param penguin the moving penguin.
+   **/
   private void updatePlayersFish(Tile targetTile, Penguin penguin) {
     Player player = penguin.getPlayer();
     int fishNum = targetTile.getFishNum();

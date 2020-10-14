@@ -37,6 +37,7 @@ public class FishModel {
    */
   public FishModel(int width, int height, int minOneFishNumOrFishNumOnTiles, boolean isRandomized) {
 
+
     board = new ArrayList<ArrayList<Tile>>();
 
     for (int i = 0; i < height; ++i) {
@@ -112,26 +113,36 @@ public class FishModel {
 
 
 
+
   /**
    * Takes in a x position and a y position, which will be used for emptying the tile in the board,
    * setting its isEmpty attribute to true.
    *  @param xPos x position of the tile to be emptied.
    * @param yPos y position of the tile to be emptied.
+   * @throws IllegalArgumentException throw an exception when the input argument is invalid.
    */
-  public void emptyTile(int xPos, int yPos) {
-    //when the game board is not empty
+  public void emptyTile(int xPos, int yPos) throws IllegalArgumentException {
+    inputPosChecking(xPos, yPos);
+    board.get(yPos).get(xPos).setEmpty();
+  }
+
+  /**
+   * If the board is empty or the input tile position is out of the board, throw the exception.
+   *
+   * @param xPos x position of the tile.
+   * @param yPos y position of the tile.
+   * @throws IllegalArgumentException If the board is empty or the input tile position is
+   * out of the board, throw the exception.
+   */
+  private void inputPosChecking(int xPos, int yPos) throws IllegalArgumentException {
     if (board != null) {
       int boardWidth = board.get(0).size();
       int boardHeight = board.size();
-
-      if (xPos > -1 && xPos < boardWidth && yPos > -1 && yPos < boardHeight) {
-        board.get(yPos).get(xPos).setEmpty();
-        System.out.println("Emptied.");
-      } else {
-        System.out.println("Error: Invalid position of a tile.");
+      if (xPos <0 || xPos >= boardWidth || yPos <0 || yPos >= boardHeight) {
+        throw new IllegalArgumentException("Error: Invalid position of a tile.");
       }
     } else {
-      System.out.println("Error: Game board is empty.");
+      throw new IllegalArgumentException("Error: Game board is empty.");
     }
   }
 
@@ -144,10 +155,11 @@ public class FishModel {
    * @param startY y position of the starting tile.
    * @return a arraylist of FishTiles on the board that the current tile can move to.
    */
-  public ArrayList<Tile> getPossibleMoves(int startX, int startY){
+  public ArrayList<Tile> getPossibleMoves(int startX, int startY) throws IllegalArgumentException {
+
+    inputPosChecking(startX, startY);
     ArrayList<Tile> possibleMoveTiles = new ArrayList<Tile>();
 
-    if(board != null) {
       int boardHeight = board.size();
       int boardWidth = board.get(0).size();
 
@@ -232,7 +244,7 @@ public class FishModel {
         } else break;
       }
 
-    }
+
 
     return possibleMoveTiles;
   }
