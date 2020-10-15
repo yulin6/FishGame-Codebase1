@@ -69,7 +69,7 @@
   </properties>
   <testcase name="getAge" classname="PlayerTest" time="0"/>
   <testcase name="setAge" classname="PlayerTest" time="0"/>
-  <testcase name="getTotalFish" classname="PlayerTest" time="0"/>
+  <testcase name="getTotalFish" classname="PlayerTest" time="0.001"/>
   <testcase name="addTotalFish" classname="PlayerTest" time="0"/>
   <testcase name="getPenguinColor" classname="PlayerTest" time="0"/>
   <testcase name="setPenguinColor" classname="PlayerTest" time="0"/>
