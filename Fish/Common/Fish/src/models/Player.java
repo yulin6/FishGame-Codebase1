@@ -10,17 +10,19 @@ public class Player {
   private int age;
   private int totalFish;
   private PenguinColor penguinColor;
-  private ArrayList<Penguin> penguins;
+//  private ArrayList<Penguin> penguins;
 
   /**
    * Constructor of the Player class that takes in the age of player.
    *
    * @param age the age of the playing player.
+   * @param penguinColor the color of their penguins color.
    **/
-  public Player(int age){
+  public Player(int age, PenguinColor penguinColor){
     this.age = age;
-    totalFish = 0;
-    penguins = new ArrayList<Penguin>();
+    this.totalFish = 0;
+    this.penguinColor = penguinColor;
+//    penguins = new ArrayList<Penguin>();
   }
 
   /**
@@ -72,21 +74,21 @@ public class Player {
     this.penguinColor = penguinColor;
   }
 
-  /**
-   * Gets the penguins controlled by a player.
-   *
-   * @return the ArrayList of penguins controlled by a player.
-   **/
-  public ArrayList<Penguin> getPenguins() {
-    return penguins;
-  }
-
-  /**
-   * Adds a penguin to the ArrayList of penguins controlled by a player.
-   **/
-  public void addPenguin(Penguin penguin) {
-    this.penguins.add(penguin);
-  }
+//  /**
+//   * Gets the penguins controlled by a player.
+//   *
+//   * @return the ArrayList of penguins controlled by a player.
+//   **/
+//  public ArrayList<Penguin> getPenguins() {
+//    return penguins;
+//  }
+//
+//  /**
+//   * Adds a penguin to the ArrayList of penguins controlled by a player.
+//   **/
+//  public void addPenguin(Penguin penguin) {
+//    this.penguins.add(penguin);
+//  }
 
 
 

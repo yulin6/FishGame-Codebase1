@@ -5,6 +5,7 @@ import models.FishModel;
 import models.Penguin;
 import models.PenguinColor;
 import models.Player;
+import models.Tile;
 import views.FishView;
 
 /**
@@ -20,17 +21,6 @@ public class Main {
    * @param args string of input arguments.
    */
   public static void main(String[] args) {
-//
-//    Player player = new Player(4);
-//    ArrayList<Player> players = new ArrayList<Player>();
-//    Penguin penguin = new Penguin(player, PenguinColor.BLACK);
-//    player.addPenguin(penguin);
-//    players.add(player);
-//    Player player1 = player;
-//    System.out.println(player1.getPenguins().get(0).getColor());
-//    penguin.setColor(PenguinColor.RED);
-//    System.out.println(player.getPenguins().get(0).getColor());
-//    System.out.println(player1.getPenguins().get(0).getColor());
 
     Scanner scanner = new Scanner(System.in);
     createFishModel(scanner);
@@ -149,7 +139,11 @@ public class Main {
           int xPos = Integer.parseInt(xPosStr);
           int yPos = Integer.parseInt(yPosStr);
           argsList = new ArrayList<String>();
-          fishModel.emptyTile(xPos, yPos);
+
+          Penguin penguin = new Penguin(PenguinColor.BROWN);
+          Tile tile = fishModel.getBoard().get(yPos).get(xPos);
+          tile.setPenguin(penguin);
+//          fishModel.emptyTile(xPos, yPos);
 
         } else {
           argsList = new ArrayList<String>();

@@ -102,7 +102,7 @@ public class TilesPanel extends JPanel {
 
             if(penguinColor.equals(red)) g2d.setColor(Color.red);
             else if (penguinColor.equals(white)) g2d.setColor(Color.white);
-            else if (penguinColor.equals(brown)) g2d.setColor(Color.GRAY);
+            else if (penguinColor.equals(brown)) g2d.setColor(new Color(102,76,40));
             else if (penguinColor.equals(black)) g2d.setColor(Color.black);
 
             int xPos = mostLeftX + 55;

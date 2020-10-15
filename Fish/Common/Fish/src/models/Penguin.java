@@ -5,7 +5,7 @@ package models;
  */
 public class Penguin {
 
-  Player player;
+//  Player player;
   PenguinColor color;
   int xPos;
   int yPos;
@@ -15,14 +15,14 @@ public class Penguin {
    *
    * @param color color of the penguin.
    */
-  public Penguin(Player player, PenguinColor color) {
-    this.player = player;
+  public Penguin( PenguinColor color) {
+//    this.player = player;
     this.color = color;
   }
 
-  public Player getPlayer() {
-    return player;
-  }
+//  public Player getPlayer() {
+//    return player;
+//  }
 
   /**
    * get the color of the penguin.
