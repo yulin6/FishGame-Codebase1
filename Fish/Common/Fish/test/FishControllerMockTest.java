@@ -31,24 +31,24 @@ public class FishControllerMockTest {
     fishControllerMock = new FishControllerMock(fishModel, fishView);
   }
 
-//  @Test
-//  public void generateView() {
-//    /** Code Source of converting system.out.println to String:
-//     *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
-//     */
-//    // Create a stream to hold the output
-//    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//    PrintStream ps = new PrintStream(baos);
-//    // IMPORTANT: Save the old System.out!
-//    PrintStream old = System.out;
-//    // Tell Java to use your special stream
-//    System.setOut(ps);
-//    // Print
-//    fishControllerMock.generateView();
-//    // Put things back
-//    System.out.flush();
-//    System.setOut(old);
-//
-//    assertEquals("View generated.\n", baos.toString());
-//  }
+  @Test
+  public void generateView() {
+    /** Code Source of converting system.out.println to String:
+     *  https://stackoverflow.com/questions/8708342/redirect-console-output-to-string-in-java
+     */
+    // Create a stream to hold the output
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream ps = new PrintStream(baos);
+    // IMPORTANT: Save the old System.out!
+    PrintStream old = System.out;
+    // Tell Java to use your special stream
+    System.setOut(ps);
+    // Print
+    fishControllerMock.generateView();
+    // Put things back
+    System.out.flush();
+    System.setOut(old);
+
+    assertEquals("View generated.\n", baos.toString());
+  }
 }

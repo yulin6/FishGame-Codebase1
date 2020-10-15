@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="FishGameStateTest" time="0.01" tests="24" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="FishGameStateTest" time="0.017" tests="24" errors="0" skipped="0" failures="0">
   <properties>
     <property name="socksProxyHost" value="127.0.0.1"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -67,20 +67,20 @@
     <property name="java.class.version" value="56.0"/>
     <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="placePenguinFailed" classname="FishGameStateTest" time="0.002"/>
+  <testcase name="placePenguinSucceed" classname="FishGameStateTest" time="0.001"/>
+  <testcase name="placePenguinSucceed1" classname="FishGameStateTest" time="0"/>
+  <testcase name="placePenguinFailed" classname="FishGameStateTest" time="0"/>
   <testcase name="placePenguinFailed1" classname="FishGameStateTest" time="0"/>
   <testcase name="placePenguinFailed2" classname="FishGameStateTest" time="0"/>
   <testcase name="placePenguinFailed3" classname="FishGameStateTest" time="0"/>
-  <testcase name="placePenguinFailed4" classname="FishGameStateTest" time="0"/>
-  <testcase name="placePenguinFailed5" classname="FishGameStateTest" time="0.001"/>
+  <testcase name="placePenguinFailed4" classname="FishGameStateTest" time="0.001"/>
+  <testcase name="placePenguinFailed5" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementSucceed" classname="FishGameStateTest" time="0"/>
-  <testcase name="makeMovementSucceed1" classname="FishGameStateTest" time="0"/>
+  <testcase name="makeMovementSucceed1" classname="FishGameStateTest" time="0.001"/>
   <testcase name="makeMovementSucceed3" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementFailed" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementFailed1" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementFailed2" classname="FishGameStateTest" time="0.001"/>
-  <testcase name="placePenguinSucceed" classname="FishGameStateTest" time="0"/>
-  <testcase name="placePenguinSucceed1" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementFailed3" classname="FishGameStateTest" time="0"/>
   <testcase name="makeMovementFailed4" classname="FishGameStateTest" time="0"/>
   <testcase name="gameNotOver" classname="FishGameStateTest" time="0.001"/>
@@ -89,6 +89,6 @@
   <testcase name="gameOver" classname="FishGameStateTest" time="0"/>
   <testcase name="isPenguinOwner" classname="FishGameStateTest" time="0"/>
   <testcase name="isPenguinOwner1" classname="FishGameStateTest" time="0"/>
-  <testcase name="notPenguinOwner" classname="FishGameStateTest" time="0"/>
+  <testcase name="notPenguinOwner" classname="FishGameStateTest" time="0.001"/>
   <testcase name="notPenguinOwner2" classname="FishGameStateTest" time="0"/>
 </testsuite>
