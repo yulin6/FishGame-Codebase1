@@ -69,6 +69,6 @@
   <testcase classname="PlayerTest" name="setAge" time="0"/>
   <testcase classname="PlayerTest" name="addTotalFish" time="0"/>
   <testcase classname="PlayerTest" name="getTotalFish" time="0"/>
-  <testcase classname="PlayerTest" name="getPenguinColor" time="0"/>
-  <testcase classname="PlayerTest" name="setPenguinColor" time="0.001"/>
+  <testcase classname="PlayerTest" name="getPenguinColor" time="0.001"/>
+  <testcase classname="PlayerTest" name="setPenguinColor" time="0"/>
 </testsuite>

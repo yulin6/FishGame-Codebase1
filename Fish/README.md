@@ -77,7 +77,7 @@ To run single/specific test(s):
 3. Locate the test files where you can run single tests or the entire classes of tests.
 
 #### Test Result:
-Tests run: 43, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 42, Failures: 0, Errors: 0, Skipped: 0
 
 ## Milestones
 ### 2 — The Game Pieces

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="24" failures="0" name="FishGameStateTest" time="0.007" errors="0" skipped="0">
+<testsuite tests="24" failures="0" name="FishGameStateTest" time="0.006" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="12.0.1+12"/>
@@ -72,21 +72,21 @@
   <testcase classname="FishGameStateTest" name="placePenguinSucceed1" time="0"/>
   <testcase classname="FishGameStateTest" name="placePenguinSucceed" time="0"/>
   <testcase classname="FishGameStateTest" name="makeMovementSucceed" time="0.002"/>
-  <testcase classname="FishGameStateTest" name="makeMovementFailed" time="0"/>
+  <testcase classname="FishGameStateTest" name="makeMovementFailed" time="0.001"/>
   <testcase classname="FishGameStateTest" name="makeMovementSucceed1" time="0"/>
-  <testcase classname="FishGameStateTest" name="makeMovementSucceed3" time="0.001"/>
-  <testcase classname="FishGameStateTest" name="placePenguinFailed1" time="0"/>
+  <testcase classname="FishGameStateTest" name="makeMovementSucceed3" time="0"/>
+  <testcase classname="FishGameStateTest" name="placePenguinFailed1" time="0.001"/>
   <testcase classname="FishGameStateTest" name="placePenguinFailed2" time="0"/>
   <testcase classname="FishGameStateTest" name="placePenguinFailed3" time="0"/>
-  <testcase classname="FishGameStateTest" name="placePenguinFailed4" time="0.001"/>
+  <testcase classname="FishGameStateTest" name="placePenguinFailed4" time="0"/>
   <testcase classname="FishGameStateTest" name="placePenguinFailed5" time="0"/>
   <testcase classname="FishGameStateTest" name="notPenguinOwner" time="0.001"/>
   <testcase classname="FishGameStateTest" name="makeMovementFailed1" time="0"/>
-  <testcase classname="FishGameStateTest" name="makeMovementFailed2" time="0.001"/>
-  <testcase classname="FishGameStateTest" name="makeMovementFailed3" time="0"/>
+  <testcase classname="FishGameStateTest" name="makeMovementFailed2" time="0"/>
+  <testcase classname="FishGameStateTest" name="makeMovementFailed3" time="0.001"/>
   <testcase classname="FishGameStateTest" name="makeMovementFailed4" time="0"/>
   <testcase classname="FishGameStateTest" name="gameNotOver1" time="0"/>
-  <testcase classname="FishGameStateTest" name="gameNotOver2" time="0.001"/>
+  <testcase classname="FishGameStateTest" name="gameNotOver2" time="0"/>
   <testcase classname="FishGameStateTest" name="gameNotOver" time="0"/>
   <testcase classname="FishGameStateTest" name="isPenguinOwner" time="0"/>
 </testsuite>

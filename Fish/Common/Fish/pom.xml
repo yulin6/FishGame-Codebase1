@@ -15,7 +15,6 @@
         <configuration>
           <source>8</source>
           <target>8</target>
-          <fork>false</fork>
         </configuration>
       </plugin>
     </plugins>
