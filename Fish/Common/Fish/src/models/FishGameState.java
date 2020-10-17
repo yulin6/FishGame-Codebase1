@@ -37,7 +37,8 @@ public class FishGameState {
   }
 
   /**
-   * get all the penguins on the board from the current game state
+   * get all the penguins on the board from the current game state.
+   *
    * @return arrayList of penguins
    */
   public ArrayList<Penguin> getPenguinsOnBoard() {

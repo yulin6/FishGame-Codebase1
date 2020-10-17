@@ -4,14 +4,24 @@ Under each of the following elements below, indicate below where your
 TAs can find:
 
 - the data description of states, including an interpretation:
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/src/models/FishGameState.java#L6-L37>
+   - This is the purpose statement and the constructor of our FishGameState class, which shows how a game state is constructed and what variables it has.
 
 - a signature/purpose statement of functionality that creates states 
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/src/models/FishGameState.java#L23-L37>
+   - This is the constructor of our FishGameState class, it takes in a model, containing the game board, and a list of players for constructing a game state.
 
 - unit tests for functionality of taking a turn 
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/test/FishGameStateTest.java#L222-L237>
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/test/FishGameStateTest.java#L135-L142>
+   - Since the functionality of taking a turn is not required in the assignment page, so we set our isPlayerTurn() to be private, which is only being used for the contract checking of placing penguin and making movements. Therefore, the only unit tests of the functionality are the tests above.
 
 - unit tests for functionality of placing an avatar 
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/test/FishGameStateTest.java#L60-L142>
 
 - unit tests for functionality of final-state test
+   - <https://github.ccs.neu.edu/CS4500-F20/annetta/blob/6afeff173cbd6631f486a87e94fdf55b0990d4d0/Fish/Common/Fish/test/FishGameStateTest.java#L303-L333>
+   - These are the methods for checking if the game is over, which means no penguin can move.
 
 The ideal feedback is a GitHub perma-link to the range of lines in specific
 file or a collection of files for each of the above bullet points.
@@ -33,13 +43,10 @@ the specified code snippets answers the request.
 
 Select ONE of the following choices by deleting the other two options.
 
-A) My partner and I contributed equally to this assignment. 
 
 B) My partner and I contributed not *exactly* equally, but *roughly*
    equally to this assignment.
 
-C) My partner and I did not contribute roughly equally to this
-   assignment; one of us contributed significantly more.
 
 If you chose C, please give some further explanation below describing
 the state of your partnership and whether and how you have been or are
