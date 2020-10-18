@@ -1,7 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import models.FishGameState;
+import models.FishState;
 import models.FishModel;
 import models.Penguin;
 import models.PenguinColor;
@@ -11,9 +11,9 @@ import org.junit.Test;
 
 
 /**
- * FishGameTest for the FishGameState class.
+ * FishGameTest for the FishState class.
  **/
-public class FishGameStateTest {
+public class FishStateTest {
 
   private int width1;
   private int height1;
@@ -28,8 +28,8 @@ public class FishGameStateTest {
   private Player playerWhite;
   private ArrayList<Player> twoPlayers;
   private ArrayList<Player> threePlayers;
-  private FishGameState gameState1;
-  private FishGameState gameState2;
+  private FishState gameState1;
+  private FishState gameState2;
 
 
   @Before
@@ -53,8 +53,8 @@ public class FishGameStateTest {
     threePlayers.add(playerRed);
     threePlayers.add(playerBlack);
     threePlayers.add(playerWhite);
-    gameState1 = new FishGameState(fourByEightFishModel, threePlayers);
-    gameState2 = new FishGameState(oneByThreeFishModel, twoPlayers);
+    gameState1 = new FishState(fourByEightFishModel, threePlayers);
+    gameState2 = new FishState(oneByThreeFishModel, twoPlayers);
   }
 
   @Test

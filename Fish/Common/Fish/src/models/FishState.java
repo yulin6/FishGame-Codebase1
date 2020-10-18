@@ -7,11 +7,11 @@ import java.util.ArrayList;
  * The game state of the fish game tournament. It stores the FishModel, which is a game board class
  * of the fish game. Board is an ArrayList of ArrayList of Tile that is taken from the FishModel.
  * playersSortedByAgeAscend is the sorted array of Player by age. penguinsOnBoard is an empty
- * ArrayList of Penguin that will be populated in the FishGameState. currentPlayerNum is the current
+ * ArrayList of Penguin that will be populated in the FishState. currentPlayerNum is the current
  * index of the player, which is 0. totalPlayerNum is the total number of players that will be
  * playing in this tournament.
  **/
-public class FishGameState {
+public class FishState {
 
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
@@ -21,19 +21,22 @@ public class FishGameState {
   private int totalPlayerNum;
 
   /**
-   * The constructor of the FishGameState takes in a FishModel and an ArrayList of Player.
+   * The constructor of the FishState takes in a FishModel and an ArrayList of Player.
    *
    * @param fishModel is the current model that the tournament will be using.
    * @param players is the ArrayList of Player that will be playing in the tournament.
    **/
-  public FishGameState(FishModel fishModel, ArrayList<Player> players) {
+  public FishState(FishModel fishModel, ArrayList<Player> players) {
+    this.totalPlayerNum = players.size();
+    if (totalPlayerNum < 2 || totalPlayerNum > 4){
+      throw new IllegalArgumentException("Error: Invalid number of players.");
+    }
     this.fishModel = fishModel;
     this.board = fishModel.getBoard();
     players.sort((p1, p2) -> Integer.valueOf(p1.getAge()).compareTo(p2.getAge()));
     this.playersSortedByAgeAscend = players;
     this.penguinsOnBoard = new ArrayList<Penguin>();
     this.currentPlayerNum = 0;
-    this.totalPlayerNum = players.size();
   }
 
   /**
@@ -43,6 +46,24 @@ public class FishGameState {
    */
   public ArrayList<Penguin> getPenguinsOnBoard() {
     return penguinsOnBoard;
+  }
+
+
+  public boolean areAllPenguinsPlaced() {
+    int penguinNumEachPlayer = 6 - totalPlayerNum;
+    int redNum = 0;
+    int blackNum = 0;
+    int whiteNum = 0;
+    int brownNum = 0;
+    for (Penguin penguin : penguinsOnBoard) {
+      if (penguin.getColor().equals(PenguinColor.RED)) ++redNum;
+      else if (penguin.getColor().equals(PenguinColor.BLACK)) ++blackNum;
+      else if (penguin.getColor().equals(PenguinColor.WHITE)) ++whiteNum;
+      else if (penguin.getColor().equals(PenguinColor.BROWN)) ++brownNum;
+    }
+
+    return redNum == penguinNumEachPlayer && blackNum == penguinNumEachPlayer
+        && whiteNum == penguinNumEachPlayer && brownNum == penguinNumEachPlayer;
   }
 
 
@@ -57,6 +78,7 @@ public class FishGameState {
    * @throws IllegalArgumentException when its now the player's turn or the target position is
    * out of the board.
    **/
+  
   public void placeInitPenguin(int targetX, int targetY, Player player)
       throws IllegalArgumentException {
 //      Player player = penguin.getPlayer();
