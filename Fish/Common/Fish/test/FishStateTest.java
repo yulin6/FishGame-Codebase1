@@ -11,7 +11,7 @@ import org.junit.Test;
 
 
 /**
- * FishGameTest for the FishState class.
+ * FishTest for the FishState class.
  **/
 public class FishStateTest {
 

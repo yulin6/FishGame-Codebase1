@@ -27,6 +27,18 @@ public class FishState {
    * @param players is the ArrayList of Player that will be playing in the tournament.
    **/
   public FishState(FishModel fishModel, ArrayList<Player> players) {
+    setUpState(fishModel, players);
+    this.penguinsOnBoard = new ArrayList<Penguin>();
+    this.currentPlayerNum = 0;
+  }
+
+  private FishState(FishModel fishModel, ArrayList<Player> players, ArrayList<Penguin> penguinsOnBoard, int currentPlayerNum){
+    setUpState(fishModel, players);
+    this.penguinsOnBoard = penguinsOnBoard;
+    this.currentPlayerNum = currentPlayerNum;
+  }
+
+  public void setUpState(FishModel fishModel, ArrayList<Player> players) {
     this.totalPlayerNum = players.size();
     if (totalPlayerNum < 2 || totalPlayerNum > 4){
       throw new IllegalArgumentException("Error: Invalid number of players.");
@@ -35,8 +47,6 @@ public class FishState {
     this.board = fishModel.getBoard();
     players.sort((p1, p2) -> Integer.valueOf(p1.getAge()).compareTo(p2.getAge()));
     this.playersSortedByAgeAscend = players;
-    this.penguinsOnBoard = new ArrayList<Penguin>();
-    this.currentPlayerNum = 0;
   }
 
   /**
@@ -78,8 +88,8 @@ public class FishState {
    * @throws IllegalArgumentException when its now the player's turn or the target position is
    * out of the board.
    **/
-  
-  public void placeInitPenguin(int targetX, int targetY, Player player)
+
+  public FishState placeInitPenguin(int targetX, int targetY, Player player)
       throws IllegalArgumentException {
 //      Player player = penguin.getPlayer();
     PenguinColor penguinColor = player.getPenguinColor();
@@ -89,6 +99,7 @@ public class FishState {
         updatePenguinPos(targetX, targetY, penguin);
         addPlayerTotalFish(targetX, targetY, player);
         nextPlayerTurn();
+        return new FishState(fishModel, playersSortedByAgeAscend, penguinsOnBoard, currentPlayerNum);
       } else {
         throw new IllegalArgumentException("Error: Target position is out of board.");
       }
@@ -111,7 +122,7 @@ public class FishState {
    * of the penguin, the target position is out of the board or the target position is invalid to
    * move to.
    **/
-  public void makeMovement(int targetX, int targetY, Penguin penguin, Player player)
+  public FishState makeMovement(int targetX, int targetY, Penguin penguin, Player player)
       throws IllegalArgumentException {
 
     int startX = penguin.getXPos();
@@ -130,6 +141,7 @@ public class FishState {
             startTile.setEmpty(); //makes the tile a hole when the penguin leaves it.
             startTile.setPenguin(null);
             nextPlayerTurn();
+            return new FishState(fishModel, playersSortedByAgeAscend, penguinsOnBoard, currentPlayerNum);
           } else {
             throw new IllegalArgumentException("Error: Invalid position to move to.");
           }
