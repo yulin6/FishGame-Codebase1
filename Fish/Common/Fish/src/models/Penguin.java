@@ -6,9 +6,10 @@ package models;
 public class Penguin {
 
 //  Player player;
-  PenguinColor color;
-  int xPos;
-  int yPos;
+  private PenguinColor color;
+  private long id;
+  private int xPos;
+  private int yPos;
 
   /**
    * Create a penguin based on the input playerId and penguinColor.
@@ -18,11 +19,17 @@ public class Penguin {
   public Penguin( PenguinColor color) {
 //    this.player = player;
     this.color = color;
+    this.id = System.nanoTime();
   }
 
-//  public Player getPlayer() {
-//    return player;
-//  }
+  private Penguin(){
+
+  }
+
+
+  public long getId() {
+    return id;
+  }
 
   /**
    * get the color of the penguin.

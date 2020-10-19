@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 
 public class FishTree  {
 
+
+
   private FishState fishState;
   private ArrayList<FishTree> states;
 
@@ -15,11 +17,21 @@ public class FishTree  {
       throw new IllegalArgumentException("Error: incomplete number of penguins for each player");
     }
     this.fishState = fishState;
-
+    states = new ArrayList<FishTree>();
+    generateTree();
   }
 
   public void generateTree(){
 
+
+  }
+
+  public FishState getFishState() {
+    return fishState;
+  }
+
+  public ArrayList<FishTree> getStates() {
+    return states;
   }
 
 

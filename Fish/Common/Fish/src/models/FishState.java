@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * The game state of the fish game tournament. It stores the FishModel, which is a game board class
  * of the fish game. Board is an ArrayList of ArrayList of Tile that is taken from the FishModel.
  * playersSortedByAgeAscend is the sorted array of Player by age. penguinsOnBoard is an empty
- * ArrayList of Penguin that will be populated in the FishState. currentPlayerNum is the current
+ * ArrayList of Penguin that will be populated in the FishState. currentPlayerIndex is the current
  * index of the player, which is 0. totalPlayerNum is the total number of players that will be
  * playing in this tournament.
  **/
@@ -16,10 +16,9 @@ public class FishState {
 
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
-  private ArrayList<Position> holes;
   private ArrayList<Player> playersSortedByAgeAscend;
   private ArrayList<Penguin> penguinsOnBoard;
-  private int currentPlayerNum;
+  private int currentPlayerIndex;
   private int totalPlayerNum;
 
   /**
@@ -31,16 +30,33 @@ public class FishState {
   public FishState(FishModel fishModel, ArrayList<Player> players) {
     setUpState(fishModel, players);
     this.penguinsOnBoard = new ArrayList<Penguin>();
-    this.currentPlayerNum = 0;
+    this.currentPlayerIndex = 0;
   }
 
+  /**
+   * The private constructor is used for making copy of the current state and use it as the
+   * next state. The fishModel, players, penguinsOnBoard will be exactly the same when creating
+   * the state, but the ideal currentPlayerIndex should be the next player index.
+   *
+   * @param fishModel is the model copy for the state.
+   * @param players the array list copy of players for the state.
+   * @param penguinsOnBoard the array list copy of penguins on board for the state.
+   * @param currentPlayerIndex the current player index for the state.
+   */
   private FishState(FishModel fishModel, ArrayList<Player> players,
-      ArrayList<Penguin> penguinsOnBoard, int currentPlayerNum) {
+      ArrayList<Penguin> penguinsOnBoard, int currentPlayerIndex) {
     setUpState(fishModel, players);
     this.penguinsOnBoard = penguinsOnBoard;
-    this.currentPlayerNum = currentPlayerNum;
+    this.currentPlayerIndex = currentPlayerIndex;
   }
 
+  /**
+   * A helper method which would be used in the constructors, it checks if the number of players
+   * is valid, and then assign the variables and sort the players list of their age.
+   *
+   * @param fishModel is the model copy for the state.
+   * @param players the array list copy of players for the state.
+   */
   private void setUpState(FishModel fishModel, ArrayList<Player> players) {
     this.totalPlayerNum = players.size();
     if (totalPlayerNum < 2 || totalPlayerNum > 4) {
@@ -62,10 +78,40 @@ public class FishState {
   }
 
 
+  /**
+   * Getter method of the the board, which return a 2d array list of tiles.
+   *
+   * @return a 2d array list of tiles represents the board.
+   */
   public ArrayList<ArrayList<Tile>> getBoard() {
     return board;
   }
 
+  /**
+   * Get the players list, sorted by age, in the current state.
+   *
+   * @return array list of player in the state, which is sorted by age.
+   */
+  public ArrayList<Player> getPlayersSortedByAgeAscend() {
+    return playersSortedByAgeAscend;
+  }
+
+  /**
+   * Get the index of the player who is allowed to make action. The index is used for finding
+   * the actual Player instance from the playersSortedByAgeAscend list.
+   *
+   * @return the index of the player who is allowed to make action.
+   */
+  public int getCurrentPlayerIndex() {
+    return currentPlayerIndex;
+  }
+
+  /**
+   * Check whether can any new penguins be placed on the board, the valid player number should
+   * be 2 to 4, and the valid number of penguin in each color should be 6 minus the player number.
+   *
+   * @return boolean represents whether all penguins are placed.
+   */
   public boolean areAllPenguinsPlaced() {
     int penguinNumEachPlayer = 6 - totalPlayerNum;
     int redNum = 0;
@@ -88,6 +134,14 @@ public class FishState {
         && whiteNum == penguinNumEachPlayer && brownNum == penguinNumEachPlayer;
   }
 
+  /**
+   * Make a copy of the variables in the current state, and then construct a new state with
+   * these variables, the only difference is the currentPlayerIndex, which will the next index
+   * of the players list when constructing the state copy.
+   *
+   * @return a copy of the the current state, its currentPlayerIndex will be the next index
+   * of the players list
+   */
   private FishState createStateCopy() {
     Kryo kryo = new Kryo();
     kryo.setRegistrationRequired(false);
@@ -98,29 +152,30 @@ public class FishState {
 //      kryo.register(Player.class);
     ArrayList<Player> playersCopy = kryo.copy(playersSortedByAgeAscend);
     ArrayList<Penguin> penguinsOnBoardCopy = kryo.copy(penguinsOnBoard);
-    int nextPlayerNum = getNextPlayerNum();
+    int nextPlayerIndex = getNextPlayerIndex();
     FishState fishStateCopy = new FishState(modelCopy, playersCopy, penguinsOnBoardCopy,
-        nextPlayerNum);
-    FishState tmp = fishStateCopy;
+        nextPlayerIndex);
     return fishStateCopy;
   }
-
 
   /**
    * placeInitPenguin places the initial position of the penguin based on the specific row and
    * column. A player should only be able to place a penguin when its their turn, and the target
-   * position is in side of the board.
+   * position is in side of the board. The placement of penguin will be shown in the returned
+   * next state.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or the row of the board.
    * @param player the player who is going to place their penguin onto board.
+   * @return FishState the next state after making the placement of penguin.
    * @throws IllegalArgumentException when its now the player's turn or the target position is out
    * of the board.
    **/
 
+
   public FishState placeInitPenguin(int targetX, int targetY, Player player)
       throws IllegalArgumentException {
-    System.out.println(currentPlayerNum);
+//    System.out.println(currentPlayerNum);
     if (!isPlayerTurn(player)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
@@ -136,21 +191,26 @@ public class FishState {
     Penguin penguin = new Penguin(penguinColor);
     FishState nextState = createStateCopy();
     nextState.updatePenguinPos(targetX, targetY, penguin);
-    nextState.addPlayerTotalFish(targetX, targetY, player);
+    nextState.addPlayerTotalFish(targetX, targetY, player.getId());
 
     return nextState;
   }
 
 
+
+
+
   /**
    * makeMovement moves an existing penguin on the board to a specified row and column within the
    * board. A player should only be able to move when its their turn, the penguin is theirs, and the
-   * target position is in side of the board.
+   * target position is in side of the board. The movement of penguin will be shown in the returned
+   * next state.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or row of the board.
    * @param penguin the existing penguin on the board.
    * @param player the player who is going to move a penguin.
+   * @return FishState the next state after the movement is made.
    * @throws IllegalArgumentException when its now the player's turn, the player is not the owner of
    * the penguin, the target position is out of the board or the target position is invalid to move
    * to.
@@ -180,14 +240,19 @@ public class FishState {
 
     FishState nextState = createStateCopy();
     nextState.updatePenguinPos(targetX, targetY, penguin);
-    nextState.addPlayerTotalFish(targetX, targetY, player);
+    nextState.addPlayerTotalFish(targetX, targetY, player.getId());
     nextState.emptyStartTile(startX, startY);
     return nextState;
 
   }
 
+  /**
+   * Set the attributes, isEmpty and Penguin, of the tile to true and null.
+   *
+   * @param startX x position of the start tile.
+   * @param startY y position of the start tile.
+   */
   private void emptyStartTile(int startX, int startY) {
-//    ArrayList<ArrayList<Tile>> board = nextState.getBoard();
     Tile startTile = board.get(startY).get(startX);
     startTile.setEmpty(); //makes the tile a hole when the penguin leaves it.
     startTile.setPenguin(null);
@@ -262,23 +327,24 @@ public class FishState {
    * @return boolean value that determines whether its actually a player's turn.
    **/
   private boolean isPlayerTurn(Player player) {
-    int playerNum = playersSortedByAgeAscend.indexOf(player);
-//    Player currentPlayer = playersSortedByAgeAscend.get(currentPlayerNum);
-    return currentPlayerNum == playerNum;
+    long playerId = player.getId();
+    long currentPlayerId = playersSortedByAgeAscend.get(currentPlayerIndex).getId();
+    return currentPlayerId == playerId;
   }
 
   /**
-   * nextPlayerTurn is a helper function that increments the currentPlayerNum.
+   * nextPlayerTurn is a helper method that increments the currentPlayerIndex.
    **/
-  private int getNextPlayerNum() {
-    int nextPlayerNum = currentPlayerNum;
-    if (nextPlayerNum >= totalPlayerNum - 1) {
-      nextPlayerNum = 0;
+  private int getNextPlayerIndex() {
+    int nextPlayerIndex = currentPlayerIndex;
+    if (nextPlayerIndex >= totalPlayerNum - 1) {
+      nextPlayerIndex = 0;
     } else {
-      ++nextPlayerNum;
+      ++nextPlayerIndex;
     }
-    return nextPlayerNum;
+    return nextPlayerIndex;
   }
+
 
   /**
    * updatePenguinPos is a helper function that updates the penguin's position within the board.
@@ -295,11 +361,13 @@ public class FishState {
     boolean alreadyHadPenguin = targetTile.getPenguin() != null;
 
     if (!alreadyHadPenguin) {
-      if (!penguinsOnBoard.contains(penguin)) {
+      long penguinId = penguin.getId();
+      if (!alreadyOnBoard(penguinId)) {
         penguin.setXPos(targetX);
         penguin.setYPos(targetY);
-        penguinsOnBoard.add(penguin);
+        penguinsOnBoard.add(penguin); //
       } else {
+        penguin = getPenguinById(penguinId); //updating the penguin in the nextState.
         penguin.setXPos(targetX);
         penguin.setYPos(targetY);
       }
@@ -311,20 +379,59 @@ public class FishState {
   }
 
   /**
+   * a helper method that checks if the penguin already exist in the penguinsOnBoard list.
+   *
+   * @param penguinId the id that distinguishes the penguin
+   * @return whether the penguin already exist in the penguinsOnBoard list.
+   */
+  private boolean alreadyOnBoard(long penguinId){
+    for (Penguin penguin : penguinsOnBoard){
+      if(penguin.getId() == penguinId){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * a helpter method that find the penguin whose id matches the the given penguinId from
+   * the playersSortedByAgeAscend list.
+   *
+   * @param penguinId the id of the penguin that's going to be returned.
+   * @return the penguin whose id matches the the given penguinId.
+   */
+  private Penguin getPenguinById(long penguinId){
+    for (Penguin penguin : penguinsOnBoard){
+      if(penguin.getId() == penguinId){
+        return penguin;
+      }
+    }
+    throw new IllegalArgumentException("Error: no penguin on board with the id.");
+  }
+
+  /**
    * addPlayerTotalFish is helper function that adds the total number of fish gathered by a
    * penguin.
    *
    * @param targetX the x position or the column of the board.
    * @param targetY the y position or the row of the board.
-   * @param player the player whose total fish num will be added.
+   * @param playerId the id of the player whose total fish num will be added.
    **/
-  private void addPlayerTotalFish(int targetX, int targetY, Player player) {
-//    Player player = penguin.getPlayer();
-    Tile targetTile = board.get(targetY).get(targetX);
-    int fishNum = targetTile.getFishNum();
-    player.addTotalFish(fishNum);
+  private void addPlayerTotalFish(int targetX, int targetY, long playerId) {
+
+    for (Player player : playersSortedByAgeAscend){
+      if(player.getId() == playerId){
+        Tile targetTile = board.get(targetY).get(targetX);
+        int fishNum = targetTile.getFishNum();
+        player.addTotalFish(fishNum);
+      }
+    }
+
   }
 
 
+
+
 }
+
 

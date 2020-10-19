@@ -59,9 +59,9 @@ public class FishStateTest {
 
   @Test
   public void placePenguinSucceed() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    int penguinX = gameState1.getPenguinsOnBoard().get(0).getXPos();
-    int penguinY = gameState1.getPenguinsOnBoard().get(0).getYPos();
+    FishState nextState = gameState1.placeInitPenguin(0, 0, playerRed);
+    int penguinX = nextState.getPenguinsOnBoard().get(0).getXPos();
+    int penguinY = nextState.getPenguinsOnBoard().get(0).getYPos();
     assertEquals(0, penguinX);
     assertEquals(0, penguinY);
   }
@@ -74,6 +74,8 @@ public class FishStateTest {
     assertEquals(0, penguinX1);
     assertEquals(0, penguinY1);
 
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
     FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
     int penguinX2 = nextState2.getPenguinsOnBoard().get(1).getXPos();
     int penguinY2 = nextState2.getPenguinsOnBoard().get(1).getYPos();
@@ -83,13 +85,15 @@ public class FishStateTest {
 
   @Test//(expected = IllegalArgumentException.class)
   public void placePenguinFailed() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    int penguinX1 = gameState1.getPenguinsOnBoard().get(0).getXPos();
-    int penguinY1 = gameState1.getPenguinsOnBoard().get(0).getYPos();
-    assertEquals(0, penguinX1);
-    assertEquals(0, penguinY1);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+//    int penguinX1 = nextState1.getPenguinsOnBoard().get(0).getXPos();
+//    int penguinY1 = nextState1.getPenguinsOnBoard().get(0).getYPos();
+////    assertEquals(0, penguinX1);
+//    assertEquals(0, penguinY1);
     try {
-      gameState1.placeInitPenguin(0, 0, playerBlack);
+      ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+      playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+      FishState nextState2 = nextState1.placeInitPenguin(0, 0, playerBlack);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: There is already one penguin on the target tile.", e.getMessage());
     }
@@ -145,92 +149,116 @@ public class FishStateTest {
 
   @Test
   public void makeMovementSucceed() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    int penguinRedX = penguinRed.getXPos();
-    int penguinRedY = penguinRed.getYPos();
-    assertEquals(0, penguinRedX);
-    assertEquals(0, penguinRedY);
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
 
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(0).getXPos());
-    assertEquals(2, gameState1.getPenguinsOnBoard().get(0).getYPos());
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+
+    int currentPlayerNum = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerNum);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
+    assertEquals(0, nextState4.getPenguinsOnBoard().get(0).getXPos());
+    assertEquals(2, nextState4.getPenguinsOnBoard().get(0).getYPos());
   }
 
   @Test
   public void makeMovementSucceed1() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    int penguinRedX = penguinRed.getXPos();
-    int penguinRedY = penguinRed.getYPos();
-    assertEquals(0, penguinRedX);
-    assertEquals(0, penguinRedY);
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(0).getXPos());
-    assertEquals(2, gameState1.getPenguinsOnBoard().get(0).getYPos());
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
 
-    Penguin penguinBlack = gameState1.getPenguinsOnBoard().get(1);
-    int penguinBlackX = penguinBlack.getXPos();
-    int penguinBlackY = penguinBlack.getYPos();
-    assertEquals(0, penguinBlackX);
-    assertEquals(1, penguinBlackY);
-    gameState1.makeMovement(0, 5, penguinBlack, playerBlack);
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(1).getXPos());
-    assertEquals(5, gameState1.getPenguinsOnBoard().get(1).getYPos());
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+
+    int currentPlayerNum = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerNum);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
+    assertEquals(0, nextState4.getPenguinsOnBoard().get(0).getXPos());
+    assertEquals(2, nextState4.getPenguinsOnBoard().get(0).getYPos());
+
+    currentPlayerNum = nextState4.getCurrentPlayerIndex();
+    Penguin penguinBlack = nextState4.getPenguinsOnBoard().get(1);
+    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+    playerBlack = players4.get(currentPlayerNum);
+    FishState nextState5 = nextState4.makeMovement(0, 5, penguinBlack, playerBlack);
+    assertEquals(0, nextState5.getPenguinsOnBoard().get(1).getXPos());
+    assertEquals(5, nextState5.getPenguinsOnBoard().get(1).getYPos());
   }
 
   @Test
   public void makeMovementSucceed3() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    int penguinRedX = penguinRed.getXPos();
-    int penguinRedY = penguinRed.getYPos();
-    assertEquals(0, penguinRedX);
-    assertEquals(0, penguinRedY);
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(0).getXPos());
-    assertEquals(2, gameState1.getPenguinsOnBoard().get(0).getYPos());
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
 
-    Penguin penguinBlack = gameState1.getPenguinsOnBoard().get(1);
-    int penguinBlackX = penguinBlack.getXPos();
-    int penguinBlackY = penguinBlack.getYPos();
-    assertEquals(0, penguinBlackX);
-    assertEquals(1, penguinBlackY);
-    gameState1.makeMovement(0, 5, penguinBlack, playerBlack);
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(1).getXPos());
-    assertEquals(5, gameState1.getPenguinsOnBoard().get(1).getYPos());
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
 
-    Penguin penguinWhite = gameState1.getPenguinsOnBoard().get(2);
-    int penguinWhiteX = penguinWhite.getXPos();
-    int penguinWhiteY = penguinWhite.getYPos();
-    assertEquals(1, penguinWhiteX);
-    assertEquals(1, penguinWhiteY);
-    gameState1.makeMovement(2, 0, penguinWhite, playerWhite);
-    assertEquals(2, gameState1.getPenguinsOnBoard().get(2).getXPos());
-    assertEquals(0, gameState1.getPenguinsOnBoard().get(2).getYPos());
+    int currentPlayerIndex = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerIndex);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
+    assertEquals(0, nextState4.getPenguinsOnBoard().get(0).getXPos());
+    assertEquals(2, nextState4.getPenguinsOnBoard().get(0).getYPos());
+
+    currentPlayerIndex = nextState4.getCurrentPlayerIndex();
+    Penguin penguinBlack = nextState4.getPenguinsOnBoard().get(1);
+    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+    playerBlack = players4.get(currentPlayerIndex);
+    FishState nextState5 = nextState4.makeMovement(0, 5, penguinBlack, playerBlack);
+    assertEquals(0, nextState5.getPenguinsOnBoard().get(1).getXPos());
+    assertEquals(5, nextState5.getPenguinsOnBoard().get(1).getYPos());
+
+    currentPlayerIndex = nextState5.getCurrentPlayerIndex();
+    Penguin penguinWhite = nextState5.getPenguinsOnBoard().get(2);
+    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
+    playerWhite = players5.get(currentPlayerIndex);
+    FishState nextState6 = nextState5.makeMovement(2, 0, penguinWhite, playerWhite);
+    assertEquals(2, nextState6.getPenguinsOnBoard().get(2).getXPos());
+    assertEquals(0, nextState6.getPenguinsOnBoard().get(2).getYPos());
+
   }
 
   @Test
   public void makeMovementFailed() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+
+    int currentPlayerIndex = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerIndex);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
 
     try {
-      Penguin penguinWhite = gameState1.getPenguinsOnBoard().get(2);
-      gameState1.makeMovement(2, 0, penguinWhite, playerWhite);
+      currentPlayerIndex = nextState4.getCurrentPlayerIndex();
+      Penguin penguinWhite = nextState4.getPenguinsOnBoard().get(2);
+      ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+      playerWhite = players4.get(2);
+      FishState nextState6 = nextState4.makeMovement(2, 0, penguinWhite, playerWhite);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: Not your turn.", e.getMessage());
     }
@@ -238,13 +266,22 @@ public class FishStateTest {
 
   @Test
   public void makeMovementFailed1() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
 
     try {
-      Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-      gameState1.makeMovement(0, -2, penguinRed, playerRed);
+      int currentPlayerNum = nextState3.getCurrentPlayerIndex();
+      Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+      ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+      playerRed = players3.get(currentPlayerNum);
+      FishState nextState4 = nextState3.makeMovement(0, -2, penguinRed, playerRed);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: Target position is out of board.", e.getMessage());
     }
@@ -252,13 +289,22 @@ public class FishStateTest {
 
   @Test
   public void makeMovementFailed2() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
 
     try {
-      Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-      gameState1.makeMovement(1, 0, penguinRed, playerRed);
+      int currentPlayerNum = nextState3.getCurrentPlayerIndex();
+      Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+      ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+      playerRed = players3.get(currentPlayerNum);
+      FishState nextState4 = nextState3.makeMovement(1, 0, penguinRed, playerRed);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: Invalid position to move to.", e.getMessage());
     }
@@ -266,16 +312,28 @@ public class FishStateTest {
 
   @Test
   public void makeMovementFailed3() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+
+    int currentPlayerNum = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerNum);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
 
     try {
-      Penguin penguinBlack = gameState1.getPenguinsOnBoard().get(1);
-      gameState1.makeMovement(0, 2, penguinBlack, playerBlack);
+      currentPlayerNum = nextState4.getCurrentPlayerIndex();
+      Penguin penguinBlack = nextState4.getPenguinsOnBoard().get(1);
+      ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+      playerBlack = players4.get(currentPlayerNum);
+      FishState nextState5 = nextState4.makeMovement(0, 2, penguinBlack, playerBlack);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: Invalid position to move to.", e.getMessage());
     }
@@ -284,16 +342,28 @@ public class FishStateTest {
 
   @Test
   public void makeMovementFailed4() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    gameState1.placeInitPenguin(1, 1, playerWhite);
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
 
-    Penguin penguinRed = gameState1.getPenguinsOnBoard().get(0);
-    gameState1.makeMovement(0, 2, penguinRed, playerRed);
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+
+    int currentPlayerIndex = nextState3.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState3.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerIndex);
+    FishState nextState4 = nextState3.makeMovement(0, 2, penguinRed, playerRed);
 
     try {
-      Penguin penguinBlack = gameState1.getPenguinsOnBoard().get(1);
-      gameState1.makeMovement(0, 2, penguinRed, playerBlack);
+      currentPlayerIndex = nextState4.getCurrentPlayerIndex();
+      Penguin penguinWhite = nextState4.getPenguinsOnBoard().get(2);
+      ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+      playerBlack = players4.get(currentPlayerIndex);
+      FishState nextState5 = nextState4.makeMovement(2, 0, penguinWhite, playerBlack);
     } catch (IllegalArgumentException e) {
       assertEquals("Error: not the owner of the penguin.", e.getMessage());
     }
@@ -309,9 +379,19 @@ public class FishStateTest {
 
   @Test
   public void gameNotOver1() {
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
-    boolean isGameOver = gameState2.isGameOver();
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+    int penguinX1 = nextState1.getPenguinsOnBoard().get(0).getXPos();
+    int penguinY1 = nextState1.getPenguinsOnBoard().get(0).getYPos();
+    assertEquals(0, penguinX1);
+    assertEquals(0, penguinY1);
+
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+//    gameState2.placeInitPenguin(0, 0, playerRed);
+//    gameState2.placeInitPenguin(0, 1, playerBlack);
+    boolean isGameOver = nextState2.isGameOver();
     assertEquals(false, isGameOver);
   }
 
@@ -323,49 +403,90 @@ public class FishStateTest {
 
   @Test
   public void gameOver() {
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
-//    gameState2.placeInitPenguin(1, 1, penguinWhite1);
-    Penguin penguinRed = gameState2.getPenguinsOnBoard().get(0);
-    gameState2.makeMovement(0, 2, penguinRed, playerRed);
-    boolean isGameOver = gameState2.isGameOver();
+
+
+    FishState nextState1 = gameState2.placeInitPenguin(0, 0, playerRed);
+
+
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    int currentPlayerIndex = nextState2.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState2.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState2.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerIndex);
+    FishState nextState3 = nextState2.makeMovement(0, 2, penguinRed, playerRed);
+
+    boolean isGameOver = nextState3.isGameOver();
     assertEquals(true, isGameOver);
+
   }
 
   @Test
-  public void isPenguinOwner(){
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
+  public void addTotalFishNum() {
 
-    Penguin penguinBlack = gameState2.getPenguinsOnBoard().get(1);
-    assertEquals(true, gameState2.isPenguinOwner(penguinBlack, playerBlack));
+//    System.out.println(gameState2.getPlayersSortedByAgeAscend().get(0).getPenguinColor());
+//    System.out.println(gameState2.getPlayersSortedByAgeAscend().get(0).getTotalFish());
+    int totalFishNum = gameState2.getPlayersSortedByAgeAscend().get(0).getTotalFish();
+    assertEquals(0, totalFishNum);
+
+    FishState nextState1 = gameState2.placeInitPenguin(0, 0, playerRed);
+    totalFishNum += nextState1.getBoard().get(0).get(0).getFishNum();
+    int currentTotalFish = nextState1.getPlayersSortedByAgeAscend().get(0).getTotalFish();
+    assertEquals(currentTotalFish, totalFishNum);
+
+    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+
+    int currentPlayerIndex = nextState2.getCurrentPlayerIndex();
+    Penguin penguinRed = nextState2.getPenguinsOnBoard().get(0);
+    ArrayList<Player> players3 = nextState2.getPlayersSortedByAgeAscend();
+    playerRed = players3.get(currentPlayerIndex);
+    FishState nextState3 = nextState2.makeMovement(0, 2, penguinRed, playerRed);
+
+    totalFishNum += nextState3.getBoard().get(2).get(0).getFishNum();
+    currentTotalFish = nextState3.getPlayersSortedByAgeAscend().get(0).getTotalFish();
+    assertEquals(currentTotalFish, totalFishNum);
+
+
   }
 
-  @Test
-  public void isPenguinOwner1(){
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
-
-    Penguin penguinRed = gameState2.getPenguinsOnBoard().get(0);
-    assertEquals(true, gameState2.isPenguinOwner(penguinRed, playerRed));
-  }
-
-  @Test
-  public void notPenguinOwner(){
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
-
-    Penguin penguinBlack = gameState2.getPenguinsOnBoard().get(1);
-    assertEquals(false, gameState2.isPenguinOwner(penguinBlack, playerRed));
-  }
-
-  @Test
-  public void notPenguinOwner2(){
-    gameState2.placeInitPenguin(0, 0, playerRed);
-    gameState2.placeInitPenguin(0, 1, playerBlack);
-
-    Penguin penguinRed = gameState2.getPenguinsOnBoard().get(0);
-    assertEquals(false, gameState2.isPenguinOwner(penguinRed, playerWhite));
-  }
+//  @Test
+//  public void isPenguinOwner(){
+//    gameState2.placeInitPenguin(0, 0, playerRed);
+//    gameState2.placeInitPenguin(0, 1, playerBlack);
+//
+//    Penguin penguinBlack = gameState2.getPenguinsOnBoard().get(1);
+//    assertEquals(true, gameState2.isPenguinOwner(penguinBlack, playerBlack));
+//  }
+//
+//  @Test
+//  public void isPenguinOwner1(){
+//    gameState2.placeInitPenguin(0, 0, playerRed);
+//    gameState2.placeInitPenguin(0, 1, playerBlack);
+//
+//    Penguin penguinRed = gameState2.getPenguinsOnBoard().get(0);
+//    assertEquals(true, gameState2.isPenguinOwner(penguinRed, playerRed));
+//  }
+//
+//  @Test
+//  public void notPenguinOwner(){
+//    gameState2.placeInitPenguin(0, 0, playerRed);
+//    gameState2.placeInitPenguin(0, 1, playerBlack);
+//
+//    Penguin penguinBlack = gameState2.getPenguinsOnBoard().get(1);
+//    assertEquals(false, gameState2.isPenguinOwner(penguinBlack, playerRed));
+//  }
+//
+//  @Test
+//  public void notPenguinOwner2(){
+//    gameState2.placeInitPenguin(0, 0, playerRed);
+//    gameState2.placeInitPenguin(0, 1, playerBlack);
+//
+//    Penguin penguinRed = gameState2.getPenguinsOnBoard().get(0);
+//    assertEquals(false, gameState2.isPenguinOwner(penguinRed, playerWhite));
+//  }
 
 }

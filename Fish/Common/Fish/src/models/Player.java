@@ -1,12 +1,15 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Class of Player, which contains how a player is constructed.
  **/
 public class Player {
 
+
+  private long id;
   private int age;
   private int totalFish;
   private PenguinColor penguinColor;
@@ -19,6 +22,7 @@ public class Player {
    * @param penguinColor the color of their penguins color.
    **/
   public Player(int age, PenguinColor penguinColor){
+    this.id = System.nanoTime();
     this.age = age;
     this.totalFish = 0;
     this.penguinColor = penguinColor;
@@ -27,6 +31,11 @@ public class Player {
 
   private Player(){
 
+  }
+
+
+  public long getId() {
+    return id;
   }
 
   /**
