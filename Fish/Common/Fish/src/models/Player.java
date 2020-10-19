@@ -25,6 +25,10 @@ public class Player {
 //    penguins = new ArrayList<Penguin>();
   }
 
+  private Player(){
+
+  }
+
   /**
    * Gets the age of the player.
    *

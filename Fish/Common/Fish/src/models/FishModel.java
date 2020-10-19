@@ -16,11 +16,15 @@ public class FishModel {
   private int maxFishNumOnOneTile = 5;
   private int minFishNumOnOneTile = 1;
 
+
+
   /**
    * A constructor that construct a empty game board for testing.
    */
   public FishModel() {
   }
+
+
 
   /**
    * The main constructor of the fish model. Width and height are used for determine the size
@@ -266,5 +270,11 @@ public class FishModel {
 //    }
 //    return boardCopy;
   }
+
+//  public ArrayList<ArrayList<Tile>> getBoardCopy() {
+//    Kyro kyro = new Kyro();
+//  }
+
+
 
 }

@@ -1,5 +1,6 @@
 package models;
 
+import com.esotericsoftware.kryo.Kryo;
 import java.util.ArrayList;
 
 
@@ -15,6 +16,7 @@ public class FishState {
 
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
+  private ArrayList<Position> holes;
   private ArrayList<Player> playersSortedByAgeAscend;
   private ArrayList<Penguin> penguinsOnBoard;
   private int currentPlayerNum;
@@ -32,15 +34,16 @@ public class FishState {
     this.currentPlayerNum = 0;
   }
 
-  private FishState(FishModel fishModel, ArrayList<Player> players, ArrayList<Penguin> penguinsOnBoard, int currentPlayerNum){
+  private FishState(FishModel fishModel, ArrayList<Player> players,
+      ArrayList<Penguin> penguinsOnBoard, int currentPlayerNum) {
     setUpState(fishModel, players);
     this.penguinsOnBoard = penguinsOnBoard;
     this.currentPlayerNum = currentPlayerNum;
   }
 
-  public void setUpState(FishModel fishModel, ArrayList<Player> players) {
+  private void setUpState(FishModel fishModel, ArrayList<Player> players) {
     this.totalPlayerNum = players.size();
-    if (totalPlayerNum < 2 || totalPlayerNum > 4){
+    if (totalPlayerNum < 2 || totalPlayerNum > 4) {
       throw new IllegalArgumentException("Error: Invalid number of players.");
     }
     this.fishModel = fishModel;
@@ -59,6 +62,10 @@ public class FishState {
   }
 
 
+  public ArrayList<ArrayList<Tile>> getBoard() {
+    return board;
+  }
+
   public boolean areAllPenguinsPlaced() {
     int penguinNumEachPlayer = 6 - totalPlayerNum;
     int redNum = 0;
@@ -66,61 +73,87 @@ public class FishState {
     int whiteNum = 0;
     int brownNum = 0;
     for (Penguin penguin : penguinsOnBoard) {
-      if (penguin.getColor().equals(PenguinColor.RED)) ++redNum;
-      else if (penguin.getColor().equals(PenguinColor.BLACK)) ++blackNum;
-      else if (penguin.getColor().equals(PenguinColor.WHITE)) ++whiteNum;
-      else if (penguin.getColor().equals(PenguinColor.BROWN)) ++brownNum;
+      if (penguin.getColor().equals(PenguinColor.RED)) {
+        ++redNum;
+      } else if (penguin.getColor().equals(PenguinColor.BLACK)) {
+        ++blackNum;
+      } else if (penguin.getColor().equals(PenguinColor.WHITE)) {
+        ++whiteNum;
+      } else if (penguin.getColor().equals(PenguinColor.BROWN)) {
+        ++brownNum;
+      }
     }
 
     return redNum == penguinNumEachPlayer && blackNum == penguinNumEachPlayer
         && whiteNum == penguinNumEachPlayer && brownNum == penguinNumEachPlayer;
   }
 
+  private FishState createStateCopy() {
+    Kryo kryo = new Kryo();
+    kryo.setRegistrationRequired(false);
+//      kryo.register(FishModel.class);
+//      kryo.register(ArrayList.class);
+//      kryo.register(Tile.class);
+    FishModel modelCopy = kryo.copy(fishModel);
+//      kryo.register(Player.class);
+    ArrayList<Player> playersCopy = kryo.copy(playersSortedByAgeAscend);
+    ArrayList<Penguin> penguinsOnBoardCopy = kryo.copy(penguinsOnBoard);
+    int nextPlayerNum = getNextPlayerNum();
+    FishState fishStateCopy = new FishState(modelCopy, playersCopy, penguinsOnBoardCopy,
+        nextPlayerNum);
+    FishState tmp = fishStateCopy;
+    return fishStateCopy;
+  }
+
 
   /**
    * placeInitPenguin places the initial position of the penguin based on the specific row and
-   * column. A player should only be able to place a penguin when its their turn,
-   * and the target position is in side of the board.
+   * column. A player should only be able to place a penguin when its their turn, and the target
+   * position is in side of the board.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or the row of the board.
    * @param player the player who is going to place their penguin onto board.
-   * @throws IllegalArgumentException when its now the player's turn or the target position is
-   * out of the board.
+   * @throws IllegalArgumentException when its now the player's turn or the target position is out
+   * of the board.
    **/
 
   public FishState placeInitPenguin(int targetX, int targetY, Player player)
       throws IllegalArgumentException {
-//      Player player = penguin.getPlayer();
-    PenguinColor penguinColor = player.getPenguinColor();
-    Penguin penguin = new Penguin(penguinColor);
-    if (isPlayerTurn(player)) {
-      if (!isPosOutOfBoard(targetX, targetY)) {
-        updatePenguinPos(targetX, targetY, penguin);
-        addPlayerTotalFish(targetX, targetY, player);
-        nextPlayerTurn();
-        return new FishState(fishModel, playersSortedByAgeAscend, penguinsOnBoard, currentPlayerNum);
-      } else {
-        throw new IllegalArgumentException("Error: Target position is out of board.");
-      }
-    } else {
+    System.out.println(currentPlayerNum);
+    if (!isPlayerTurn(player)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
+    if (isPosOutOfBoard(targetX, targetY)) {
+      throw new IllegalArgumentException("Error: Target position is out of board.");
+    }
+    if (areAllPenguinsPlaced()) {
+      throw new IllegalArgumentException("Error: no more penguins can be added.");
+    }
+
+
+    PenguinColor penguinColor = player.getPenguinColor();
+    Penguin penguin = new Penguin(penguinColor);
+    FishState nextState = createStateCopy();
+    nextState.updatePenguinPos(targetX, targetY, penguin);
+    nextState.addPlayerTotalFish(targetX, targetY, player);
+
+    return nextState;
   }
 
 
   /**
    * makeMovement moves an existing penguin on the board to a specified row and column within the
-   * board. A player should only be able to move when its their turn, the penguin is theirs,
-   * and the target position is in side of the board.
+   * board. A player should only be able to move when its their turn, the penguin is theirs, and the
+   * target position is in side of the board.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or row of the board.
    * @param penguin the existing penguin on the board.
    * @param player the player who is going to move a penguin.
-   * @throws IllegalArgumentException when its now the player's turn, the player is not the owner
-   * of the penguin, the target position is out of the board or the target position is invalid to
-   * move to.
+   * @throws IllegalArgumentException when its now the player's turn, the player is not the owner of
+   * the penguin, the target position is out of the board or the target position is invalid to move
+   * to.
    **/
   public FishState makeMovement(int targetX, int targetY, Penguin penguin, Player player)
       throws IllegalArgumentException {
@@ -128,32 +161,36 @@ public class FishState {
     int startX = penguin.getXPos();
     int startY = penguin.getYPos();
 
-    if (isPlayerTurn(player)) {
-      if (isPenguinOwner(penguin, player)) {
-        if (!isPosOutOfBoard(targetX, targetY)) {
-          ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(startX, startY);
-          Tile targetTile = board.get(targetY).get(targetX);
-          Tile startTile = board.get(startY).get(startX);
-
-          if (possibleMoves.contains(targetTile)) {
-            updatePenguinPos(targetX, targetY, penguin);
-            addPlayerTotalFish(targetX, targetY, player);
-            startTile.setEmpty(); //makes the tile a hole when the penguin leaves it.
-            startTile.setPenguin(null);
-            nextPlayerTurn();
-            return new FishState(fishModel, playersSortedByAgeAscend, penguinsOnBoard, currentPlayerNum);
-          } else {
-            throw new IllegalArgumentException("Error: Invalid position to move to.");
-          }
-        } else {
-          throw new IllegalArgumentException("Error: Target position is out of board.");
-        }
-      } else {
-        throw new IllegalArgumentException("Error: not the owner of the penguin.");
-      }
-    } else {
+    if (!isPlayerTurn(player)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
+    if (!isPenguinOwner(penguin, player)) {
+      throw new IllegalArgumentException("Error: not the owner of the penguin.");
+    }
+    if (isPosOutOfBoard(targetX, targetY)) {
+      throw new IllegalArgumentException("Error: Target position is out of board.");
+    }
+
+    ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(startX, startY);
+    Tile targetTile = board.get(targetY).get(targetX);
+
+    if (!possibleMoves.contains(targetTile)) {
+      throw new IllegalArgumentException("Error: Invalid position to move to.");
+    }
+
+    FishState nextState = createStateCopy();
+    nextState.updatePenguinPos(targetX, targetY, penguin);
+    nextState.addPlayerTotalFish(targetX, targetY, player);
+    nextState.emptyStartTile(startX, startY);
+    return nextState;
+
+  }
+
+  private void emptyStartTile(int startX, int startY) {
+//    ArrayList<ArrayList<Tile>> board = nextState.getBoard();
+    Tile startTile = board.get(startY).get(startX);
+    startTile.setEmpty(); //makes the tile a hole when the penguin leaves it.
+    startTile.setPenguin(null);
   }
 
   /**
@@ -225,19 +262,22 @@ public class FishState {
    * @return boolean value that determines whether its actually a player's turn.
    **/
   private boolean isPlayerTurn(Player player) {
-    Player currentPlayer = playersSortedByAgeAscend.get(currentPlayerNum);
-    return currentPlayer.equals(player);
+    int playerNum = playersSortedByAgeAscend.indexOf(player);
+//    Player currentPlayer = playersSortedByAgeAscend.get(currentPlayerNum);
+    return currentPlayerNum == playerNum;
   }
 
   /**
    * nextPlayerTurn is a helper function that increments the currentPlayerNum.
    **/
-  private void nextPlayerTurn() {
-    if (currentPlayerNum >= totalPlayerNum - 1) {
-      currentPlayerNum = 0;
+  private int getNextPlayerNum() {
+    int nextPlayerNum = currentPlayerNum;
+    if (nextPlayerNum >= totalPlayerNum - 1) {
+      nextPlayerNum = 0;
     } else {
-      ++currentPlayerNum;
+      ++nextPlayerNum;
     }
+    return nextPlayerNum;
   }
 
   /**
@@ -287,3 +327,4 @@ public class FishState {
 
 
 }
+

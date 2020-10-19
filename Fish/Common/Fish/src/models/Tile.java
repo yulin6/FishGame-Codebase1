@@ -21,6 +21,10 @@ public class Tile {
     this.fishNum = fishNum;
   }
 
+  private Tile() {
+
+  }
+
   /**
    * is the current tile empty.
    *

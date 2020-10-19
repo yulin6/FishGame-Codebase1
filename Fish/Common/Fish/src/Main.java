@@ -1,7 +1,9 @@
+import com.esotericsoftware.kryo.Kryo;
 import controllers.FishController;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.FishModel;
+import models.FishState;
 import models.Penguin;
 import models.PenguinColor;
 import models.Player;
@@ -22,9 +24,32 @@ public class Main {
    */
   public static void main(String[] args) {
 
-    Scanner scanner = new Scanner(System.in);
-    createFishModel(scanner);
-    emptyTilesAndSetUpGui(scanner);
+    FishModel model = new FishModel(6, 6, 4, false);
+//    Player playerRed = new Player(2, PenguinColor.RED);
+//    ArrayList<Player> players = new ArrayList<Player>();
+//    players.add(playerRed);
+//    FishState state = new FishState(model, players);
+//    state.placeInitPenguin(0,0,playerRed);
+//    System.out.println(state.getPenguinsOnBoard().get(0));
+//
+//    FishTree tree = new FishTree(state);
+//    int before = tree.getFishState().getPenguinsOnBoard().get(0).getYPos();
+//    int after = tree.getStates().get(0).getFishState().getPenguinsOnBoard().get(0).getYPos();
+//
+//    System.out.println(before);
+//    System.out.println(after);
+    Kryo kryo = new Kryo();
+    kryo.setRegistrationRequired(false);
+    FishModel modelCopy = kryo.copy(model);
+    boolean width = model.getBoard().get(0).get(0).isEmpty();
+    modelCopy.emptyTile(0, 0);
+    boolean widthCopy = modelCopy.getBoard().get(0).get(0).isEmpty();
+    System.out.println( width);
+    System.out.println( widthCopy);
+
+//    Scanner scanner = new Scanner(System.in);
+//    createFishModel(scanner);
+//    emptyTilesAndSetUpGui(scanner);
 
   }
 
@@ -179,4 +204,6 @@ public class Main {
     }
     return i >= 0;
   }
+
+
 }

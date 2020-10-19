@@ -65,18 +65,18 @@ public class FishStateTest {
     assertEquals(0, penguinX);
     assertEquals(0, penguinY);
   }
-
+//
   @Test
   public void placePenguinSucceed1() {
-    gameState1.placeInitPenguin(0, 0, playerRed);
-    int penguinX1 = gameState1.getPenguinsOnBoard().get(0).getXPos();
-    int penguinY1 = gameState1.getPenguinsOnBoard().get(0).getYPos();
+    FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+    int penguinX1 = nextState1.getPenguinsOnBoard().get(0).getXPos();
+    int penguinY1 = nextState1.getPenguinsOnBoard().get(0).getYPos();
     assertEquals(0, penguinX1);
     assertEquals(0, penguinY1);
 
-    gameState1.placeInitPenguin(0, 1, playerBlack);
-    int penguinX2 = gameState1.getPenguinsOnBoard().get(1).getXPos();
-    int penguinY2 = gameState1.getPenguinsOnBoard().get(1).getYPos();
+    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+    int penguinX2 = nextState2.getPenguinsOnBoard().get(1).getXPos();
+    int penguinY2 = nextState2.getPenguinsOnBoard().get(1).getYPos();
     assertEquals(0, penguinX2);
     assertEquals(1, penguinY2);
   }

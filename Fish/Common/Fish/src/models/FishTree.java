@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 
 public class FishTree  {
 
-
   private FishState fishState;
   private ArrayList<FishTree> states;
 
