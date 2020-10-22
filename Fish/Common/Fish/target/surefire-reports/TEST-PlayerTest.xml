@@ -67,7 +67,7 @@
     <property name="java.class.version" value="56.0"/>
     <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="getAge" classname="PlayerTest" time="0"/>
+  <testcase name="getAge" classname="PlayerTest" time="0.001"/>
   <testcase name="setAge" classname="PlayerTest" time="0"/>
   <testcase name="getTotalFish" classname="PlayerTest" time="0"/>
   <testcase name="addTotalFish" classname="PlayerTest" time="0"/>

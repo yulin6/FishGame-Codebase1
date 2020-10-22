@@ -3,6 +3,9 @@ import static org.junit.Assert.*;
 import models.Position;
 import org.junit.Test;
 
+/**
+ * a test class for Position class
+ */
 public class PositionTest {
 
   @Test

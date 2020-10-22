@@ -11,6 +11,9 @@ import models.Player;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * a test class for FishTreeNode class
+ */
 public class FishTreeNodeTest {
 
   private int width1;

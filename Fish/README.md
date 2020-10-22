@@ -6,12 +6,16 @@
     | Planning
     |   | milestons.pdf
     |   | system.pdf
-    |   | self-1.pdf
+    |   | self-1.md
     |   | game-state.md
-    |   | self-2.pdf
-    |   | games.pdf
+    |   | self-2.md
+    |   | games.md
+    |   | self-3.md
+    |   | player-protocol.md
     | Common
-    |   | state.java   
+    |   | state.java 
+    |   | player-interface.java   
+    |   | game-tree.java 
     |   | Fish
     |   |   | Fish.iml
     |   |   | Fish.png   
@@ -21,22 +25,29 @@
     |   |   |   | Main.java  
     |   |   |   | xboard.java 
     |   |   |   | META-INF
-    |   |   | controllers
-    |   |   |   | FishController.java
-    |   |   | models
-    |   |   |   | FishGameState.java
-    |   |   |   | FishModel.java 
-    |   |   |   | Tile.java
-    |   |   |   | Player.java 
-    |   |   |   | Penguin.java 
-    |   |   |   | PenguinColor.java
-    |   |   | views
-    |   |   |   | FishView.java 
-    |   |   |   | TilesPanel.java   
+    |   |   |   | controllers
+    |   |   |   |   | FishController.java
+    |   |   |   | models
+    |   |   |   |   | Actions
+    |   |   |   |   |   | IAction.java 
+    |   |   |   |   |   | MovePenguinAction.java    
+    |   |   |   |   | FishGameTreeNode.java
+    |   |   |   |   | FishGameState.java
+    |   |   |   |   | FishModel.java 
+    |   |   |   |   | Tile.java
+    |   |   |   |   | Player.java 
+    |   |   |   |   | Penguin.java 
+    |   |   |   |   | Position.java 
+    |   |   |   |   | PenguinColor.java
+    |   |   |   | views
+    |   |   |   |   | FishView.java 
+    |   |   |   |   | TilesPanel.java   
     |   |   | test
     |   |   |   | FishControllerMock.java 
     |   |   |   | FishControllerMockTest.java 
     |   |   |   | FishGameStateTest.java 
+    |   |   |   | FishTreeNodeTest.java 
+    |   |   |   | PositionTest.java
     |   |   |   | FishModelTest.java
     |   |   |   | TileTest.java 
     |   |   |   | PlayerTest.java
@@ -77,7 +88,7 @@ To run single/specific test(s):
 3. Locate the test files where you can run single tests or the entire classes of tests.
 
 #### Test Result:
-Tests run: 42, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 62, Failures: 0, Errors: 0, Skipped: 0
 
 ## Milestones
 ### 2 — The Game Pieces
@@ -198,3 +209,110 @@ In console:
 Output:
 
     2
+
+
+### 4 - The Game Tree
+
+A game tree data representation, including the following operations. A game tree represents an entire game, starting from some state. For each state it connects to all legal successor states. Each transition corresponds to a legal action of the player whose turn it is in this state.
+
+The game representation should come with these pieces of functionality:
+
+-   creating a complete tree for a state to which players will not add any more penguins;
+
+- a query facility that for a given tree node and action A either signals that A is illegal or returns the state that would result from taking action A;
+
+- a query facility that for a given tree node S and function applies this function to all states directly reachable from S.
+
+#### Implementations
+
+    FishTreeNode
+
+FishTreeNode is a representation of a tree of FishState and FishTreeNodes. The parentNode is a node its parent node of the current node, if it is the start of the tree, the parentNode will be null. CurrentState is the current fishState of a certain game at certain point in time. DirectReachableStates is the states that are directly reachable from the current FishState. childNodes is an ArrayList\<FishTreeNode>, which are the directly connected tree nodes, and it will only be generated when the method by calling generateChildNodes().
+
+    IAction
+
+IAction is an interface that allows users the ability to apply a certain action to a certain FishState using performAction() method. Other actions can be further implemented in the future, e.g. removePlayeAction(FishState state)
+
+    MovePenguinAction
+
+MovePenguinAction is a class that represent a movement on the Fish game that implements on the IAction interface. In order to move penguins and modify fish states, there are 4 parameters that needs to be inserted to move a penguin. A targetX representing the column of the fish board, a targetY representing the row of the fish board, a penguin and a player.
+
+    Position
+
+Position class that represent a position on the board, the x represent the column and the y represent the row on the Fish board.
+
+#### Test Harness
+he harness consumes its JSON input from STDIN and produces its results to STDOUT. The tests are formulated as pairs of files: \<n>-in.json, the input, and \<n>-out.json, the expected result, for an integer \<n> ranged from 1 to 3.
+
+Input:
+
+    State:
+
+      { "players" : Player*,
+
+        "board" : Board }
+
+
+
+    Player* is
+
+      [Player, ..., Player]
+
+    INTERPRETATION The array lists all players and specifies the order
+
+    in which they take turns.
+
+
+
+    Player is
+
+      { "color" : Color,
+
+        "score" : Natural,
+
+        "places" : [Position, ..., Position] }
+
+    INTERPRETATION The color identifies a player's penguins on the board,
+
+    the score represents how many fish the player has collected so far,
+
+    and the last field shows where the player's penguins are located.
+
+    CONSTRAINT All penguins must occupy distinct tiles on the board.
+
+
+
+    Color is
+    
+        One of "red", "black", "white", "brown"
+
+
+Output:
+
+    Its expected output is the effect of a silly player strategy of taking a turn 
+    That is, it is the State that results from moving the first player’s first 
+    penguin one step either North, NorthEast, SouthEast, South, SoutheWest, or 
+    Northwest (in this order) from its current position—if possible. Otherwise the 
+    expected output is False. The order in which a JSON array specifies a player's 
+    penguin positions remains the same.
+
+Executable Location:
+
+    annetta/4/xstate
+
+Tests Files Location:
+
+    annetta/4/Tests/<n>-in.json, <n>-out.json
+
+##### Running example:
+In console:
+
+    cat ./Tests/1-in.json | ./xstate
+
+Output:
+
+    {"players":[
+        {"color":"red","score":11,"places":[[2,0],[0,1]]},
+        {"color":"black","score":6,"places":[[1,0],[1,1]]},
+        {"color":"white","score":2,"places":[[2,1],[2,2]]}],
+    "board":[[0,1,1],[1,5,1],[5,1,1],[5,1,1]]}
