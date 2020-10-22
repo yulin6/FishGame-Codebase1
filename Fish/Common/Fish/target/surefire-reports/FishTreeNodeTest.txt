@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: FishTreeNodeTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.024 s - in FishTreeNodeTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.325 s - in FishTreeNodeTest

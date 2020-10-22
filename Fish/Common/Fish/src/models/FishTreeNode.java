@@ -3,8 +3,10 @@ package models;
 import java.util.ArrayList;
 import models.Actions.IAction;
 
+/**
+ *
+ */
 public class FishTreeNode {
-
 
   private FishTreeNode parentNode;
   private FishState currentState;
@@ -55,20 +57,20 @@ public class FishTreeNode {
     }
   }
 
-  public void generateDirectReachableTreeNodes() {
+  public void generateChildNodes() {
     for (FishState fishState : directReachableStates) {
       FishTreeNode treeNode = new FishTreeNode(this, fishState);
       childNodes.add(treeNode);
     }
   }
 
-  public FishState actOnFishState(FishTreeNode fishTreeNode, IAction action)
+  public FishState applyActionToState(FishTreeNode fishTreeNode, IAction action)
       throws IllegalArgumentException {
     FishState fishState = fishTreeNode.getCurrentState();
     return action.performAction(fishState);
   }
 
-  public ArrayList<FishState> applyFunctionToStates(FishTreeNode fishTreeNode, IAction action)
+  public ArrayList<FishState> applyActionToStates(FishTreeNode fishTreeNode, IAction action)
       throws IllegalArgumentException {
 
     ArrayList<FishState> states = fishTreeNode.getDirectReachableStates();

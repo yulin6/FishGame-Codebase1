@@ -68,11 +68,11 @@
     <property name="http.proxyPort" value="1087"/>
   </properties>
   <testcase name="moveFailed" classname="MovePenguinActionTest" time="0"/>
-  <testcase name="moveFailed1" classname="MovePenguinActionTest" time="0.001"/>
-  <testcase name="moveFailed2" classname="MovePenguinActionTest" time="0"/>
-  <testcase name="moveFailed3" classname="MovePenguinActionTest" time="0.001"/>
+  <testcase name="moveFailed1" classname="MovePenguinActionTest" time="0"/>
+  <testcase name="moveFailed2" classname="MovePenguinActionTest" time="0.001"/>
+  <testcase name="moveFailed3" classname="MovePenguinActionTest" time="0"/>
   <testcase name="moveFailed4" classname="MovePenguinActionTest" time="0"/>
-  <testcase name="moveFailed5" classname="MovePenguinActionTest" time="0"/>
-  <testcase name="moveSucceed" classname="MovePenguinActionTest" time="0.001"/>
-  <testcase name="moveSucceed1" classname="MovePenguinActionTest" time="0"/>
+  <testcase name="moveFailed5" classname="MovePenguinActionTest" time="0.001"/>
+  <testcase name="moveSucceed" classname="MovePenguinActionTest" time="0"/>
+  <testcase name="moveSucceed1" classname="MovePenguinActionTest" time="0.001"/>
 </testsuite>

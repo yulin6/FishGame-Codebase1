@@ -67,8 +67,8 @@
     <property name="java.class.version" value="56.0"/>
     <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="setEmpty" classname="TileTest" time="0"/>
-  <testcase name="getFishNum" classname="TileTest" time="0"/>
   <testcase name="isEmptyTrue" classname="TileTest" time="0"/>
   <testcase name="isEmptyFalse" classname="TileTest" time="0"/>
+  <testcase name="setEmpty" classname="TileTest" time="0"/>
+  <testcase name="getFishNum" classname="TileTest" time="0"/>
 </testsuite>
