@@ -5,19 +5,22 @@ import models.Actions.IAction;
 
 public class FishTreeNode {
 
+
+  private FishTreeNode parentNode;
   private FishState currentState;
   private ArrayList<FishState> directReachableStates;
-  private ArrayList<FishTreeNode> directReachableTreeNodes;
+  private ArrayList<FishTreeNode> childNodes;
 
 
-  public FishTreeNode(FishState currentState) {
+  public FishTreeNode(FishTreeNode parentNode, FishState currentState) {
     if (!currentState.areAllPenguinsPlaced()) {
       throw new IllegalArgumentException("Error: incomplete number of penguins for each Player");
     }
+    this.parentNode = parentNode;
     this.currentState = currentState;
     this.directReachableStates = new ArrayList<>();
     generateDirectReachableStates();
-    this.directReachableTreeNodes = new ArrayList<>();
+    this.childNodes = new ArrayList<>();
   }
 
 
@@ -54,8 +57,8 @@ public class FishTreeNode {
 
   public void generateDirectReachableTreeNodes() {
     for (FishState fishState : directReachableStates) {
-      FishTreeNode treeNode = new FishTreeNode(fishState);
-      directReachableTreeNodes.add(treeNode);
+      FishTreeNode treeNode = new FishTreeNode(this, fishState);
+      childNodes.add(treeNode);
     }
   }
 
@@ -108,6 +111,9 @@ public class FishTreeNode {
     return penguinsOfSameColor;
   }
 
+  public FishTreeNode getParentNode() {
+    return parentNode;
+  }
 
   public FishState getCurrentState() {
     return currentState;
@@ -117,8 +123,8 @@ public class FishTreeNode {
     return directReachableStates;
   }
 
-  public ArrayList<FishTreeNode> getDirectReachableTreeNodes() {
-    return directReachableTreeNodes;
+  public ArrayList<FishTreeNode> getChildNodes() {
+    return childNodes;
   }
 
 

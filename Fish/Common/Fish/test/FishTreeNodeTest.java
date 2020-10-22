@@ -1,7 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
 import models.Actions.MovePenguinAction;
 import models.FishModel;
 import models.FishState;
@@ -69,7 +68,7 @@ public class FishTreeNodeTest {
     FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
 
     try {
-      FishTreeNode tree = new FishTreeNode(nextState3);
+      FishTreeNode tree = new FishTreeNode(null, nextState3);
     } catch (IllegalArgumentException e){
       assertEquals("Error: incomplete number of penguins for each Player",e.getMessage());
     }
@@ -109,7 +108,7 @@ public class FishTreeNodeTest {
     FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
 
     try {
-      FishTreeNode tree = new FishTreeNode(nextState8);
+      FishTreeNode tree = new FishTreeNode(null, nextState8);
     } catch (IllegalArgumentException e){
       assertEquals("Error: incomplete number of penguins for each Player",e.getMessage());
     }
@@ -153,7 +152,7 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     ArrayList<FishState> fishStates = tree.getDirectReachableStates();
     assertEquals(20, fishStates.size());
 
@@ -196,10 +195,10 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     ArrayList<FishState> fishStates = tree.getDirectReachableStates();
     tree.generateDirectReachableTreeNodes();
-    ArrayList<FishTreeNode> treeNodes = tree.getDirectReachableTreeNodes();
+    ArrayList<FishTreeNode> treeNodes = tree.getChildNodes();
     assertEquals(20, treeNodes.size());
 
   }
@@ -241,14 +240,14 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     ArrayList<FishState> fishStates = tree.getDirectReachableStates();
     tree.generateDirectReachableTreeNodes();
-    ArrayList<FishTreeNode> treeNodes = tree.getDirectReachableTreeNodes();
+    ArrayList<FishTreeNode> treeNodes = tree.getChildNodes();
     ArrayList<FishTreeNode> nextTreeNodes = new ArrayList<>();
     for (FishTreeNode node: treeNodes){
       node.generateDirectReachableTreeNodes();
-      ArrayList<FishTreeNode> nextNodes = node.getDirectReachableTreeNodes();
+      ArrayList<FishTreeNode> nextNodes = node.getChildNodes();
       nextTreeNodes.addAll(nextNodes);
     }
     assertEquals(369, nextTreeNodes.size());
@@ -291,7 +290,7 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
     Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
     ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
@@ -344,7 +343,7 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
     Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
     ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
@@ -398,7 +397,7 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
     Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
     ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
@@ -446,7 +445,7 @@ public class FishTreeNodeTest {
     FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
 
 
-    FishTreeNode tree = new FishTreeNode(nextState9);
+    FishTreeNode tree = new FishTreeNode(null, nextState9);
     int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
     Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
     ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
