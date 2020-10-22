@@ -39,6 +39,7 @@ public class Tile {
    */
   public void setEmpty() {
     isEmpty = true;
+    fishNum = 0;
   }
 
   /**

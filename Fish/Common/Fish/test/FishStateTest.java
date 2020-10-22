@@ -43,9 +43,9 @@ public class FishStateTest {
     width2 = 1;
     height2 = 3;
     oneByThreeFishModel = new FishModel(width2, height2, maxFishNum1, isRandom);
-    playerRed = new Player(11, PenguinColor.RED);
-    playerBlack = new Player(12, PenguinColor.BLACK);
-    playerWhite = new Player(13, PenguinColor.WHITE);
+    playerRed = new Player(11, PenguinColor.red);
+    playerBlack = new Player(12, PenguinColor.black);
+    playerWhite = new Player(13, PenguinColor.white);
     twoPlayers = new ArrayList<Player>();
     twoPlayers.add(playerRed);
     twoPlayers.add(playerBlack);
@@ -365,7 +365,7 @@ public class FishStateTest {
       playerBlack = players4.get(currentPlayerIndex);
       FishState nextState5 = nextState4.makeMovement(2, 0, penguinWhite, playerBlack);
     } catch (IllegalArgumentException e) {
-      assertEquals("Error: not the owner of the penguin.", e.getMessage());
+      assertEquals("Error: Not the owner of the penguin.", e.getMessage());
     }
 
   }

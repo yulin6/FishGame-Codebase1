@@ -159,9 +159,9 @@ public class FishModelTest {
 //    fishModel.emptyTile(2, 2);
 //    fishModel.emptyTile(1, 1);
 //    fishModel.emptyTile(3, 6);
-    ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(0, 0);
+    ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(1, 3);
 
-    assertEquals(10, possibleMoves.size());
+    assertEquals(16, possibleMoves.size());
   }
 
   @Test

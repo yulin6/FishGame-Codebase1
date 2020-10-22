@@ -5,7 +5,7 @@ package models;
  */
 public class Penguin {
 
-//  Player player;
+//  Player PlayerX;
   private PenguinColor color;
   private long id;
   private int xPos;
@@ -17,11 +17,12 @@ public class Penguin {
    * @param color color of the penguin.
    */
   public Penguin( PenguinColor color) {
-//    this.player = player;
+//    this.PlayerX = PlayerX;
     this.color = color;
     this.id = System.nanoTime();
   }
 
+  //A empty constructor that's needed for Kryo library
   private Penguin(){
 
   }

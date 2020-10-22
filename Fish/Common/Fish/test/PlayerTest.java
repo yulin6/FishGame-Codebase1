@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import models.Penguin;
 import models.PenguinColor;
 import models.Player;
 import org.junit.Before;
@@ -15,7 +14,7 @@ public class PlayerTest {
   @Before
   public void init(){
     age = 12;
-    penguinColor = PenguinColor.RED;
+    penguinColor = PenguinColor.red;
     player = new Player(age, penguinColor);
   }
 
@@ -43,12 +42,12 @@ public class PlayerTest {
 
   @Test
   public void getPenguinColor() {
-    assertEquals(PenguinColor.RED, player.getPenguinColor());
+    assertEquals(PenguinColor.red, player.getPenguinColor());
   }
 
   @Test
   public void setPenguinColor() {
-    player.setPenguinColor(PenguinColor.BROWN);
-    assertEquals(PenguinColor.BROWN, player.getPenguinColor());
+    player.setPenguinColor(PenguinColor.brown);
+    assertEquals(PenguinColor.brown, player.getPenguinColor());
   }
 }

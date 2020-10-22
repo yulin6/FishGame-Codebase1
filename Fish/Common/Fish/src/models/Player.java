@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Class of Player, which contains how a player is constructed.
+ * Class of Player, which contains how a PlayerX is constructed.
  **/
 public class Player {
 
@@ -13,12 +13,13 @@ public class Player {
   private int age;
   private int totalFish;
   private PenguinColor penguinColor;
+//  private ArrayList<Position> penguinsPositions;
 //  private ArrayList<Penguin> penguins;
 
   /**
-   * Constructor of the Player class that takes in the age of player.
+   * Constructor of the Player class that takes in the age of PlayerX.
    *
-   * @param age the age of the playing player.
+   * @param age the age of the playing PlayerX.
    * @param penguinColor the color of their penguins color.
    **/
   public Player(int age, PenguinColor penguinColor){
@@ -29,9 +30,8 @@ public class Player {
 //    penguins = new ArrayList<Penguin>();
   }
 
-  private Player(){
-
-  }
+  //A empty constructor that's needed for Kryo library
+  private Player(){ }
 
 
   public long getId() {
@@ -39,32 +39,32 @@ public class Player {
   }
 
   /**
-   * Gets the age of the player.
+   * Gets the age of the PlayerX.
    *
-   * @return the age of the player as an int.
+   * @return the age of the PlayerX as an int.
    **/
   public int getAge() {
     return age;
   }
 
   /**
-   * Sets the age of the player.
+   * Sets the age of the PlayerX.
    **/
   public void setAge(int age) {
     this.age = age;
   }
 
   /**
-   * Gets the total number of fish of a player.
+   * Gets the total number of fish of a PlayerX.
    *
-   * @return the total fish collected by a player as an int.
+   * @return the total fish collected by a PlayerX as an int.
    **/
   public int getTotalFish() {
     return totalFish;
   }
 
   /**
-   * Adds the fish gathered by a player.
+   * Adds the fish gathered by a PlayerX.
    **/
   public void addTotalFish(int totalFish) {
     this.totalFish += totalFish;
@@ -87,24 +87,15 @@ public class Player {
     this.penguinColor = penguinColor;
   }
 
-//  /**
-//   * Gets the penguins controlled by a player.
-//   *
-//   * @return the ArrayList of penguins controlled by a player.
-//   **/
-//  public ArrayList<Penguin> getPenguins() {
-//    return penguins;
+
+
+//  public ArrayList<Position> getPenguinsPositions() {
+//    return penguinsPositions;
 //  }
 //
-//  /**
-//   * Adds a penguin to the ArrayList of penguins controlled by a player.
-//   **/
-//  public void addPenguin(Penguin penguin) {
-//    this.penguins.add(penguin);
+//  public void setPenguinsPositions(ArrayList<Position> penguinsPositions) {
+//    this.penguinsPositions = penguinsPositions;
 //  }
-
-
-
 
 
 }

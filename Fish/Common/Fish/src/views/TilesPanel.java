@@ -95,10 +95,10 @@ public class TilesPanel extends JPanel {
             }
           } else {
             PenguinColor penguinColor = penguin.getColor();
-            PenguinColor red = PenguinColor.RED;
-            PenguinColor white = PenguinColor.WHITE;
-            PenguinColor brown = PenguinColor.BROWN;
-            PenguinColor black = PenguinColor.BLACK;
+            PenguinColor red = PenguinColor.red;
+            PenguinColor white = PenguinColor.white;
+            PenguinColor brown = PenguinColor.brown;
+            PenguinColor black = PenguinColor.black;
 
             if(penguinColor.equals(red)) g2d.setColor(Color.red);
             else if (penguinColor.equals(white)) g2d.setColor(Color.white);

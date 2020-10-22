@@ -1,14 +1,7 @@
-import com.esotericsoftware.kryo.Kryo;
 import controllers.FishController;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.FishModel;
-import models.FishState;
-import models.FishTree;
-import models.Penguin;
-import models.PenguinColor;
-import models.Player;
-import models.Tile;
 import views.FishView;
 
 /**
@@ -33,7 +26,7 @@ public class Main {
 //    state.placeInitPenguin(0,0,playerRed);
 //    System.out.println(state.getPenguinsOnBoard().get(0));
 //
-//    FishTree tree = new FishTree(state);
+//    FishTreeNode tree = new FishTreeNode(state);
 //    int before = tree.getFishState().getPenguinsOnBoard().get(0).getYPos();
 //    int after = tree.getStates().get(0).getFishState().getPenguinsOnBoard().get(0).getYPos();
 //

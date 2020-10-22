@@ -1,6 +1,11 @@
 package models;
 
+import static models.PenguinColor.*;
+
 import com.esotericsoftware.kryo.Kryo;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -9,10 +14,11 @@ import java.util.ArrayList;
  * of the fish game. Board is an ArrayList of ArrayList of Tile that is taken from the FishModel.
  * playersSortedByAgeAscend is the sorted array of Player by age. penguinsOnBoard is an empty
  * ArrayList of Penguin that will be populated in the FishState. currentPlayerIndex is the current
- * index of the player, which is 0. totalPlayerNum is the total number of players that will be
+ * index of the PlayerX, which is 0. totalPlayerNum is the total number of players that will be
  * playing in this tournament.
  **/
 public class FishState {
+
 
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
@@ -36,12 +42,12 @@ public class FishState {
   /**
    * The private constructor is used for making copy of the current state and use it as the
    * next state. The fishModel, players, penguinsOnBoard will be exactly the same when creating
-   * the state, but the ideal currentPlayerIndex should be the next player index.
+   * the state, but the ideal currentPlayerIndex should be the next PlayerX index.
    *
    * @param fishModel is the model copy for the state.
    * @param players the array list copy of players for the state.
    * @param penguinsOnBoard the array list copy of penguins on board for the state.
-   * @param currentPlayerIndex the current player index for the state.
+   * @param currentPlayerIndex the current PlayerX index for the state.
    */
   private FishState(FishModel fishModel, ArrayList<Player> players,
       ArrayList<Penguin> penguinsOnBoard, int currentPlayerIndex) {
@@ -62,10 +68,15 @@ public class FishState {
     if (totalPlayerNum < 2 || totalPlayerNum > 4) {
       throw new IllegalArgumentException("Error: Invalid number of players.");
     }
+    throwIfPlayersColorDuplicate(players);
     this.fishModel = fishModel;
     this.board = fishModel.getBoard();
     players.sort((p1, p2) -> Integer.valueOf(p1.getAge()).compareTo(p2.getAge()));
     this.playersSortedByAgeAscend = players;
+  }
+
+  public FishModel getFishModel() {
+    return fishModel;
   }
 
   /**
@@ -90,42 +101,68 @@ public class FishState {
   /**
    * Get the players list, sorted by age, in the current state.
    *
-   * @return array list of player in the state, which is sorted by age.
+   * @return array list of PlayerX in the state, which is sorted by age.
    */
   public ArrayList<Player> getPlayersSortedByAgeAscend() {
     return playersSortedByAgeAscend;
   }
 
   /**
-   * Get the index of the player who is allowed to make action. The index is used for finding
+   * Get the index of the PlayerX who is allowed to make action. The index is used for finding
    * the actual Player instance from the playersSortedByAgeAscend list.
    *
-   * @return the index of the player who is allowed to make action.
+   * @return the index of the PlayerX who is allowed to make action.
    */
   public int getCurrentPlayerIndex() {
     return currentPlayerIndex;
   }
 
+  private void throwIfPlayersColorDuplicate(ArrayList<Player> players) throws IllegalArgumentException{
+    int redNum = 0;
+    int blackNum = 0;
+    int whiteNum = 0;
+    int brownNum = 0;
+    for(Player player : players){
+      if (player.getPenguinColor().equals(red))  ++redNum;
+      else if (player.getPenguinColor().equals(black))  ++blackNum;
+      else if (player.getPenguinColor().equals(white))  ++whiteNum;
+      else if (player.getPenguinColor().equals(brown))  ++brownNum;
+    }
+    if(redNum > 1 || blackNum > 1 || whiteNum > 1 || brownNum > 1){
+      throw new IllegalArgumentException("Error: Found players with duplicated colors.");
+    }
+  }
+
   /**
-   * Check whether can any new penguins be placed on the board, the valid player number should
-   * be 2 to 4, and the valid number of penguin in each color should be 6 minus the player number.
+   * Check whether can any new penguins be placed on the board, the valid PlayerX number should
+   * be 2 to 4, and the valid number of penguin in each color should be 6 minus the PlayerX number.
    *
    * @return boolean represents whether all penguins are placed.
    */
   public boolean areAllPenguinsPlaced() {
     int penguinNumEachPlayer = 6 - totalPlayerNum;
-    int redNum = 0;
-    int blackNum = 0;
-    int whiteNum = 0;
-    int brownNum = 0;
+    int redNum = penguinNumEachPlayer;
+    int blackNum = penguinNumEachPlayer;
+    int whiteNum = penguinNumEachPlayer;
+    int brownNum = penguinNumEachPlayer;
+
+    for (Player player : playersSortedByAgeAscend){
+      PenguinColor color = player.getPenguinColor();
+      if(color.equals(red)) redNum = 0;
+      else if (color.equals(black)) blackNum = 0;
+      else if (color.equals(white)) whiteNum = 0;
+      else if (color.equals(brown)) brownNum = 0;
+    }
+
     for (Penguin penguin : penguinsOnBoard) {
-      if (penguin.getColor().equals(PenguinColor.RED)) {
+
+      if (penguin.getColor().equals(red)) {
         ++redNum;
-      } else if (penguin.getColor().equals(PenguinColor.BLACK)) {
+      } else if (penguin.getColor().equals(black)) {
         ++blackNum;
-      } else if (penguin.getColor().equals(PenguinColor.WHITE)) {
+      } else if (penguin.getColor().equals(white)) {
         ++whiteNum;
-      } else if (penguin.getColor().equals(PenguinColor.BROWN)) {
+      } else if (penguin.getColor().equals(brown)) {
         ++brownNum;
       }
     }
@@ -143,15 +180,14 @@ public class FishState {
    * of the players list
    */
   private FishState createStateCopy() {
-    Kryo kryo = new Kryo();
-    kryo.setRegistrationRequired(false);
-//      kryo.register(FishModel.class);
-//      kryo.register(ArrayList.class);
-//      kryo.register(Tile.class);
-    FishModel modelCopy = kryo.copy(fishModel);
-//      kryo.register(Player.class);
-    ArrayList<Player> playersCopy = kryo.copy(playersSortedByAgeAscend);
-    ArrayList<Penguin> penguinsOnBoardCopy = kryo.copy(penguinsOnBoard);
+    Gson gson = new Gson();
+    FishModel modelCopy = gson.fromJson(gson.toJson(fishModel), FishModel.class);
+
+    Type playersType = new TypeToken<ArrayList<Player>>() {}.getType();
+    ArrayList<Player> playersCopy = gson.fromJson(gson.toJson(playersSortedByAgeAscend), playersType);
+
+    Type penguinsType = new TypeToken<ArrayList<Penguin>>() {}.getType();
+    ArrayList<Penguin> penguinsOnBoardCopy = gson.fromJson(gson.toJson(penguinsOnBoard), penguinsType);
     int nextPlayerIndex = getNextPlayerIndex();
     FishState fishStateCopy = new FishState(modelCopy, playersCopy, penguinsOnBoardCopy,
         nextPlayerIndex);
@@ -160,22 +196,21 @@ public class FishState {
 
   /**
    * placeInitPenguin places the initial position of the penguin based on the specific row and
-   * column. A player should only be able to place a penguin when its their turn, and the target
+   * column. A PlayerX should only be able to place a penguin when its their turn, and the target
    * position is in side of the board. The placement of penguin will be shown in the returned
    * next state.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or the row of the board.
-   * @param player the player who is going to place their penguin onto board.
+   * @param player the PlayerX who is going to place their penguin onto board.
    * @return FishState the next state after making the placement of penguin.
-   * @throws IllegalArgumentException when its now the player's turn or the target position is out
+   * @throws IllegalArgumentException when its now the PlayerX's turn or the target position is out
    * of the board.
    **/
 
 
   public FishState placeInitPenguin(int targetX, int targetY, Player player)
       throws IllegalArgumentException {
-//    System.out.println(currentPlayerNum);
     if (!isPlayerTurn(player)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
@@ -202,16 +237,16 @@ public class FishState {
 
   /**
    * makeMovement moves an existing penguin on the board to a specified row and column within the
-   * board. A player should only be able to move when its their turn, the penguin is theirs, and the
+   * board. A PlayerX should only be able to move when its their turn, the penguin is theirs, and the
    * target position is in side of the board. The movement of penguin will be shown in the returned
    * next state.
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or row of the board.
    * @param penguin the existing penguin on the board.
-   * @param player the player who is going to move a penguin.
+   * @param player the PlayerX who is going to move a penguin.
    * @return FishState the next state after the movement is made.
-   * @throws IllegalArgumentException when its now the player's turn, the player is not the owner of
+   * @throws IllegalArgumentException when its now the PlayerX's turn, the PlayerX is not the owner of
    * the penguin, the target position is out of the board or the target position is invalid to move
    * to.
    **/
@@ -224,12 +259,16 @@ public class FishState {
     if (!isPlayerTurn(player)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
+    if (!alreadyOnBoard(penguin.getId())){
+      throw new IllegalArgumentException("Error: The penguin is not on the board.");
+    }
     if (!isPenguinOwner(penguin, player)) {
-      throw new IllegalArgumentException("Error: not the owner of the penguin.");
+      throw new IllegalArgumentException("Error: Not the owner of the penguin.");
     }
     if (isPosOutOfBoard(targetX, targetY)) {
       throw new IllegalArgumentException("Error: Target position is out of board.");
     }
+
 
     ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(startX, startY);
     Tile targetTile = board.get(targetY).get(targetX);
@@ -259,12 +298,12 @@ public class FishState {
   }
 
   /**
-   * isPenguinOwner takes in a penguin and a player, and check if their penguin color are the same,
-   * which means whether the owner of the penguin is the player.
+   * isPenguinOwner takes in a penguin and a PlayerX, and check if their penguin color are the same,
+   * which means whether the owner of the penguin is the PlayerX.
    *
    * @param penguin a penguin
-   * @param player a player
-   * @return boolean determines whether the penguin and the player have a same penguin color.
+   * @param player a PlayerX
+   * @return boolean determines whether the penguin and the PlayerX have a same penguin color.
    */
   public boolean isPenguinOwner(Penguin penguin, Player player) {
     PenguinColor penguinColor = penguin.getColor();
@@ -320,11 +359,11 @@ public class FishState {
 
 
   /**
-   * isPlayerTurn is a helper function that checks whether the current player should be the one
+   * isPlayerTurn is a helper function that checks whether the current PlayerX should be the one
    * moving its penguin.
    *
-   * @param player the player that is trying to move a penguin.
-   * @return boolean value that determines whether its actually a player's turn.
+   * @param player the PlayerX that is trying to move a penguin.
+   * @return boolean value that determines whether its actually a PlayerX's turn.
    **/
   private boolean isPlayerTurn(Player player) {
     long playerId = player.getId();
@@ -366,6 +405,7 @@ public class FishState {
         penguin.setXPos(targetX);
         penguin.setYPos(targetY);
         penguinsOnBoard.add(penguin); //
+
       } else {
         penguin = getPenguinById(penguinId); //updating the penguin in the nextState.
         penguin.setXPos(targetX);
@@ -415,7 +455,7 @@ public class FishState {
    *
    * @param targetX the x position or the column of the board.
    * @param targetY the y position or the row of the board.
-   * @param playerId the id of the player whose total fish num will be added.
+   * @param playerId the id of the PlayerX whose total fish num will be added.
    **/
   private void addPlayerTotalFish(int targetX, int targetY, long playerId) {
 
