@@ -6,6 +6,8 @@ import models.Position;
 
 public class PlayerX {
 
+
+
    PenguinColor color;
    int score;
    ArrayList<ArrayList<Integer>> places;
@@ -15,6 +17,26 @@ public class PlayerX {
       this.score = score;
       this.color = color;
       this.places = new ArrayList<>();
+   }
+
+   public PenguinColor getColor() {
+      return color;
+   }
+
+   public void setColor(PenguinColor color) {
+      this.color = color;
+   }
+
+   public int getScore() {
+      return score;
+   }
+
+   public void setScore(int score) {
+      this.score = score;
+   }
+
+   public ArrayList<ArrayList<Integer>> getPlaces() {
+      return places;
    }
 
 

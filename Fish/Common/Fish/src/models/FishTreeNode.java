@@ -115,7 +115,7 @@ public class FishTreeNode {
    * @param board an ArrayList of ArrayList of tiles that represent the fish board game.
    * @return an ArrayList of positions of the given tiles on the board.
    **/
-  private ArrayList<Position> getPositionsOfTiles(ArrayList<Tile> tiles,
+  public static ArrayList<Position> getPositionsOfTiles(ArrayList<Tile> tiles,
       ArrayList<ArrayList<Tile>> board) {
     ArrayList<Position> positions = new ArrayList<>();
     for (Tile tile : tiles) {
@@ -139,7 +139,7 @@ public class FishTreeNode {
    * @param fishState the state of the Fish game.
    * @return an ArrayList of penguins that are controlled by the current player.
    **/
-  private ArrayList<Penguin> getPenguinsOfSameColor(FishState fishState) {
+  public static ArrayList<Penguin> getPenguinsOfSameColor(FishState fishState) {
     ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
     ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
     Player currentPlayer = players.get(fishState.getCurrentPlayerIndex());

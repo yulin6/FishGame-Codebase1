@@ -22,7 +22,7 @@
     <property name="http.nonProxyHosts" value="127.0.0.1|localhost|*.localhost"/>
     <property name="jdk.debug" value="release"/>
     <property name="maven.home" value="/usr/local/Cellar/maven/3.6.1/libexec"/>
-    <property name="surefire.test.class.path" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/test-classes:/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/classes:/Users/helloworld/.m2/repository/junit/junit/4.8/junit-4.8.jar:/Users/helloworld/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/Users/helloworld/.m2/repository/org/example/Fish/1.0-SNAPSHOT/Fish-1.0-SNAPSHOT.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/kryo/5.0.0-RC9/kryo-5.0.0-RC9.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/reflectasm/1.11.8/reflectasm-1.11.8.jar:/Users/helloworld/.m2/repository/org/objenesis/objenesis/3.0.1/objenesis-3.0.1.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar:"/>
+    <property name="surefire.test.class.path" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/test-classes:/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/classes:/Users/helloworld/.m2/repository/junit/junit/4.12/junit-4.12.jar:/Users/helloworld/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/helloworld/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/Users/helloworld/.m2/repository/org/example/Fish/1.0-SNAPSHOT/Fish-1.0-SNAPSHOT.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/kryo/5.0.0-RC9/kryo-5.0.0-RC9.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/reflectasm/1.11.8/reflectasm-1.11.8.jar:/Users/helloworld/.m2/repository/org/objenesis/objenesis/3.0.1/objenesis-3.0.1.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/Users/helloworld"/>
     <property name="user.language" value="en"/>
@@ -67,10 +67,10 @@
     <property name="java.class.version" value="56.0"/>
     <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="getAge" classname="PlayerTest" time="0.001"/>
+  <testcase name="getAge" classname="PlayerTest" time="0"/>
   <testcase name="setAge" classname="PlayerTest" time="0"/>
-  <testcase name="getTotalFish" classname="PlayerTest" time="0"/>
   <testcase name="addTotalFish" classname="PlayerTest" time="0"/>
+  <testcase name="getTotalFish" classname="PlayerTest" time="0"/>
   <testcase name="getPenguinColor" classname="PlayerTest" time="0"/>
   <testcase name="setPenguinColor" classname="PlayerTest" time="0"/>
 </testsuite>
