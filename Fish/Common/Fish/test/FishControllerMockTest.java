@@ -1,11 +1,6 @@
-import static org.junit.Assert.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import models.FishModel;
+import common.models.FishModel;
 import org.junit.Before;
-import org.junit.Test;
-import views.FishView;
+import common.views.FishView;
 
 /**
  * class for testing the FishControllerMock.

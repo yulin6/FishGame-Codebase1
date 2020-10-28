@@ -1,7 +1,7 @@
-import static org.junit.Assert.*;
-
-import models.Position;
+import common.models.Position;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * a test class for Position class

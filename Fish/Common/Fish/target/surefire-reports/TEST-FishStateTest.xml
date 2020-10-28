@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="FishStateTest" time="0.006" tests="21" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="FishStateTest" time="0.019" tests="21" errors="0" skipped="0" failures="0">
   <properties>
-    <property name="socksProxyHost" value="127.0.0.1"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
-    <property name="http.proxyHost" value="127.0.0.1"/>
     <property name="java.specification.version" value="12"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.class.path" value="/usr/local/Cellar/maven/3.6.1/libexec/boot/plexus-classworlds-2.6.0.jar"/>
-    <property name="https.proxyPort" value="1087"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
@@ -19,7 +16,6 @@
     <property name="user.country" value="CN"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/lib"/>
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
-    <property name="http.nonProxyHosts" value="127.0.0.1|localhost|*.localhost"/>
     <property name="jdk.debug" value="release"/>
     <property name="maven.home" value="/usr/local/Cellar/maven/3.6.1/libexec"/>
     <property name="surefire.test.class.path" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/test-classes:/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish/target/classes:/Users/helloworld/.m2/repository/junit/junit/4.12/junit-4.12.jar:/Users/helloworld/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/helloworld/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/Users/helloworld/.m2/repository/org/example/Fish/1.0-SNAPSHOT/Fish-1.0-SNAPSHOT.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/kryo/5.0.0-RC9/kryo-5.0.0-RC9.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/reflectasm/1.11.8/reflectasm-1.11.8.jar:/Users/helloworld/.m2/repository/org/objenesis/objenesis/3.0.1/objenesis-3.0.1.jar:/Users/helloworld/.m2/repository/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar:"/>
@@ -30,7 +26,6 @@
     <property name="java.version.date" value="2019-04-16"/>
     <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home"/>
     <property name="file.separator" value="/"/>
-    <property name="https.proxyHost" value="127.0.0.1"/>
     <property name="basedir" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
@@ -38,7 +33,6 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="ftp.nonProxyHosts" value="127.0.0.1|localhost|*.localhost"/>
     <property name="java.runtime.version" value="12.0.1+12"/>
     <property name="user.name" value="helloworld"/>
     <property name="path.separator" value=":"/>
@@ -54,7 +48,6 @@
     <property name="user.dir" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish"/>
     <property name="os.arch" value="x86_64"/>
     <property name="maven.multiModuleProjectDirectory" value="/Users/helloworld/Documents/Schooling in NEU/2020 Fall/Software Development/annetta/Fish/Common/Fish"/>
-    <property name="socksProxyPort" value="1086"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.library.path" value="/Users/helloworld/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
@@ -63,17 +56,15 @@
     <property name="classworlds.conf" value="/usr/local/Cellar/maven/3.6.1/libexec/bin/m2.conf"/>
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="library.jansi.path" value="/usr/local/Cellar/maven/3.6.1/libexec/lib/jansi-native"/>
-    <property name="socksNonProxyHosts" value="127.0.0.1|localhost|*.localhost"/>
     <property name="java.class.version" value="56.0"/>
-    <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="gameOver" classname="FishStateTest" time="0"/>
-  <testcase name="placePenguinFailed" classname="FishStateTest" time="0.001"/>
+  <testcase name="gameOver" classname="FishStateTest" time="0.001"/>
+  <testcase name="placePenguinFailed" classname="FishStateTest" time="0"/>
   <testcase name="placePenguinSucceed1" classname="FishStateTest" time="0"/>
-  <testcase name="placePenguinSucceed" classname="FishStateTest" time="0"/>
-  <testcase name="makeMovementSucceed" classname="FishStateTest" time="0"/>
-  <testcase name="makeMovementFailed" classname="FishStateTest" time="0.001"/>
-  <testcase name="makeMovementSucceed1" classname="FishStateTest" time="0"/>
+  <testcase name="placePenguinSucceed" classname="FishStateTest" time="0.001"/>
+  <testcase name="makeMovementSucceed" classname="FishStateTest" time="0.001"/>
+  <testcase name="makeMovementFailed" classname="FishStateTest" time="0.002"/>
+  <testcase name="makeMovementSucceed1" classname="FishStateTest" time="0.001"/>
   <testcase name="makeMovementSucceed3" classname="FishStateTest" time="0.001"/>
   <testcase name="placePenguinFailed1" classname="FishStateTest" time="0"/>
   <testcase name="placePenguinFailed2" classname="FishStateTest" time="0"/>
@@ -82,10 +73,10 @@
   <testcase name="placePenguinFailed5" classname="FishStateTest" time="0"/>
   <testcase name="makeMovementFailed1" classname="FishStateTest" time="0"/>
   <testcase name="makeMovementFailed2" classname="FishStateTest" time="0.001"/>
-  <testcase name="makeMovementFailed3" classname="FishStateTest" time="0"/>
-  <testcase name="makeMovementFailed4" classname="FishStateTest" time="0.001"/>
-  <testcase name="gameNotOver1" classname="FishStateTest" time="0"/>
+  <testcase name="makeMovementFailed3" classname="FishStateTest" time="0.001"/>
+  <testcase name="makeMovementFailed4" classname="FishStateTest" time="0.002"/>
+  <testcase name="gameNotOver1" classname="FishStateTest" time="0.001"/>
   <testcase name="gameNotOver2" classname="FishStateTest" time="0"/>
-  <testcase name="addTotalFishNum" classname="FishStateTest" time="0"/>
+  <testcase name="addTotalFishNum" classname="FishStateTest" time="0.001"/>
   <testcase name="gameNotOver" classname="FishStateTest" time="0"/>
 </testsuite>

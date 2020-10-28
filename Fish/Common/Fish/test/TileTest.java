@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
 
-import models.Tile;
+import common.models.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,21 +18,21 @@ public class TileTest {
 
   @Test
   public void isEmptyTrue() {
-    tile.setEmpty();
-    boolean isEmpty = tile.isEmpty();
+    tile.setToHole();
+    boolean isEmpty = tile.isHole();
     assertEquals(true, isEmpty);
   }
 
   @Test
   public void isEmptyFalse() {
-    boolean isEmpty = tile.isEmpty();
+    boolean isEmpty = tile.isHole();
     assertEquals(false, isEmpty);
   }
 
   @Test
   public void setEmpty() {
-    tile.setEmpty();
-    boolean isEmpty = tile.isEmpty();
+    tile.setToHole();
+    boolean isEmpty = tile.isHole();
     assertEquals(true, isEmpty);
   }
 

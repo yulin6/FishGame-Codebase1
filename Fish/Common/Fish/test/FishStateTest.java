@@ -1,11 +1,11 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import models.FishState;
-import models.FishModel;
-import models.Penguin;
-import models.PenguinColor;
-import models.Player;
+import common.models.FishState;
+import common.models.FishModel;
+import common.models.Penguin;
+import common.models.PenguinColor;
+import common.models.Player;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,9 +1,9 @@
-import static org.junit.Assert.*;
-
-import models.Penguin;
-import models.PenguinColor;
+import common.models.Penguin;
+import common.models.PenguinColor;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * A test class for testing Penguin class

@@ -1,9 +1,9 @@
-import static org.junit.Assert.*;
-
-import models.PenguinColor;
-import models.Player;
+import common.models.PenguinColor;
+import common.models.Player;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
 

@@ -1,13 +1,13 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import models.Actions.MovePenguinAction;
-import models.FishModel;
-import models.FishState;
-import models.FishTreeNode;
-import models.Penguin;
-import models.PenguinColor;
-import models.Player;
+import common.models.Actions.MovePenguinAction;
+import common.models.FishModel;
+import common.models.FishState;
+import common.models.FishTreeNode;
+import common.models.Penguin;
+import common.models.PenguinColor;
+import common.models.Player;
 import org.junit.Before;
 import org.junit.Test;
 

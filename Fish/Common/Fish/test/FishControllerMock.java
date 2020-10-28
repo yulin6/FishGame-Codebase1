@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import models.FishModel;
-import models.Tile;
-import views.FishView;
+import common.models.FishModel;
+import common.models.Tile;
+import common.views.FishView;
 
 /**
  * a mock of FishController class, which will be used for testing.
