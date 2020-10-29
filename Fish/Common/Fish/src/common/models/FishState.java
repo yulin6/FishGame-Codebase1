@@ -472,12 +472,13 @@ public class FishState {
    *
 //   * @param fishState the state of the Fish game.
    * @return an ArrayList of penguins that are controlled by the current player.
-   **/
-  public ArrayList<Penguin> getCurrentPlayerPenguins() {
+   *
+   * @param penguinColor*/
+  public ArrayList<Penguin> getPlayerPenguins(PenguinColor penguinColor) {
 //    ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
 //    ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
 
-    Player currentPlayer = playersSortedByAgeAscend.get(currentPlayerIndex);
+    Player currentPlayer = findPlayerWithTheColor(penguinColor);
     ArrayList<Penguin> penguinsOfSameColor = new ArrayList<>();
     for (Penguin penguin : penguinsOnBoard) {
       if (penguin.getColor().equals(currentPlayer.getPenguinColor())) {
@@ -485,6 +486,15 @@ public class FishState {
       }
     }
     return penguinsOfSameColor;
+  }
+
+  private Player findPlayerWithTheColor(PenguinColor penguinColor) {
+    for(Player player: playersSortedByAgeAscend){
+      if(player.getPenguinColor().equals(penguinColor)){
+        return player;
+      }
+    }
+    throw new IllegalArgumentException("Error: no player with the color.");
   }
 
 

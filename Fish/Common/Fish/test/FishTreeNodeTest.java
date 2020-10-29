@@ -256,209 +256,209 @@ public class FishTreeNodeTest {
     assertEquals(369, nextTreeNodes.size());
   }
 
-  @Test
-  public void actOnFishStateSucceed() {
-    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
+//  @Test
+//  public void actOnFishStateSucceed() {
+//    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
+//
+//    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+//    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+//    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+//
+//    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+//    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+//    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+//
+//    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+//    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
+//    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
+//
+//    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+//    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
+//    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+//
+//    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
+//    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
+//    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
+//
+//    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
+//    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
+//    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
+//
+//    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
+//    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
+//    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
+//
+//    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
+//    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
+//    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
+//
+//
+//    FishTreeNode tree = new FishTreeNode(null, nextState9);
+//    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
+//    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
+//    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
+//    playerRed = players9.get(currentPlayerIndex);
+//
+//    MovePenguinAction moveAction = new MovePenguinAction(2, 4, penguinRed, playerRed);
+//
+//    assertEquals(2, penguinRed.getXPos());
+//    assertEquals(2, penguinRed.getYPos());
+//    FishState nextState = tree.applyActionToState(tree, moveAction);
+//    penguinRed = nextState.getPenguinsOnBoard().get(0);
+//    assertEquals(2, penguinRed.getXPos());
+//    assertEquals(4, penguinRed.getYPos());
+//  }
 
-    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+//  @Test
+//  public void actOnFishStateFailed() {
+//    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
+//
+//    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+//    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+//    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+//
+//    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+//    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+//    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+//
+//    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+//    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
+//    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
+//
+//    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+//    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
+//    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+//
+//    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
+//    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
+//    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
+//
+//    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
+//    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
+//    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
+//
+//    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
+//    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
+//    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
+//
+//    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
+//    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
+//    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
+//
+//
+//    FishTreeNode tree = new FishTreeNode(null, nextState9);
+//    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
+//    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
+//    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
+//    playerRed = players9.get(currentPlayerIndex);
+//
+//    MovePenguinAction moveAction = new MovePenguinAction(3, 2, penguinRed, playerRed);
+//
+//    try {
+//      FishState nextState = tree.applyActionToState(tree, moveAction);
+//    } catch (IllegalArgumentException e){
+//      assertEquals("Error: Invalid position to move to.", e.getMessage());
+//    }
+//
+//
+//  }
 
-    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+//  @Test(expected = IllegalArgumentException.class)
+//  public void applyFunctionToStatesFailed() {
+//    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
+//
+//    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+//    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+//    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+//
+//    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+//    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+//    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+//
+//    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+//    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
+//    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
+//
+//    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+//    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
+//    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+//
+//    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
+//    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
+//    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
+//
+//    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
+//    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
+//    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
+//
+//    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
+//    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
+//    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
+//
+//    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
+//    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
+//    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
+//
+//
+//    FishTreeNode tree = new FishTreeNode(null, nextState9);
+//    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
+//    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
+//    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
+//    playerRed = players9.get(currentPlayerIndex);
+//
+//    MovePenguinAction moveAction = new MovePenguinAction(3, 2, penguinRed, playerRed);
+//
+//    ArrayList<FishState> nextState = tree.applyActionToStates(tree, moveAction);
+//  }
 
-    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
-
-    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
-
-    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
-
-    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
-
-    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
-
-    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
-
-
-    FishTreeNode tree = new FishTreeNode(null, nextState9);
-    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
-    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
-    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-    playerRed = players9.get(currentPlayerIndex);
-
-    MovePenguinAction moveAction = new MovePenguinAction(2, 4, penguinRed, playerRed);
-
-    assertEquals(2, penguinRed.getXPos());
-    assertEquals(2, penguinRed.getYPos());
-    FishState nextState = tree.applyActionToState(tree, moveAction);
-    penguinRed = nextState.getPenguinsOnBoard().get(0);
-    assertEquals(2, penguinRed.getXPos());
-    assertEquals(4, penguinRed.getYPos());
-  }
-
-  @Test
-  public void actOnFishStateFailed() {
-    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
-
-    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
-
-    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
-
-    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
-
-    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
-
-    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
-
-    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
-
-    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
-
-    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
-
-
-    FishTreeNode tree = new FishTreeNode(null, nextState9);
-    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
-    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
-    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-    playerRed = players9.get(currentPlayerIndex);
-
-    MovePenguinAction moveAction = new MovePenguinAction(3, 2, penguinRed, playerRed);
-
-    try {
-      FishState nextState = tree.applyActionToState(tree, moveAction);
-    } catch (IllegalArgumentException e){
-      assertEquals("Error: Invalid position to move to.", e.getMessage());
-    }
-
-
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void applyFunctionToStatesFailed() {
-    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
-
-    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
-
-    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
-
-    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
-
-    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
-
-    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
-
-    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
-
-    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
-
-    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
-
-
-    FishTreeNode tree = new FishTreeNode(null, nextState9);
-    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
-    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
-    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-    playerRed = players9.get(currentPlayerIndex);
-
-    MovePenguinAction moveAction = new MovePenguinAction(3, 2, penguinRed, playerRed);
-
-    ArrayList<FishState> nextState = tree.applyActionToStates(tree, moveAction);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void applyFunctionToStatesFailed1() {
-    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
-
-    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
-
-    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
-
-    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
-
-    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
-
-    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
-
-    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
-
-    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
-
-    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
-
-
-    FishTreeNode tree = new FishTreeNode(null, nextState9);
-    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
-    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
-    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-    playerRed = players9.get(currentPlayerIndex);
-
-    MovePenguinAction moveAction = new MovePenguinAction(-30, 2, penguinRed, playerRed);
-
-    ArrayList<FishState> nextState = tree.applyActionToStates(tree, moveAction);
-
-  }
+//  @Test(expected = IllegalArgumentException.class)
+//  public void applyFunctionToStatesFailed1() {
+//    FishState nextState1 = gameState1.placeInitPenguin(2, 2, playerRed);
+//
+//    ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
+//    playerBlack = players.get(nextState1.getCurrentPlayerIndex());
+//    FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+//
+//    ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
+//    playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
+//    FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+//
+//    ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
+//    playerRed = players3.get(nextState3.getCurrentPlayerIndex());
+//    FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerRed);
+//
+//    ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
+//    playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
+//    FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+//
+//    ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
+//    playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
+//    FishState nextState6 = nextState5.placeInitPenguin(3, 6, playerWhite);
+//
+//    ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
+//    playerRed = players6.get(nextState6.getCurrentPlayerIndex());
+//    FishState nextState7 = nextState6.placeInitPenguin(1, 5, playerRed);
+//
+//    ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
+//    playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
+//    FishState nextState8 = nextState7.placeInitPenguin(3, 2, playerBlack);
+//
+//    ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
+//    playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
+//    FishState nextState9 = nextState8.placeInitPenguin(1, 6, playerWhite);
+//
+//
+//    FishTreeNode tree = new FishTreeNode(null, nextState9);
+//    int currentPlayerIndex = nextState9.getCurrentPlayerIndex();
+//    Penguin penguinRed = nextState9.getPenguinsOnBoard().get(0);
+//    ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
+//    playerRed = players9.get(currentPlayerIndex);
+//
+//    MovePenguinAction moveAction = new MovePenguinAction(-30, 2, penguinRed, playerRed);
+//
+//    ArrayList<FishState> nextState = tree.applyActionToStates(tree, moveAction);
+//
+//  }
 
   @Test
   public void noParentNode() {

@@ -322,5 +322,18 @@ public class FishModel {
 //    Kyro kyro = new Kyro();
 //  }
 
+  public Position findTilePosition(Tile targetTile){
+    for (int i = 0; i < board.size(); ++i){
+      for (int j = 0; j < board.get(i).size(); ++j){
+        Tile tile = board.get(i).get(j);
+        if(tile.equals(targetTile)){
+          Position position = new Position(j, i);
+          return position;
+        }
+      }
+    }
+    throw new IllegalArgumentException("Error: the tile is not found on the board.");
+  }
+
 
 }

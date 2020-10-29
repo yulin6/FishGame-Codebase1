@@ -48,9 +48,10 @@ public class FishTreeNode {
 
       ArrayList<Player> players = currentState.getPlayersSortedByAgeAscend();
       Player currentPlayer = players.get(currentState.getCurrentPlayerIndex());
+      PenguinColor currentPlayerColor = currentPlayer.getPenguinColor();
       ArrayList<ArrayList<Tile>> board = currentState.getBoard();
       FishModel model = currentState.getFishModel();
-      ArrayList<Penguin> penguinsOfTheSameColor = currentState.getCurrentPlayerPenguins();
+      ArrayList<Penguin> penguinsOfTheSameColor = currentState.getPlayerPenguins(currentPlayerColor);
 
       for (Penguin penguin : penguinsOfTheSameColor) {
 //        System.out.println("next penguin");

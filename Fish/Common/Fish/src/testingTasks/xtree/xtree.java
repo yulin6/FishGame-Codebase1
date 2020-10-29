@@ -6,14 +6,8 @@ import com.google.gson.Gson;
 
 import java.util.*;
 
+import common.models.*;
 import common.models.Actions.MovePenguinAction;
-import common.models.FishModel;
-import common.models.FishState;
-import common.models.FishTreeNode;
-import common.models.Penguin;
-import common.models.Player;
-import common.models.Position;
-import common.models.Tile;
 import testingTasks.xstate.FishStateX;
 import testingTasks.xstate.PlayerX;
 
@@ -113,22 +107,25 @@ public class xtree {
 //    }
     int currentPlayerIndex = fishState.getCurrentPlayerIndex();
     Player currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+
     Penguin targetPenguin = findTargetPenguin(from, penguinsOnBoard);
 
+    int fromX = targetPenguin.getXPos();
+    int fromY = targetPenguin.getYPos();
     int toX = to.get(1);
     int toY = to.get(0);
-    MovePenguinAction movePenguinAction = new MovePenguinAction(toX, toY, targetPenguin,
-        currentPlayer);
+    MovePenguinAction movePenguinAction = new MovePenguinAction(fromX, fromY, toX, toY);
     FishTreeNode treeNode = new FishTreeNode(null, fishState);
     fishState = treeNode.applyActionToState(treeNode, movePenguinAction);
 
-//    currentPlayerIndex = fishState.getCurrentPlayerIndex();
-//    currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+    currentPlayerIndex = fishState.getCurrentPlayerIndex();
+    currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+    PenguinColor currentPlayerColor = currentPlayer.getPenguinColor();
     FishModel model = fishState.getFishModel();
     board = fishState.getBoard();
 
     ArrayList<ArrayList<Integer>> neighboringTiles = findNeighboringTilesPos(toX, toY, boardX);
-    ArrayList<Penguin> penguinsOfTheSameColor = fishState.getCurrentPlayerPenguins();
+    ArrayList<Penguin> penguinsOfTheSameColor = fishState.getPlayerPenguins(currentPlayerColor);
     Comparator<Penguin> comp = Comparator.comparing(Penguin::getYPos).thenComparing(Penguin::getXPos);
     penguinsOfTheSameColor.sort(comp);
 //    System.out.println(penguinsOfTheSameColor.get(0).getXPos() + " " + penguinsOfTheSameColor.get(0).getYPos());
@@ -178,7 +175,7 @@ public class xtree {
   }
 
   private static Penguin findTargetPenguin(ArrayList<Integer> from,
-      ArrayList<Penguin> penguinsOnBoard) {
+      ArrayList<Penguin> penguinsOnBoard) throws IllegalArgumentException{
     for (Penguin penguin : penguinsOnBoard) {
       int xPos = penguin.getXPos();
       int yPos = penguin.getYPos();
@@ -187,7 +184,7 @@ public class xtree {
         return penguin;
       }
     }
-    return null;
+    throw new IllegalArgumentException("Error: no such penguin placing in the position.");
   }
 
   private static ArrayList<ArrayList<Integer>> findNeighboringTilesPos(int xPos, int yPos,
