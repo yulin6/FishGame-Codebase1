@@ -12,6 +12,7 @@
     |   | games.md
     |   | self-3.md
     |   | player-protocol.md
+    |   | referee.md
     | Common
     |   | state.java 
     |   | player-interface.java   

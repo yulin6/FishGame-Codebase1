@@ -2,15 +2,15 @@
 The tournament manager will set up the initial parts of the game like the referee and the players. We think we could implement a tournament manager by creating a builder pattern. Moreover, we also believe that there will also be a “Game Component” which are the games in a tournament and each game would have referee and ArrayList of players.
 
 #### Referee:
-The referee built the initial game model from the information given from the tournament manager. The referee then constructs the model and creates the initial fish state before any penguins are placed on the board. The referee also has the ability to create holes on the board.
+The referee built the initial game model from the information given from the tournament manager/Game component. The referee then constructs the model which contains the game board and creates the initial fish state before any penguins are placed on the board. The referee also has the ability to create holes on the board.
 
-The referee communicates with the players and are given actions to place penguins on the board and determines if each placement is a legal and valid.
+Before all the penguins are placed, the referee communicates with the players and are given actions to place penguins on the board and determines if each placement is a legal and valid.
 
-Through out the game, the referee will continue to communicate with the players by getting each turn of player per round in which the players send out actions and the referee determines if their movement is legal and valid. Each legal movement then modifies the true state of the game and players are given a copy of the state of the game.
+Through out the game, the referee will continue to communicate with the players by getting each turn of player per round in which the players send out move actions and the referee determines if their movement is legal and valid. Each legal movement then modifies the actual state of the game and players are given a copy of the state of the game.
 
 If a player makes an illegal move, a referee has the right to kick a player out of the game and remove a penguin on the board. The referee also has the ability to shut down the game if there are any problems during the game. 
 
-The referee could determine if the game is over, after there are no other possible movement that any player can make. The referee will then report the outcome of the game through a new class called GameReport that reports the ending fish state, the arraylist of players that failed and cheat and also the winning player.
+The referee could determine if the game is over, after there are no other possible movement that any player can make. The referee will then report the outcome of the game through a new class called GameReport that contains the ending fish state, the arraylist of players that failed and cheat and also the winning player.
 
 #### Referee Interface:
 
@@ -28,8 +28,8 @@ The referee could determine if the game is over, after there are no other possib
 
 
 
-    /** Executes an action that is given from the player to the current FishState game by changing
-     * placement of the penguin, adding of score to the player and the whole fish state.
+    /** Executes an action that is given from the player, which will result into a new game state
+     * where the penguin placement is different and the player's score is updated.
      *
      * @return If the action is  valid, then returns the fish state corresponding to the action given.
      * @throws IllegalArgumentException If the action is illegal.
@@ -38,20 +38,19 @@ The referee could determine if the game is over, after there are no other possib
 
 
 
-    /**Determines if the current fish game is over.
+    /**Determines if the current fish game is over based on the current game state.
      *
-     * @param fishState the current fish game state.
      * @return a boolean value that determines if the game is over.
      */
-     boolean isGameOver(FishState fishState);
+     boolean isGameOver();
 
 
 
-    /** Removes a player from the Fish Game State.
+    /** Removes a player and its penguins from the Game State.
      *
      * @param player that has made an illegal move.
      */
-    void removePlayer(Player player);
+    void removePlayerAndPenguins(Player player);
 
 
 
