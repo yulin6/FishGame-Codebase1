@@ -25,33 +25,42 @@
     |   |   |   | Main.java  
     |   |   |   | xboard.java 
     |   |   |   | META-INF
-    |   |   |   | controllers
-    |   |   |   |   | FishController.java
-    |   |   |   | models
-    |   |   |   |   | Actions
-    |   |   |   |   |   | IAction.java 
-    |   |   |   |   |   | MovePenguinAction.java    
-    |   |   |   |   | FishGameTreeNode.java
-    |   |   |   |   | FishGameState.java
-    |   |   |   |   | FishModel.java 
-    |   |   |   |   | Tile.java
-    |   |   |   |   | Player.java 
-    |   |   |   |   | Penguin.java 
-    |   |   |   |   | Position.java 
-    |   |   |   |   | PenguinColor.java
-    |   |   |   | views
-    |   |   |   |   | FishView.java 
-    |   |   |   |   | TilesPanel.java   
+    |   |   |   | common
+    |   |   |   |   | controllers
+    |   |   |   |   |   | FishController.java
+    |   |   |   |   | models
+    |   |   |   |   |   | Actions
+    |   |   |   |   |   |   | IAction.java 
+    |   |   |   |   |   |   | MovePenguinAction.java
+    |   |   |   |   |   |   | MiniMaxAction.java    
+    |   |   |   |   |   | FishGameTreeNode.java
+    |   |   |   |   |   | FishGameState.java
+    |   |   |   |   |   | FishModel.java 
+    |   |   |   |   |   | Tile.java
+    |   |   |   |   |   | Player.java 
+    |   |   |   |   |   | Penguin.java 
+    |   |   |   |   |   | Position.java 
+    |   |   |   |   |   | PenguinColor.java
+    |   |   |   |   | views
+    |   |   |   |   |   | FishView.java 
+    |   |   |   |   |   | TilesPanel.java  
+    |   |   |   | player
+    |   |   |   |   | Strategy.java
     |   |   | test
-    |   |   |   | FishControllerMock.java 
-    |   |   |   | FishControllerMockTest.java 
-    |   |   |   | FishGameStateTest.java 
-    |   |   |   | FishTreeNodeTest.java 
-    |   |   |   | PositionTest.java
-    |   |   |   | FishModelTest.java
-    |   |   |   | TileTest.java 
-    |   |   |   | PlayerTest.java
-    |   |   |   | PenguinTest.java 
+    |   |   |   | common
+    |   |   |   |   | FishControllerMock.java 
+    |   |   |   |   | FishControllerMockTest.java 
+    |   |   |   |   | FishGameStateTest.java 
+    |   |   |   |   | FishTreeNodeTest.java 
+    |   |   |   |   | PositionTest.java
+    |   |   |   |   | FishModelTest.java
+    |   |   |   |   | TileTest.java 
+    |   |   |   |   | PlayerTest.java
+    |   |   |   |   | PenguinTest.java 
+    |   |   |   |   | MovePenguinActionTest.java 
+    |   |   |   |   | MiniMaxActionTest.java 
+    |   |   |   | player
+    |   |   |   |   | StrategyTest.java
 
 ### Test
 
@@ -88,7 +97,7 @@ To run single/specific test(s):
 3. Locate the test files where you can run single tests or the entire classes of tests.
 
 #### Test Result:
-Tests run: 62, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 59, Failures: 0, Errors: 0, Skipped: 0
 
 ## Milestones
 ### 2 — The Game Pieces
@@ -316,3 +325,98 @@ Output:
         {"color":"black","score":6,"places":[[1,0],[1,1]]},
         {"color":"white","score":2,"places":[[2,1],[2,2]]}],
     "board":[[0,1,1],[1,5,1],[5,1,1],[5,1,1]]}
+
+
+### 5 - The Strategy
+
+A strategy component that takes care of two decisions:
+
+- penguin placements
+
+    - It places a penguin in the next available free spot followning a zig zag pattern that starts at the top left corner. That is, the search goes from left to right in each row and moves down to the next row when one is filled up.
+
+    - This piece of functionality may assume that the referee will set up a game board that is large enough to accommodate all the penguins of all the players.
+
+- a choice of action for the player whose turn it is
+
+    - It picks the action that realizes the best gain after looking ahead N > 0 turns for this player in the game tree for the current state.
+
+    - The minimal maximum best gain after N turns is the highest score a player can make after playing the specified number of turns—assuming that all opponents pick one of the moves that minimizes the player’s gain.
+
+    - Tie Breaker: If several different actions can realize the same gain, the strategy moves the penguin that has the lowest row number for the place from which the penguin is moved and, within this row, the lowest column number. 
+
+#### Implementations
+
+    Strategy
+
+A strategy class is a strategy to do two functionality, first is for the penguin placement and second is to pick an action for a player. The penguin placement is done through doing a zig-zag search on the board and returning a position of the penguin. The second functionality, uses a minimax optimization in order to pick the best action to move their penguin  after placing them on the board.
+
+    MiniMaxAciton
+
+A MiniMaxAction is class that represent the moves a player can make through utilizing the minimaxGain strategy and has a parameter of an ArrayList of MovePenguinAction that moves the penguin for which movement decided by the strategy. The purpose of the class is for gathering and showing the moves that a player can make to minimax their gain, so the performAction method is not going to perform the list of movePenguinActions. Instead, the player should call performAction() on each of the MovePenguinAction to make the move when it is their turn.
+
+
+#### Test Harness
+he harness consumes its JSON input from STDIN and produces its results to STDOUT. The tests are formulated as pairs of files: \<n>-in.json, the input, and \<n>-out.json, the expected result, for an integer \<n> ranged from 1 to 4.
+
+Input
+    Its inputs are objects with thtee fields:
+    Move-Response-Query is
+
+     { "state" : State,
+
+       "from" : Position,
+
+       "to" : Position }
+
+    INTERPRETATION The object describes the current state and the move that the
+
+    currently active player picked. CONSTRAINT The object is invalid, if the
+
+    specified move is illegal in the given state.
+
+Its expected output is the action that the next player can take to get a penguin to a place that neighbors the one that the first player just conquered:
+     Action is
+
+    either
+
+     false
+
+    or
+
+     [ Position, Position ]
+
+    INTERPRETATION The array describes the opponent's move from the first
+
+    position to the second; if the desired kind of move isn't possible, the
+
+    harness delivers False false.
+
+Tie breaker - when two distinct penguins can move to the same spot:
+
+    If more than one position satisfies the "closeness" condition, a tie breaker 
+    algorithm picks by the top-most row of the "from" position, the left-most 
+    column of the  "from" position, the top-most row of the "to" position, 
+    and the left-most column of the "to" position---in exactly this order.
+
+The neighboring tiles:
+
+    Neiboring tiles are searched in the following order: North, NorthEast, SouthEast, 
+    South, SouthWest, and NorthWest.
+
+Executable Location:
+
+    annetta/5/xtree
+
+Tests Files Location:
+
+    annetta/5/Tests/<n>-in.json, <n>-out.json
+
+##### Running example:
+In console:
+
+    cat ./Tests/1-in.json | ./xtree
+
+Output:
+
+    [[0,2][2,2]]

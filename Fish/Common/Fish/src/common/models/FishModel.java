@@ -8,7 +8,8 @@ import java.util.Random;
  * ArrayList of ArrayList of Fish Tiles. There are two types (modes) of game board, one (RANDOM)is
  * having randomly number of fishes on each tiles with a minimum number of 1-fish tiles. Another one
  * (NONRANDOM) has each tiles with the same number of fish numbers. The common.Main methods are emptyTile,
- * getPossibleMoves and getBoardCopy.
+ * getPossibleMoves and getBoardCopy. For the detail of the tiles indexing, please refer to the example
+ * in the README.
  */
 public class FishModel {
 
@@ -318,10 +319,12 @@ public class FishModel {
 //    return boardCopy;
   }
 
-//  public ArrayList<ArrayList<Tile>> getBoardCopy() {
-//    Kyro kyro = new Kyro();
-//  }
 
+  /**
+   * Gets the position on a specific target tile on the board.
+   * @param targetTile the tile that is about to be moved.
+   * @return the position of the target tile.
+   */
   public Position findTilePosition(Tile targetTile){
     for (int i = 0; i < board.size(); ++i){
       for (int j = 0; j < board.get(i).size(); ++j){

@@ -1,1 +1,1 @@
-// see Common/Fish/src/models/FishGameState.java
+// see Common/Fish/src/common/models/FishGameState.java

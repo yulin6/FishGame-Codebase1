@@ -5,7 +5,7 @@ package common.models;
  */
 public class Penguin {
 
-//  Player PlayerX;
+  //  Player PlayerX;
   private PenguinColor color;
   private long id;
   private int xPos;
@@ -50,18 +50,34 @@ public class Penguin {
     this.color = color;
   }
 
+  /**
+   * gets the x position of the penguin.
+   * @return the x position or the column number of the penguin.
+   */
   public int getXPos() {
     return xPos;
   }
 
+  /**
+   * sets the x position or the column number of the penguin.
+   * @param xPos or column number of the penguin.
+   */
   public void setXPos(int xPos) {
     this.xPos = xPos;
   }
 
+  /**
+   * gets the y position of the penguin.
+   * @return the y position or the row number of the penguin.
+   */
   public int getYPos() {
     return yPos;
   }
 
+  /**
+   * sets the y position or the row number of the penguin.
+   * @param yPos or row number of the penguin.
+   */
   public void setYPos(int yPos) {
     this.yPos = yPos;
   }

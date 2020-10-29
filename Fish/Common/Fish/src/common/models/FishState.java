@@ -467,13 +467,13 @@ public class FishState {
 
   }
 
-  /** A method that gets the the array list of penguins controlled by the current player from a
-   * certain FishState, which means their PenguinColor are the same.
+
+  /**
+   * The method gets all the penguins that has the same color as the given color.
    *
-//   * @param fishState the state of the Fish game.
-   * @return an ArrayList of penguins that are controlled by the current player.
-   *
-   * @param penguinColor*/
+   * @param penguinColor color of the penguin.
+   * @return Arraylist of Penguins.
+   */
   public ArrayList<Penguin> getPlayerPenguins(PenguinColor penguinColor) {
 //    ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
 //    ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
@@ -488,6 +488,11 @@ public class FishState {
     return penguinsOfSameColor;
   }
 
+  /**
+   * A method that checks whether a player has the same color as a certain PenguinColor.
+   * @param penguinColor the color of the penguin.
+   * @return the Player that has the same color as the specified PenguinColor.
+   */
   private Player findPlayerWithTheColor(PenguinColor penguinColor) {
     for(Player player: playersSortedByAgeAscend){
       if(player.getPenguinColor().equals(penguinColor)){

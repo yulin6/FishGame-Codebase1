@@ -16,23 +16,21 @@ public class MovePenguinAction implements IAction {
   private int startY;
   private int targetX;
   private int targetY;
-  private Penguin penguin;
-  private Player player;
 
-  /** MovePenguinAction constructor that acts as a mameMovement method that takes in a targetX,
+
+  /**
+   * MovePenguinAction constructor that acts as a mameMovement method that takes in a targetX,
    * targetY, penguin and player and creates a movement from these variables.
-   * @param targetX the column on the fish board.
-   * @param targetY the row on the fish board.
-//   * @param penguin the penguin that is controlled by a player.
-//   * @param player a player playing the game of Fish.
-   **/
+   * @param startX x coordinate of the start position in the move action.
+   * @param startY y coordinate of the start position in the move action.
+   * @param targetX x coordinate of the target position in the move action.
+   * @param targetY y coordinate of the target position in the move action.
+   */
   public MovePenguinAction(int startX, int startY, int targetX, int targetY) {
     this.targetX = targetX;
     this.targetY = targetY;
     this.startX = startX;
     this.startY = startY;
-//    this.penguin = penguin;
-//    this.player = player;
   }
 
   @Override
@@ -46,6 +44,12 @@ public class MovePenguinAction implements IAction {
     return actionPerformedState;
   }
 
+  /**
+   * Gets the penguin on the board based on the FishState given in order to perform an action
+   * to that specific penguin based on its current x and y position.
+   * @param fishState is the current state of the game.
+   * @return a penguin that is going to be moved.
+   */
   private Penguin getPenguinOnState(FishState fishState) {
     ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
     for (Penguin penguin: penguinsOnBoard) {
@@ -56,6 +60,11 @@ public class MovePenguinAction implements IAction {
     throw new IllegalArgumentException("Error: Penguin not Found in Position");
   }
 
+  /**
+   * Get the player on the board corresponding to the current penguin that is about to be moved.
+   * @param fishState is the current state of the game.
+   * @return a player that controls a specific penguin.
+   */
   private Player getPlayerOnState(FishState fishState) {
     ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
     Penguin currPenguin = this.getPenguinOnState(fishState);
@@ -65,6 +74,21 @@ public class MovePenguinAction implements IAction {
       }
     }
     throw new IllegalArgumentException("Error: Player not Found");
+  }
+
+  /**
+   * The getter method forms the startX, startY, targetX and targetY into a arraylist of Integer,
+   * which can be used for checking the starting and targeting positions of the move action.
+   *
+   * @return arraylist of Integer which is formed by startX, startY, targetX and targetY
+   */
+  public ArrayList<Integer> getMoveActionPositions(){
+    ArrayList<Integer> positions = new ArrayList<>();
+    positions.add(startX);
+    positions.add(startY);
+    positions.add(targetX);
+    positions.add(targetY);
+    return positions;
   }
 
 
