@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: common.FishStateTest
+Test set: common.MiniMaxActionTest
 -------------------------------------------------------------------------------
-Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s - in common.FishStateTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in common.MiniMaxActionTest

@@ -151,8 +151,7 @@ public class Strategy {
 
             ArrayList<Tile> possibleMoves = currentModel.getPossibleMoves(xPos, yPos);
             if (!possibleMoves.isEmpty()) {
-                possibleMoves.sort(fishNumComparator);
-                Tile maxTile = possibleMoves.get(possibleMoves.size() - 1);
+                Tile maxTile = Collections.max(possibleMoves, fishNumComparator);
                 maxTiles.add(maxTile);
             } else {
                 //To keep the index of elements in maxTiles aligned with the index of currentPlayerPenguins.

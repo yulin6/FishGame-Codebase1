@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="common.FishTreeNodeTest" time="1.756" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="common.MiniMaxActionTest" time="0.003" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="socksProxyHost" value="127.0.0.1"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -67,13 +67,8 @@
     <property name="java.class.version" value="56.0"/>
     <property name="http.proxyPort" value="1087"/>
   </properties>
-  <testcase name="currentState1" classname="common.FishTreeNodeTest" time="0.315"/>
-  <testcase name="createCurrentLayerTree" classname="common.FishTreeNodeTest" time="0.013"/>
-  <testcase name="createNextLayerTreeNodes" classname="common.FishTreeNodeTest" time="0.107"/>
-  <testcase name="needMorePenguinsOnBoard" classname="common.FishTreeNodeTest" time="0"/>
-  <testcase name="needMorePenguinsOnBoard1" classname="common.FishTreeNodeTest" time="0.002"/>
-  <testcase name="parentNode1" classname="common.FishTreeNodeTest" time="0.08"/>
-  <testcase name="noParentNode" classname="common.FishTreeNodeTest" time="0.006"/>
-  <testcase name="currentState" classname="common.FishTreeNodeTest" time="0.008"/>
-  <testcase name="createNextTwoLayerTreeNodes" classname="common.FishTreeNodeTest" time="1.218"/>
+  <testcase name="getMovePenguinActions2" classname="common.MiniMaxActionTest" time="0.001"/>
+  <testcase name="addMovePenguinAction" classname="common.MiniMaxActionTest" time="0"/>
+  <testcase name="addMovePenguinAction2" classname="common.MiniMaxActionTest" time="0"/>
+  <testcase name="getMovePenguinActions" classname="common.MiniMaxActionTest" time="0"/>
 </testsuite>
