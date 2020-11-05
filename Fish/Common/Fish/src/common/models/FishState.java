@@ -21,7 +21,7 @@ public class FishState {
 
   private FishModel fishModel;
   private ArrayList<ArrayList<Tile>> board;
-  private ArrayList<Player> playersSortedByAgeAscend;
+  private ArrayList<PlayerInfo> allPlayerInfos;
   private ArrayList<Penguin> penguinsOnBoard;
   private int currentPlayerIndex;
   private int totalPlayerNum;
@@ -30,10 +30,14 @@ public class FishState {
    * The constructor of the FishState takes in a FishModel and an ArrayList of Player.
    *
    * @param fishModel is the current model that the tournament will be using.
-   * @param players is the ArrayList of Player that will be playing in the tournament.
+   * @param allPlayerInfos is the ArrayList of Player that will be playing in the tournament.
    **/
-  public FishState(FishModel fishModel, ArrayList<Player> players) {
-    setUpState(fishModel, players);
+  public FishState(FishModel fishModel, ArrayList<PlayerInfo> allPlayerInfos) {
+    this.totalPlayerNum = allPlayerInfos.size();
+    if (totalPlayerNum < 2 || totalPlayerNum > 4) {
+      throw new IllegalArgumentException("Error: Invalid number of players.");
+    }
+    setUpState(fishModel, allPlayerInfos);
     this.penguinsOnBoard = new ArrayList<Penguin>();
     this.currentPlayerIndex = 0;
   }
@@ -41,16 +45,17 @@ public class FishState {
   /**
    * The private constructor is used for making copy of the current state and use it as the
    * next state. The fishModel, players, penguinsOnBoard will be exactly the same when creating
-   * the state, but the ideal currentPlayerIndex should be the next PlayerX index.
+   * the state, but the ideal currentPlayerIndex should be the next player index.
    *
    * @param fishModel is the model copy for the state.
-   * @param players the array list copy of players for the state.
+   * @param allPlayerInfos the array list copy of players for the state.
    * @param penguinsOnBoard the array list copy of penguins on board for the state.
    * @param currentPlayerIndex the current PlayerX index for the state.
    */
-  private FishState(FishModel fishModel, ArrayList<Player> players,
+  private FishState(FishModel fishModel, ArrayList<PlayerInfo> allPlayerInfos,
       ArrayList<Penguin> penguinsOnBoard, int currentPlayerIndex) {
-    setUpState(fishModel, players);
+    this.totalPlayerNum = allPlayerInfos.size();
+    setUpState(fishModel, allPlayerInfos);
     this.penguinsOnBoard = penguinsOnBoard;
     this.currentPlayerIndex = currentPlayerIndex;
   }
@@ -60,18 +65,15 @@ public class FishState {
    * is valid, and then assign the variables and sort the players list of their age.
    *
    * @param fishModel is the model copy for the state.
-   * @param players the array list copy of players for the state.
+   * @param playerInfos the array list copy of players for the state.
    */
-  private void setUpState(FishModel fishModel, ArrayList<Player> players) {
-    this.totalPlayerNum = players.size();
-    if (totalPlayerNum < 2 || totalPlayerNum > 4) {
-      throw new IllegalArgumentException("Error: Invalid number of players.");
-    }
-    throwIfPlayersColorDuplicate(players);
+  private void setUpState(FishModel fishModel, ArrayList<PlayerInfo> playerInfos) {
+
+    throwIfPlayersColorDuplicate(playerInfos);
     this.fishModel = fishModel;
     this.board = fishModel.getBoard();
-    players.sort((p1, p2) -> Integer.valueOf(p1.getAge()).compareTo(p2.getAge()));
-    this.playersSortedByAgeAscend = players;
+    playerInfos.sort((p1, p2) -> Integer.valueOf(p1.getAge()).compareTo(p2.getAge()));
+    this.allPlayerInfos = playerInfos;
   }
 
   public FishModel getFishModel() {
@@ -102,8 +104,8 @@ public class FishState {
    *
    * @return array list of PlayerX in the state, which is sorted by age.
    */
-  public ArrayList<Player> getPlayersSortedByAgeAscend() {
-    return playersSortedByAgeAscend;
+  public ArrayList<PlayerInfo> getAllPlayerInfos() {
+    return allPlayerInfos;
   }
 
   /**
@@ -116,16 +118,16 @@ public class FishState {
     return currentPlayerIndex;
   }
 
-  private void throwIfPlayersColorDuplicate(ArrayList<Player> players) throws IllegalArgumentException{
+  private void throwIfPlayersColorDuplicate(ArrayList<PlayerInfo> playerInfos) throws IllegalArgumentException{
     int redNum = 0;
     int blackNum = 0;
     int whiteNum = 0;
     int brownNum = 0;
-    for(Player player : players){
-      if (player.getPenguinColor().equals(red))  ++redNum;
-      else if (player.getPenguinColor().equals(black))  ++blackNum;
-      else if (player.getPenguinColor().equals(white))  ++whiteNum;
-      else if (player.getPenguinColor().equals(brown))  ++brownNum;
+    for(PlayerInfo playerInfo : playerInfos){
+      if (playerInfo.getPenguinColor().equals(red))  ++redNum;
+      else if (playerInfo.getPenguinColor().equals(black))  ++blackNum;
+      else if (playerInfo.getPenguinColor().equals(white))  ++whiteNum;
+      else if (playerInfo.getPenguinColor().equals(brown))  ++brownNum;
     }
     if(redNum > 1 || blackNum > 1 || whiteNum > 1 || brownNum > 1){
       throw new IllegalArgumentException("Error: Found players with duplicated colors.");
@@ -145,8 +147,8 @@ public class FishState {
     int whiteNum = penguinNumEachPlayer;
     int brownNum = penguinNumEachPlayer;
 
-    for (Player player : playersSortedByAgeAscend){
-      PenguinColor color = player.getPenguinColor();
+    for (PlayerInfo playerInfo : allPlayerInfos){
+      PenguinColor color = playerInfo.getPenguinColor();
       if(color.equals(red)) redNum = 0;
       else if (color.equals(black)) blackNum = 0;
       else if (color.equals(white)) whiteNum = 0;
@@ -178,12 +180,12 @@ public class FishState {
    * @return a copy of the the current state, its currentPlayerIndex will be the next index
    * of the players list
    */
-  private FishState createStateCopy() {
+  public FishState createNextState() {
     Gson gson = new Gson();
     FishModel modelCopy = gson.fromJson(gson.toJson(fishModel), FishModel.class);
 
-    Type playersType = new TypeToken<ArrayList<Player>>() {}.getType();
-    ArrayList<Player> playersCopy = gson.fromJson(gson.toJson(playersSortedByAgeAscend), playersType);
+    Type playersType = new TypeToken<ArrayList<PlayerInfo>>() {}.getType();
+    ArrayList<PlayerInfo> playersCopy = gson.fromJson(gson.toJson(allPlayerInfos), playersType);
 
     Type penguinsType = new TypeToken<ArrayList<Penguin>>() {}.getType();
     ArrayList<Penguin> penguinsOnBoardCopy = gson.fromJson(gson.toJson(penguinsOnBoard), penguinsType);
@@ -193,6 +195,10 @@ public class FishState {
     return fishStateCopy;
   }
 
+//  public FishState skip() {
+//    return createNextStateCopy();
+//  }
+
   /**
    * placeInitPenguin places the initial position of the penguin based on the specific row and
    * column. A PlayerX should only be able to place a penguin when its their turn, and the target
@@ -201,16 +207,16 @@ public class FishState {
    *
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or the row of the board.
-   * @param player the PlayerX who is going to place their penguin onto board.
+   * @param playerInfo the PlayerX who is going to place their penguin onto board.
    * @return FishState the next state after making the placement of penguin.
    * @throws IllegalArgumentException when its now the PlayerX's turn or the target position is out
    * of the board.
    **/
 
 
-  public FishState placeInitPenguin(int targetX, int targetY, Player player)
+  public FishState placeInitPenguin(int targetX, int targetY, PlayerInfo playerInfo)
       throws IllegalArgumentException {
-    if (!isPlayerTurn(player)) {
+    if (!isPlayerTurn(playerInfo)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
     if (isPosOutOfBoard(targetX, targetY)) {
@@ -221,11 +227,11 @@ public class FishState {
     }
 
 
-    PenguinColor penguinColor = player.getPenguinColor();
+    PenguinColor penguinColor = playerInfo.getPenguinColor();
     Penguin penguin = new Penguin(penguinColor);
-    FishState nextState = createStateCopy();
+    FishState nextState = createNextState();
     nextState.updatePenguinPos(targetX, targetY, penguin);
-    nextState.addPlayerTotalFish(targetX, targetY, player.getId());
+    nextState.addPlayerTotalFish(targetX, targetY, playerInfo.getId());
 
     return nextState;
   }
@@ -243,25 +249,25 @@ public class FishState {
    * @param targetX the target x position or column of the board.
    * @param targetY the target y position or row of the board.
    * @param penguin the existing penguin on the board.
-   * @param player the PlayerX who is going to move a penguin.
+   * @param playerInfo the PlayerX who is going to move a penguin.
    * @return FishState the next state after the movement is made.
    * @throws IllegalArgumentException when its now the PlayerX's turn, the PlayerX is not the owner of
    * the penguin, the target position is out of the board or the target position is invalid to move
    * to.
    **/
-  public FishState makeMovement(int targetX, int targetY, Penguin penguin, Player player)
+  public FishState makeMovement(int targetX, int targetY, Penguin penguin, PlayerInfo playerInfo)
       throws IllegalArgumentException {
 
     int startX = penguin.getXPos();
     int startY = penguin.getYPos();
 
-    if (!isPlayerTurn(player)) {
+    if (!isPlayerTurn(playerInfo)) {
       throw new IllegalArgumentException("Error: Not your turn.");
     }
     if (!alreadyOnBoard(penguin.getId())){
       throw new IllegalArgumentException("Error: The penguin is not on the board.");
     }
-    if (!isPenguinOwner(penguin, player)) {
+    if (!isPenguinOwner(penguin, playerInfo)) {
       throw new IllegalArgumentException("Error: Not the owner of the penguin.");
     }
     if (isPosOutOfBoard(targetX, targetY)) {
@@ -270,15 +276,15 @@ public class FishState {
 
 
     ArrayList<Tile> possibleMoves = fishModel.getPossibleMoves(startX, startY);
-    Tile targetTile = board.get(targetY).get(targetX);
+    Tile targetTile = fishModel.getBoard().get(targetY).get(targetX);
 
     if (!possibleMoves.contains(targetTile)) {
       throw new IllegalArgumentException("Error: Invalid position to move to.");
     }
 
-    FishState nextState = createStateCopy();
+    FishState nextState = createNextState();
     nextState.updatePenguinPos(targetX, targetY, penguin);
-    nextState.addPlayerTotalFish(targetX, targetY, player.getId());
+    nextState.addPlayerTotalFish(targetX, targetY, playerInfo.getId());
     nextState.emptyStartTile(startX, startY);
     return nextState;
 
@@ -300,12 +306,12 @@ public class FishState {
    * which means whether the owner of the penguin is the PlayerX.
    *
    * @param penguin a penguin
-   * @param player a PlayerX
+   * @param playerInfo a PlayerX
    * @return boolean determines whether the penguin and the PlayerX have a same penguin color.
    */
-  public boolean isPenguinOwner(Penguin penguin, Player player) {
+  public boolean isPenguinOwner(Penguin penguin, PlayerInfo playerInfo) {
     PenguinColor penguinColor = penguin.getColor();
-    PenguinColor playColor = player.getPenguinColor();
+    PenguinColor playColor = playerInfo.getPenguinColor();
     return penguinColor.equals(playColor);
   }
 
@@ -317,9 +323,9 @@ public class FishState {
    **/
   public boolean isGameOver() {
     boolean isGameOver = true;
-    if (penguinsOnBoard.size() == 0) {
-      return false;
-    }
+//    if (penguinsOnBoard.size() == 0) {
+//      return false;
+//    }
     for (Penguin penguin : penguinsOnBoard) {
       int xPos = penguin.getXPos();
       int yPos = penguin.getYPos();
@@ -360,12 +366,12 @@ public class FishState {
    * isPlayerTurn is a helper function that checks whether the current PlayerX should be the one
    * moving its penguin.
    *
-   * @param player the PlayerX that is trying to move a penguin.
+   * @param playerInfo the PlayerX that is trying to move a penguin.
    * @return boolean value that determines whether its actually a PlayerX's turn.
    **/
-  private boolean isPlayerTurn(Player player) {
-    long playerId = player.getId();
-    long currentPlayerId = playersSortedByAgeAscend.get(currentPlayerIndex).getId();
+  private boolean isPlayerTurn(PlayerInfo playerInfo) {
+    long playerId = playerInfo.getId();
+    long currentPlayerId = allPlayerInfos.get(currentPlayerIndex).getId();
     return currentPlayerId == playerId;
   }
 
@@ -457,11 +463,11 @@ public class FishState {
    **/
   private void addPlayerTotalFish(int targetX, int targetY, long playerId) {
 
-    for (Player player : playersSortedByAgeAscend){
-      if(player.getId() == playerId){
+    for (PlayerInfo playerInfo : allPlayerInfos){
+      if(playerInfo.getId() == playerId){
         Tile targetTile = board.get(targetY).get(targetX);
         int fishNum = targetTile.getFishNum();
-        player.addTotalFish(fishNum);
+        playerInfo.addTotalFish(fishNum);
       }
     }
 
@@ -474,14 +480,11 @@ public class FishState {
    * @param penguinColor color of the penguin.
    * @return Arraylist of Penguins.
    */
-  public ArrayList<Penguin> getPlayerPenguins(PenguinColor penguinColor) {
-//    ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
-//    ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
-
-    Player currentPlayer = findPlayerWithTheColor(penguinColor);
+  public ArrayList<Penguin> getPenguins(PenguinColor penguinColor) {
+//    PlayerInfo currentPlayerInfo = findPlayerInfoWithTheColor(penguinColor);
     ArrayList<Penguin> penguinsOfSameColor = new ArrayList<>();
     for (Penguin penguin : penguinsOnBoard) {
-      if (penguin.getColor().equals(currentPlayer.getPenguinColor())) {
+      if (penguin.getColor().equals(penguinColor)) {
         penguinsOfSameColor.add(penguin);
       }
     }
@@ -491,15 +494,54 @@ public class FishState {
   /**
    * A method that checks whether a player has the same color as a certain PenguinColor.
    * @param penguinColor the color of the penguin.
-   * @return the Player that has the same color as the specified PenguinColor.
+   * @return the PlayerInfo that has the same color as the specified PenguinColor.
    */
-  private Player findPlayerWithTheColor(PenguinColor penguinColor) {
-    for(Player player: playersSortedByAgeAscend){
-      if(player.getPenguinColor().equals(penguinColor)){
-        return player;
+  public PlayerInfo getPlayerInfo(PenguinColor penguinColor) {
+    for(PlayerInfo playerInfo : allPlayerInfos){
+      if(playerInfo.getPenguinColor().equals(penguinColor)){
+        return playerInfo;
       }
     }
     throw new IllegalArgumentException("Error: no player with the color.");
+  }
+
+
+
+  public int getPlayerGain(PenguinColor playerColor) {
+    for(PlayerInfo playerInfo : allPlayerInfos){
+      if (playerInfo.getPenguinColor().equals(playerColor)){
+        return playerInfo.getTotalFish();
+      }
+    }
+    throw new IllegalArgumentException("Error: No player found with the given color.");
+  }
+
+
+  public FishState removeCurrentPlayerInfo(){
+    FishState newState = createNextState();
+
+    ArrayList<PlayerInfo> playerInfos = newState.getAllPlayerInfos();
+    PlayerInfo playerInfo = playerInfos.get(currentPlayerIndex);
+    playerInfos.remove(playerInfo);
+
+    newState.totalPlayerNum = playerInfos.size();
+    newState.currentPlayerIndex = currentPlayerIndex == allPlayerInfos.size() - 1 ? 0 : currentPlayerIndex;
+
+    PenguinColor currentPlayerColor = allPlayerInfos.get(currentPlayerIndex).getPenguinColor();
+    ArrayList<Penguin> penguinsOnNewState = newState.getPenguinsOnBoard();
+    ArrayList<Penguin> penguinsWithSameColor = newState.getPenguins(currentPlayerColor);
+
+    for(Penguin penguin: penguinsWithSameColor){
+      int xPos = penguin.getXPos();
+      int yPos = penguin.getYPos();
+
+      Tile tile = board.get(yPos).get(xPos);
+      tile.setToHole();
+
+      penguinsOnNewState.remove(penguin);
+    }
+
+    return newState;
   }
 
 

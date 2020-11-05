@@ -32,7 +32,7 @@ public class FishModelTest {
 
   @Test
   public void emptyTileValid1() {
-    fishModel.emptyTile(0, 0);
+    fishModel.createHole(0, 0);
     ArrayList<ArrayList<Tile>> boardCopy = fishModel.getBoard();
     boolean isEmpty = boardCopy.get(0).get(0).isHole();
     assertEquals(true, isEmpty);
@@ -40,7 +40,7 @@ public class FishModelTest {
 
   @Test
   public void emptyTileValid2() {
-    fishModel.emptyTile(2, 4);
+    fishModel.createHole(2, 4);
     ArrayList<ArrayList<Tile>> boardCopy = fishModel.getBoard();
     boolean isEmpty = boardCopy.get(4).get(2).isHole();
     assertEquals(true, isEmpty);
@@ -176,7 +176,7 @@ public class FishModelTest {
     ArrayList<ArrayList<Tile>> boardBefore = fishModel.getBoard();
     boolean tileOneIsEmptyBefore = boardBefore.get(0).get(0).isHole();
     assertEquals(false, tileOneIsEmptyBefore);
-    fishModel.emptyTile(0, 0);
+    fishModel.createHole(0, 0);
     ArrayList<ArrayList<Tile>> boardAfter = fishModel.getBoard();
     boolean tileOneIsEmptyAfter = boardAfter.get(0).get(0).isHole();
     assertEquals(true, tileOneIsEmptyAfter);

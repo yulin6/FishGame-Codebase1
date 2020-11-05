@@ -1,8 +1,8 @@
-package common.models.Actions;
+package common.models.actions;
 
 import common.models.FishState;
 import common.models.Penguin;
-import common.models.Player;
+import common.models.PlayerInfo;
 import java.util.ArrayList;
 
 /** MovePenguinAction is a class that represent a movement on the Fish game that implements on the
@@ -11,6 +11,8 @@ import java.util.ArrayList;
  * targetY representing the row of the fish board, a penguin and a player.
  **/
 public class MovePenguinAction implements IAction {
+
+
 
   private int startX;
   private int startY;
@@ -35,12 +37,11 @@ public class MovePenguinAction implements IAction {
 
   @Override
   public FishState performAction(FishState fishState) throws IllegalArgumentException{
-    ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
-    ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
+
     Penguin currPenguin = getPenguinOnState(fishState);
-    Player currPlayer = getPlayerOnState(fishState);
+    PlayerInfo currPlayerInfo = getPlayerOnState(fishState);
     FishState actionPerformedState = fishState.makeMovement(targetX, targetY,
-            currPenguin, currPlayer);
+            currPenguin, currPlayerInfo);
     return actionPerformedState;
   }
 
@@ -65,16 +66,18 @@ public class MovePenguinAction implements IAction {
    * @param fishState is the current state of the game.
    * @return a player that controls a specific penguin.
    */
-  private Player getPlayerOnState(FishState fishState) {
-    ArrayList<Player> players = fishState.getPlayersSortedByAgeAscend();
+  private PlayerInfo getPlayerOnState(FishState fishState) {
+    ArrayList<PlayerInfo> playerInfos = fishState.getAllPlayerInfos();
     Penguin currPenguin = this.getPenguinOnState(fishState);
-    for (Player player: players) {
-      if (player.getPenguinColor() == currPenguin.getColor()) {
-        return player;
+    for (PlayerInfo playerInfo : playerInfos) {
+      if (playerInfo.getPenguinColor() == currPenguin.getColor()) {
+        return playerInfo;
       }
     }
     throw new IllegalArgumentException("Error: Player not Found");
   }
+
+
 
   /**
    * The getter method forms the startX, startY, targetX and targetY into a arraylist of Integer,
@@ -89,6 +92,22 @@ public class MovePenguinAction implements IAction {
     positions.add(targetX);
     positions.add(targetY);
     return positions;
+  }
+
+  public int getStartX() {
+    return startX;
+  }
+
+  public int getStartY() {
+    return startY;
+  }
+
+  public int getTargetX() {
+    return targetX;
+  }
+
+  public int getTargetY() {
+    return targetY;
   }
 
 

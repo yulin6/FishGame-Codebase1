@@ -1,17 +1,16 @@
 package common.models;
 
 /**
- * Class of Player, which contains how a PlayerX is constructed.
+ * Class of PlayerInfo, which contains the information of a player.
  **/
-public class Player {
+public class PlayerInfo {
 
 
   private long id;
   private int age;
   private int totalFish;
   private PenguinColor penguinColor;
-//  private ArrayList<Position> penguinsPositions;
-//  private ArrayList<Penguin> penguins;
+
 
   /**
    * Constructor of the Player class that takes in the age of PlayerX.
@@ -19,16 +18,18 @@ public class Player {
    * @param age the age of the playing PlayerX.
    * @param penguinColor the color of their penguins color.
    **/
-  public Player(int age, PenguinColor penguinColor){
+  public PlayerInfo(int age, PenguinColor penguinColor){
     this.id = System.nanoTime();
     this.age = age;
     this.totalFish = 0;
     this.penguinColor = penguinColor;
-//    penguins = new ArrayList<Penguin>();
   }
 
-  //A empty constructor that's needed for Kryo library
-  private Player(){ }
+  public PlayerInfo(int age){
+    this.id = System.nanoTime();
+    this.age = age;
+    this.totalFish = 0;
+  }
 
 
   public long getId() {
@@ -84,15 +85,6 @@ public class Player {
     this.penguinColor = penguinColor;
   }
 
-
-
-//  public ArrayList<Position> getPenguinsPositions() {
-//    return penguinsPositions;
-//  }
-//
-//  public void setPenguinsPositions(ArrayList<Position> penguinsPositions) {
-//    this.penguinsPositions = penguinsPositions;
-//  }
 
 
 }

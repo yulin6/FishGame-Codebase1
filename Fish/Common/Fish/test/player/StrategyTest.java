@@ -1,8 +1,9 @@
 package player;
 
 import common.models.*;
-import common.models.Actions.MiniMaxAction;
-import common.models.Actions.MovePenguinAction;
+import common.models.actions.IAction;
+import common.models.actions.MiniMaxAction;
+import common.models.actions.MovePenguinAction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,11 +22,11 @@ public class StrategyTest {
     private FishModel fourByEightFishModel;
     private FishModel oneByThreeFishModel;
     private FishModel twoByFiveFishModel;
-    private Player playerRed;
-    private Player playerBlack;
-    private Player playerWhite;
-    private ArrayList<Player> twoPlayers;
-    private ArrayList<Player> threePlayers;
+    private PlayerInfo playerInfoRed;
+    private PlayerInfo playerInfoBlack;
+    private PlayerInfo playerInfoWhite;
+    private ArrayList<PlayerInfo> twoPlayerInfos;
+    private ArrayList<PlayerInfo> threePlayerInfos;
     private FishState gameState1;
     private FishState gameState2;
     private FishState gameState3;
@@ -44,25 +45,25 @@ public class StrategyTest {
         height2 = 3;
         oneByThreeFishModel = new FishModel(width2, height2, maxFishNum1, isRandom);
         twoByFiveFishModel = new FishModel(2, 5, 3, isRandom);
-        playerRed = new Player(11, PenguinColor.red);
-        playerBlack = new Player(12, PenguinColor.black);
-        playerWhite = new Player(13, PenguinColor.white);
-        twoPlayers = new ArrayList<Player>();
-        twoPlayers.add(playerRed);
-        twoPlayers.add(playerBlack);
-        threePlayers = new ArrayList<Player>();
-        threePlayers.add(playerRed);
-        threePlayers.add(playerBlack);
-        threePlayers.add(playerWhite);
-        gameState1 = new FishState(fourByEightFishModel, threePlayers);
-        gameState2 = new FishState(oneByThreeFishModel, twoPlayers);
-        gameState3 = new FishState(twoByFiveFishModel, threePlayers);
+        playerInfoRed = new PlayerInfo(11, PenguinColor.red);
+        playerInfoBlack = new PlayerInfo(12, PenguinColor.black);
+        playerInfoWhite = new PlayerInfo(13, PenguinColor.white);
+        twoPlayerInfos = new ArrayList<PlayerInfo>();
+        twoPlayerInfos.add(playerInfoRed);
+        twoPlayerInfos.add(playerInfoBlack);
+        threePlayerInfos = new ArrayList<PlayerInfo>();
+        threePlayerInfos.add(playerInfoRed);
+        threePlayerInfos.add(playerInfoBlack);
+        threePlayerInfos.add(playerInfoWhite);
+        gameState1 = new FishState(fourByEightFishModel, threePlayerInfos);
+        gameState2 = new FishState(oneByThreeFishModel, twoPlayerInfos);
+        gameState3 = new FishState(twoByFiveFishModel, threePlayerInfos);
         strategy = new Strategy();
     }
 
     @Test
     public void nextZigZagPlacementTo10() {
-        FishState nextState = gameState1.placeInitPenguin(0, 0, playerRed);
+        FishState nextState = gameState1.placeInitPenguin(0, 0, playerInfoRed);
         int penguinX = nextState.getPenguinsOnBoard().get(0).getXPos();
         int penguinY = nextState.getPenguinsOnBoard().get(0).getYPos();
         assertEquals(0, penguinX);
@@ -74,15 +75,15 @@ public class StrategyTest {
 
     @Test
     public void nextZigZagPlacementTo20() {
-        FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerInfoRed);
         int penguinX1 = nextState1.getPenguinsOnBoard().get(0).getXPos();
         int penguinY1 = nextState1.getPenguinsOnBoard().get(0).getYPos();
         assertEquals(0, penguinX1);
         assertEquals(0, penguinY1);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
         int penguinX2 = nextState2.getPenguinsOnBoard().get(1).getXPos();
         int penguinY2 = nextState2.getPenguinsOnBoard().get(1).getYPos();
         assertEquals(1, penguinX2);
@@ -95,39 +96,39 @@ public class StrategyTest {
 
     @Test
     public void nextZigZagPlacementTo14() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(0, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(0, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(1, 1, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(1, 1, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 2, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 2, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 3, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 3, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(1, 3, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(1, 3, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(0, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(0, 4, playerInfoWhite);
 
         Position position = strategy.nextZigZagPlacement(nextState9);
         assertEquals(1, position.getX());
@@ -136,44 +137,44 @@ public class StrategyTest {
 
     @Test
     public void nextZigZagPlacementInvalidBoard() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(0, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(0, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(1, 1, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(1, 1, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(0, 2, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(0, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(0, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(1, 2, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(1, 2, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(1, 3, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(1, 3, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(0, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(0, 4, playerInfoWhite);
 
-        ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-        playerRed = players9.get(nextState9.getCurrentPlayerIndex());
+        ArrayList<PlayerInfo> players9 = nextState9.getAllPlayerInfos();
+        playerInfoRed = players9.get(nextState9.getCurrentPlayerIndex());
         Penguin penguinRed = nextState9.getPenguinsOnBoard().get(6);
-        FishState nextState10 = nextState9.makeMovement(1, 4, penguinRed, playerRed);
+        FishState nextState10 = nextState9.makeMovement(1, 4, penguinRed, playerInfoRed);
 
 
         try {
@@ -185,39 +186,39 @@ public class StrategyTest {
 
     @Test
     public void miniMaxGainZeroTurn() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(0, 2, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(0, 2, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 4, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 4, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(1, 2, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(1, 2, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerInfoWhite);
 
         FishTreeNode treeNode = new FishTreeNode(null, nextState9);
         MiniMaxAction miniMaxAction = strategy.minimaxGain(treeNode, 0, PenguinColor.red);
@@ -231,90 +232,96 @@ public class StrategyTest {
 
     @Test
     public void miniMaxGainOneTurn() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState1.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(0, 1, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(0, 2, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(0, 2, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 4, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 4, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(1, 2, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(1, 2, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerInfoWhite);
 
         FishTreeNode treeNode = new FishTreeNode(null, nextState9);
-        MiniMaxAction miniMaxAction = strategy.minimaxGain(treeNode, 1, PenguinColor.red);
-        ArrayList<MovePenguinAction> movePenguinActions = miniMaxAction.getMovePenguinActions();
+        IAction movePenguinAction = strategy.findMinimaxAction(treeNode, 1, PenguinColor.red);
 
-        MovePenguinAction onlyAction = movePenguinActions.get(0);
-        ArrayList moveActionPositions = onlyAction.getMoveActionPositions();
-
-        assertEquals(1, movePenguinActions.size());
-        assertEquals(0, moveActionPositions.get(0));
-        assertEquals(2, moveActionPositions.get(1));
-        assertEquals(0, moveActionPositions.get(2));
-        assertEquals(3, moveActionPositions.get(3));
+//        System.out.println(movePenguinAction.getStartX());
+//        System.out.println(movePenguinAction.getStartY());
+//        System.out.println(movePenguinAction.getTargetX());
+//        System.out.println(movePenguinAction.getTargetY());
+//        MiniMaxAction miniMaxAction = strategy.minimaxGain(treeNode, 1, PenguinColor.red);
+//        ArrayList<MovePenguinAction> movePenguinActions = miniMaxAction.getMovePenguinActions();
+//
+//        MovePenguinAction onlyAction = movePenguinActions.get(0);
+//        ArrayList moveActionPositions = onlyAction.getMoveActionPositions();
+//
+//        assertEquals(1, movePenguinActions.size());
+//        assertEquals(0, moveActionPositions.get(0));
+//        assertEquals(2, moveActionPositions.get(1));
+//        assertEquals(0, moveActionPositions.get(2));
+//        assertEquals(3, moveActionPositions.get(3));
 
     }
 
     @Test
     public void miniMaxGainTwoTurns() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerInfoWhite);
 
         FishTreeNode treeNode = new FishTreeNode(null, nextState9);
         MiniMaxAction miniMaxAction = strategy.minimaxGain(treeNode, 2, PenguinColor.red);
@@ -333,39 +340,39 @@ public class StrategyTest {
 
     @Test
     public void miniMaxGainNegtiveTurn() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerInfoWhite);
 
         FishTreeNode treeNode = new FishTreeNode(null, nextState9);
         try {
@@ -379,44 +386,44 @@ public class StrategyTest {
 
     @Test
     public void miniMaxGainNoMoreAction() {
-        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerRed);
+        FishState nextState1 = gameState3.placeInitPenguin(0, 0, playerInfoRed);
 
-        ArrayList<Player> players = nextState1.getPlayersSortedByAgeAscend();
-        playerBlack = players.get(nextState1.getCurrentPlayerIndex());
-        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerBlack);
+        ArrayList<PlayerInfo> playerInfos = nextState1.getAllPlayerInfos();
+        playerInfoBlack = playerInfos.get(nextState1.getCurrentPlayerIndex());
+        FishState nextState2 = nextState1.placeInitPenguin(1, 0, playerInfoBlack);
 
-        ArrayList<Player> players2 = nextState2.getPlayersSortedByAgeAscend();
-        playerWhite = players2.get(nextState2.getCurrentPlayerIndex());
-        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerWhite);
+        ArrayList<PlayerInfo> players2 = nextState2.getAllPlayerInfos();
+        playerInfoWhite = players2.get(nextState2.getCurrentPlayerIndex());
+        FishState nextState3 = nextState2.placeInitPenguin(1, 1, playerInfoWhite);
 
-        ArrayList<Player> players3 = nextState3.getPlayersSortedByAgeAscend();
-        playerRed = players3.get(nextState3.getCurrentPlayerIndex());
-        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerRed);
+        ArrayList<PlayerInfo> players3 = nextState3.getAllPlayerInfos();
+        playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
+        FishState nextState4 = nextState3.placeInitPenguin(0, 1, playerInfoRed);
 
-        ArrayList<Player> players4 = nextState4.getPlayersSortedByAgeAscend();
-        playerBlack = players4.get(nextState4.getCurrentPlayerIndex());
-        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerBlack);
+        ArrayList<PlayerInfo> players4 = nextState4.getAllPlayerInfos();
+        playerInfoBlack = players4.get(nextState4.getCurrentPlayerIndex());
+        FishState nextState5 = nextState4.placeInitPenguin(1, 2, playerInfoBlack);
 
-        ArrayList<Player> players5 = nextState5.getPlayersSortedByAgeAscend();
-        playerWhite = players5.get(nextState5.getCurrentPlayerIndex());
-        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerWhite);
+        ArrayList<PlayerInfo> players5 = nextState5.getAllPlayerInfos();
+        playerInfoWhite = players5.get(nextState5.getCurrentPlayerIndex());
+        FishState nextState6 = nextState5.placeInitPenguin(1, 3, playerInfoWhite);
 
-        ArrayList<Player> players6 = nextState6.getPlayersSortedByAgeAscend();
-        playerRed = players6.get(nextState6.getCurrentPlayerIndex());
-        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerRed);
+        ArrayList<PlayerInfo> players6 = nextState6.getAllPlayerInfos();
+        playerInfoRed = players6.get(nextState6.getCurrentPlayerIndex());
+        FishState nextState7 = nextState6.placeInitPenguin(0, 2, playerInfoRed);
 
-        ArrayList<Player> players7 = nextState7.getPlayersSortedByAgeAscend();
-        playerBlack = players7.get(nextState7.getCurrentPlayerIndex());
-        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerBlack);
+        ArrayList<PlayerInfo> players7 = nextState7.getAllPlayerInfos();
+        playerInfoBlack = players7.get(nextState7.getCurrentPlayerIndex());
+        FishState nextState8 = nextState7.placeInitPenguin(0, 3, playerInfoBlack);
 
-        ArrayList<Player> players8 = nextState8.getPlayersSortedByAgeAscend();
-        playerWhite = players8.get(nextState8.getCurrentPlayerIndex());
-        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerWhite);
+        ArrayList<PlayerInfo> players8 = nextState8.getAllPlayerInfos();
+        playerInfoWhite = players8.get(nextState8.getCurrentPlayerIndex());
+        FishState nextState9 = nextState8.placeInitPenguin(1, 4, playerInfoWhite);
 
-        ArrayList<Player> players9 = nextState9.getPlayersSortedByAgeAscend();
-        playerRed = players9.get(nextState9.getCurrentPlayerIndex());
+        ArrayList<PlayerInfo> players9 = nextState9.getAllPlayerInfos();
+        playerInfoRed = players9.get(nextState9.getCurrentPlayerIndex());
         Penguin penguinRed = nextState9.getPenguinsOnBoard().get(6);
-        FishState nextState10 = nextState9.makeMovement(0, 4, penguinRed, playerRed);
+        FishState nextState10 = nextState9.makeMovement(0, 4, penguinRed, playerInfoRed);
 
         FishTreeNode treeNode = new FishTreeNode(null, nextState10);
         MiniMaxAction miniMaxAction = strategy.minimaxGain(treeNode, 2, PenguinColor.red);

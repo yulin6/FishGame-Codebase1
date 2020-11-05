@@ -55,7 +55,7 @@ public class xboard {
           ArrayList<Integer> hole = holes.get(i);
             int holeX = hole.get(0);
             int holeY = hole.get(1);
-            fishModel.emptyTile(holeX, holeY);
+            fishModel.createHole(holeX, holeY);
         }
       }
 

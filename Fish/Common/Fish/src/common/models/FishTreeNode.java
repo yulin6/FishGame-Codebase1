@@ -1,7 +1,7 @@
 package common.models;
 
 import java.util.ArrayList;
-import common.models.Actions.IAction;
+import common.models.actions.IAction;
 
 /**
  * FishTreeNode is a representation of a tree of FishState and FishTreeNodes. The parentNode is
@@ -46,19 +46,19 @@ public class FishTreeNode {
     if (!this.currentState.isGameOver()) {
 //      System.out.println("hello");
 
-      ArrayList<Player> players = currentState.getPlayersSortedByAgeAscend();
-      Player currentPlayer = players.get(currentState.getCurrentPlayerIndex());
-      PenguinColor currentPlayerColor = currentPlayer.getPenguinColor();
+      ArrayList<PlayerInfo> playerInfos = currentState.getAllPlayerInfos();
+      PlayerInfo currentPlayerInfo = playerInfos.get(currentState.getCurrentPlayerIndex());
+      PenguinColor currentPlayerColor = currentPlayerInfo.getPenguinColor();
       ArrayList<ArrayList<Tile>> board = currentState.getBoard();
       FishModel model = currentState.getFishModel();
-      ArrayList<Penguin> penguinsOfTheSameColor = currentState.getPlayerPenguins(currentPlayerColor);
+      ArrayList<Penguin> penguinsOfTheSameColor = currentState.getPenguins(currentPlayerColor);
 
       for (Penguin penguin : penguinsOfTheSameColor) {
 //        System.out.println("next penguin");
         int penguinXPos = penguin.getXPos();
         int penguinYPos = penguin.getYPos();
         ArrayList<Tile> possibleMovesTiles = model.getPossibleMoves(penguinXPos, penguinYPos);
-        ArrayList<Position> possibleMovesPositions = getPositionsOfTiles(possibleMovesTiles, board);
+        ArrayList<Position> possibleMovesPositions = getPositionsOfTiles(possibleMovesTiles, model);
 
         for (Position position : possibleMovesPositions) {
 
@@ -66,7 +66,7 @@ public class FishTreeNode {
           int possibleMoveY = position.getY();
 //          System.out.println(possibleMoveX + " " + possibleMoveY);
           FishState nextState = currentState.makeMovement(possibleMoveX, possibleMoveY, penguin,
-              currentPlayer);
+                  currentPlayerInfo);
 //          FishTreeNode newTree = new FishTreeNode(nextState);
           directReachableStates.add(nextState);
         }
@@ -113,23 +113,27 @@ public class FishTreeNode {
   /** A method that gets the Positions of tiles based on their positions on the board.
    *
    * @param tiles an ArrayList of tiles.
-   * @param board an ArrayList of ArrayList of tiles that represent the fish board game.
+//   * @param board an ArrayList of ArrayList of tiles that represent the fish board game.
    * @return an ArrayList of positions of the given tiles on the board.
    **/
   public static ArrayList<Position> getPositionsOfTiles(ArrayList<Tile> tiles,
-      ArrayList<ArrayList<Tile>> board) {
+      FishModel model) {
     ArrayList<Position> positions = new ArrayList<>();
-    for (Tile tile : tiles) {
-      for (int i = 0; i < board.size(); i++) {
-        ArrayList<Tile> row = board.get(i);
-        if (row.contains(tile)) {
-          int xPos = row.indexOf(tile);
-          int yPos = i;
-          Position position = new Position(xPos, yPos);
-          positions.add(position);
-        }
-      }
+    for(Tile tile: tiles){
+      Position position = model.findTilePosition(tile);
+      positions.add(position);
     }
+//    for (Tile tile : tiles) {
+//      for (int i = 0; i < board.size(); i++) {
+//        ArrayList<Tile> row = board.get(i);
+//        if (row.contains(tile)) {
+//          int xPos = row.indexOf(tile);
+//          int yPos = i;
+//          Position position = new Position(xPos, yPos);
+//          positions.add(position);
+//        }
+//      }
+//    }
 
     return positions;
   }

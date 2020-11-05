@@ -1,4 +1,4 @@
-package common.models.Actions;
+package common.models.actions;
 
 import common.models.FishState;
 

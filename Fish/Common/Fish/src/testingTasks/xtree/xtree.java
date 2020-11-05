@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import java.util.*;
 
 import common.models.*;
-import common.models.Actions.MovePenguinAction;
+import common.models.actions.MovePenguinAction;
 import testingTasks.xstate.FishStateX;
 import testingTasks.xstate.PlayerX;
 
@@ -61,13 +61,13 @@ public class xtree {
       }
     }
 
-    ArrayList<Player> players = new ArrayList<>();
+    ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
     for (PlayerX playerX : playersXES) {
-      Player player = new Player(0, playerX.getColor());
-      players.add(player);
+      PlayerInfo playerInfo = new PlayerInfo(0, playerX.getColor());
+      playerInfos.add(playerInfo);
     }
 
-    FishState fishState = new FishState(fishModel, players);
+    FishState fishState = new FishState(fishModel, playerInfos);
 
     boolean isAllPenguinPlaced = false;
     int penguinIndex = 0;
@@ -76,7 +76,7 @@ public class xtree {
       for (int i = 0; i < playersXES.size(); ++i) {
 
         int currentPlayerIndex = fishState.getCurrentPlayerIndex();
-        Player currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+        PlayerInfo currentPlayerInfo = fishState.getAllPlayerInfos().get(currentPlayerIndex);
         PlayerX playerX = playersXES.get(i);
         ArrayList<ArrayList<Integer>> places = playerX.getPlaces();
 
@@ -85,7 +85,7 @@ public class xtree {
           int xPos = place.get(1);
           int yPos = place.get(0);
 
-          fishState = fishState.placeInitPenguin(xPos, yPos, currentPlayer);
+          fishState = fishState.placeInitPenguin(xPos, yPos, currentPlayerInfo);
 
           if (i == playersXES.size() - 1) {
             ++penguinIndex;
@@ -106,7 +106,7 @@ public class xtree {
 //      System.out.println(penguin.getXPos() + " " + penguin.getYPos());
 //    }
     int currentPlayerIndex = fishState.getCurrentPlayerIndex();
-    Player currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+    PlayerInfo currentPlayerInfo = fishState.getAllPlayerInfos().get(currentPlayerIndex);
 
     Penguin targetPenguin = findTargetPenguin(from, penguinsOnBoard);
 
@@ -119,13 +119,13 @@ public class xtree {
     fishState = treeNode.applyActionToState(treeNode, movePenguinAction);
 
     currentPlayerIndex = fishState.getCurrentPlayerIndex();
-    currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
-    PenguinColor currentPlayerColor = currentPlayer.getPenguinColor();
+    currentPlayerInfo = fishState.getAllPlayerInfos().get(currentPlayerIndex);
+    PenguinColor currentPlayerColor = currentPlayerInfo.getPenguinColor();
     FishModel model = fishState.getFishModel();
     board = fishState.getBoard();
 
     ArrayList<ArrayList<Integer>> neighboringTiles = findNeighboringTilesPos(toX, toY, boardX);
-    ArrayList<Penguin> penguinsOfTheSameColor = fishState.getPlayerPenguins(currentPlayerColor);
+    ArrayList<Penguin> penguinsOfTheSameColor = fishState.getPenguins(currentPlayerColor);
     Comparator<Penguin> comp = Comparator.comparing(Penguin::getYPos).thenComparing(Penguin::getXPos);
     penguinsOfTheSameColor.sort(comp);
 //    System.out.println(penguinsOfTheSameColor.get(0).getXPos() + " " + penguinsOfTheSameColor.get(0).getYPos());
@@ -144,7 +144,7 @@ public class xtree {
         int penguinYPos = penguin.getYPos();
 
         ArrayList<Tile> possibleMovesTiles = model.getPossibleMoves(penguinXPos, penguinYPos);
-        ArrayList<Position> possibleMovesPositions = getPositionsOfTiles(possibleMovesTiles, board);
+        ArrayList<Position> possibleMovesPositions = getPositionsOfTiles(possibleMovesTiles, model);
 
         for (Position position : possibleMovesPositions) {
 

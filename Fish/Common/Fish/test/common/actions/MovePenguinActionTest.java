@@ -1,16 +1,12 @@
-package common;
-
-import static org.junit.Assert.*;
+package common.actions;
 
 import java.util.ArrayList;
-import common.models.Actions.MovePenguinAction;
+
 import common.models.FishModel;
 import common.models.FishState;
-import common.models.Penguin;
 import common.models.PenguinColor;
-import common.models.Player;
+import common.models.PlayerInfo;
 import org.junit.Before;
-import org.junit.Test;
 
 public class MovePenguinActionTest {
 
@@ -22,11 +18,11 @@ public class MovePenguinActionTest {
   private boolean isRandom;
   private FishModel fourByEightFishModel;
   private FishModel oneByThreeFishModel;
-  private Player playerRed;
-  private Player playerBlack;
-  private Player playerWhite;
-  private ArrayList<Player> twoPlayers;
-  private ArrayList<Player> threePlayers;
+  private PlayerInfo playerInfoRed;
+  private PlayerInfo playerInfoBlack;
+  private PlayerInfo playerInfoWhite;
+  private ArrayList<PlayerInfo> twoPlayerInfos;
+  private ArrayList<PlayerInfo> threePlayerInfos;
   private FishState gameState1;
   private FishState gameState2;
 
@@ -42,18 +38,18 @@ public class MovePenguinActionTest {
     width2 = 1;
     height2 = 3;
     oneByThreeFishModel = new FishModel(width2, height2, maxFishNum1, isRandom);
-    playerRed = new Player(11, PenguinColor.red);
-    playerBlack = new Player(12, PenguinColor.black);
-    playerWhite = new Player(13, PenguinColor.white);
-    twoPlayers = new ArrayList<Player>();
-    twoPlayers.add(playerRed);
-    twoPlayers.add(playerBlack);
-    threePlayers = new ArrayList<Player>();
-    threePlayers.add(playerRed);
-    threePlayers.add(playerBlack);
-    threePlayers.add(playerWhite);
-    gameState1 = new FishState(fourByEightFishModel, threePlayers);
-    gameState2 = new FishState(oneByThreeFishModel, twoPlayers);
+    playerInfoRed = new PlayerInfo(11, PenguinColor.red);
+    playerInfoBlack = new PlayerInfo(12, PenguinColor.black);
+    playerInfoWhite = new PlayerInfo(13, PenguinColor.white);
+    twoPlayerInfos = new ArrayList<PlayerInfo>();
+    twoPlayerInfos.add(playerInfoRed);
+    twoPlayerInfos.add(playerInfoBlack);
+    threePlayerInfos = new ArrayList<PlayerInfo>();
+    threePlayerInfos.add(playerInfoRed);
+    threePlayerInfos.add(playerInfoBlack);
+    threePlayerInfos.add(playerInfoWhite);
+    gameState1 = new FishState(fourByEightFishModel, threePlayerInfos);
+    gameState2 = new FishState(oneByThreeFishModel, twoPlayerInfos);
   }
 
 //

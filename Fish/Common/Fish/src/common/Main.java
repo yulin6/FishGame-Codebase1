@@ -164,7 +164,7 @@ public class Main {
 //          Penguin penguin = new Penguin(PenguinColor.BROWN);
 //          Tile tile = fishModel.getBoard().get(yPos).get(xPos);
 //          tile.setPenguin(penguin);
-          fishModel.emptyTile(xPos, yPos);
+          fishModel.createHole(xPos, yPos);
 
         } else {
           argsList = new ArrayList<String>();

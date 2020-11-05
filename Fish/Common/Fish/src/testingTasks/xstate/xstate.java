@@ -15,7 +15,7 @@ import common.models.FishModel;
 import common.models.FishState;
 import common.models.Penguin;
 import common.models.PenguinColor;
-import common.models.Player;
+import common.models.PlayerInfo;
 import common.models.Position;
 import common.models.Tile;
 
@@ -62,7 +62,7 @@ public class xstate {
 
 
       JsonArray playersJsonArray = jsonObject.getAsJsonArray("players");
-      ArrayList<Player> players = new ArrayList<>();
+      ArrayList<PlayerInfo> playerInfos = new ArrayList<>();
 
       for (JsonElement element : playersJsonArray) {
 
@@ -72,13 +72,13 @@ public class xstate {
         int score = object.get("score").getAsInt();
 
 
-        Player player = new Player(0, penguinColor);
+        PlayerInfo playerInfo = new PlayerInfo(0, penguinColor);
 //        player.addTotalFish(score);
-        players.add(player);
+        playerInfos.add(playerInfo);
 
       }
 
-      FishState fishState = new FishState(fishModel, players);
+      FishState fishState = new FishState(fishModel, playerInfos);
 
 //      ArrayList<Player> playersSortedByAgeAscend = fishState.getPlayersSortedByAgeAscend();
 
@@ -93,7 +93,7 @@ public class xstate {
           JsonElement element = playersJsonArray.get(i);
           JsonObject object = element.getAsJsonObject();
           int currentPlayerIndex = fishState.getCurrentPlayerIndex();
-          Player currentPlayer = fishState.getPlayersSortedByAgeAscend().get(currentPlayerIndex);
+          PlayerInfo currentPlayerInfo = fishState.getAllPlayerInfos().get(currentPlayerIndex);
 
           JsonArray positions = object.getAsJsonArray("places");
           int[][] places = new Gson().fromJson(positions, int[][].class);
@@ -103,7 +103,7 @@ public class xstate {
             int xPos = place[1];
             int yPos = place[0];
 
-            fishState = fishState.placeInitPenguin(xPos, yPos, currentPlayer);
+            fishState = fishState.placeInitPenguin(xPos, yPos, currentPlayerInfo);
 
             if (i == playersJsonArray.size() - 1) {
               ++penguinIndex;
@@ -120,9 +120,9 @@ public class xstate {
         }
       }
 
-      Player firstPlayer = fishState.getPlayersSortedByAgeAscend().get(0);
+      PlayerInfo firstPlayerInfo = fishState.getAllPlayerInfos().get(0);
       ArrayList<Penguin> penguinsOnBoard = fishState.getPenguinsOnBoard();
-      Penguin firstPenguin = getFirstPenguin(firstPlayer, penguinsOnBoard);
+      Penguin firstPenguin = getFirstPenguin(firstPlayerInfo, penguinsOnBoard);
       int penguinX = firstPenguin.getXPos();
       int penguinY = firstPenguin.getYPos();
 
@@ -135,7 +135,7 @@ public class xstate {
         int xPos = firstPosition.getX();
         int yPos = firstPosition.getY();
 
-        fishState = fishState.makeMovement(xPos, yPos, firstPenguin, firstPlayer);
+        fishState = fishState.makeMovement(xPos, yPos, firstPenguin, firstPlayerInfo);
 
         serializeFishState(fishState);
       } else {
@@ -150,15 +150,15 @@ public class xstate {
   }
 
   private static void serializeFishState(FishState fishstate){
-    ArrayList<Player> players = fishstate.getPlayersSortedByAgeAscend();
+    ArrayList<PlayerInfo> playerInfos = fishstate.getAllPlayerInfos();
     ArrayList<PlayerX> playerXES = new ArrayList<>();
     ArrayList<Penguin> penguins = fishstate.getPenguinsOnBoard();
-    for(Player player : players){
-      PenguinColor penguinColor = player.getPenguinColor();
-      int score = player.getTotalFish();
+    for(PlayerInfo playerInfo : playerInfos){
+      PenguinColor penguinColor = playerInfo.getPenguinColor();
+      int score = playerInfo.getTotalFish();
       PlayerX playerX = new PlayerX(score, penguinColor);
       for(Penguin penguin: penguins){
-        if(penguin.getColor().equals(player.getPenguinColor())){
+        if(penguin.getColor().equals(playerInfo.getPenguinColor())){
           int xPos = penguin.getXPos();
           int yPos = penguin.getYPos();
           ArrayList<Integer> place = new ArrayList<>();
@@ -188,9 +188,9 @@ public class xstate {
 
   }
 
-  private static Penguin getFirstPenguin(Player firstPlayer, ArrayList<Penguin> penguinsOnBoard) {
+  private static Penguin getFirstPenguin(PlayerInfo firstPlayerInfo, ArrayList<Penguin> penguinsOnBoard) {
     for(Penguin penguin : penguinsOnBoard){
-      if(penguin.getColor().equals(firstPlayer.getPenguinColor())){
+      if(penguin.getColor().equals(firstPlayerInfo.getPenguinColor())){
         return penguin;
       }
     }

@@ -1,7 +1,7 @@
-package common;
+package common.actions;
 
-import common.models.Actions.MiniMaxAction;
-import common.models.Actions.MovePenguinAction;
+import common.models.actions.MiniMaxAction;
+import common.models.actions.MovePenguinAction;
 import org.junit.Before;
 import org.junit.Test;
 

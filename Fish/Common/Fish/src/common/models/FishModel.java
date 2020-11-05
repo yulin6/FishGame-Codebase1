@@ -122,7 +122,7 @@ public class FishModel {
    * @param yPos y position of the tile to be emptied.
    * @throws IllegalArgumentException throw an exception when the input argument is invalid.
    */
-  public void emptyTile(int xPos, int yPos) throws IllegalArgumentException {
+  public void createHole(int xPos, int yPos) throws IllegalArgumentException {
     inputPosChecking(xPos, yPos);
     board.get(yPos).get(xPos).setToHole();
   }
