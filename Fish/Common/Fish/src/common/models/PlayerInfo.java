@@ -1,7 +1,7 @@
 package common.models;
 
 /**
- * Class of PlayerInfo, which contains the information of a player.
+ * Class of PlayerInfo, which contains the information of a player including id, age, totalFish and their penguinColor.
  **/
 public class PlayerInfo {
 
@@ -13,9 +13,9 @@ public class PlayerInfo {
 
 
   /**
-   * Constructor of the Player class that takes in the age of PlayerX.
+   * Constructor of the PlayerInfo class that takes in the age of player, and the penguin color.
    *
-   * @param age the age of the playing PlayerX.
+   * @param age the age of the player.
    * @param penguinColor the color of their penguins color.
    **/
   public PlayerInfo(int age, PenguinColor penguinColor){
@@ -25,6 +25,11 @@ public class PlayerInfo {
     this.penguinColor = penguinColor;
   }
 
+  /**
+   * the constructor of the PlayerInfo class only takes in the age of the player, ideally, the penguinColor will
+   * be set up be a referee.
+   * @param age the age of the player.
+   */
   public PlayerInfo(int age){
     this.id = System.nanoTime();
     this.age = age;
@@ -32,6 +37,10 @@ public class PlayerInfo {
   }
 
 
+  /**
+   * get the id of the playerInfo.
+   * @return the id of the playerInfo.
+   */
   public long getId() {
     return id;
   }

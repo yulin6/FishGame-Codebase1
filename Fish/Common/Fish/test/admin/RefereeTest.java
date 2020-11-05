@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class RefereeTest {
 
-
     private PlayerInfo playerInfoRed;
     private PlayerInfo playerInfoBlack;
     private PlayerInfo playerInfoWhite;

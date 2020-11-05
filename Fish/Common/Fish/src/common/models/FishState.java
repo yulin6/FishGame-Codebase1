@@ -195,9 +195,7 @@ public class FishState {
     return fishStateCopy;
   }
 
-//  public FishState skip() {
-//    return createNextStateCopy();
-//  }
+
 
   /**
    * placeInitPenguin places the initial position of the penguin based on the specific row and
@@ -506,8 +504,12 @@ public class FishState {
   }
 
 
-
-  public int getPlayerGain(PenguinColor playerColor) {
+  /**
+   * get the score of the player with the given color in the current state.
+   * @param playerColor the PenguinColor for identifying the playerInfo.
+   * @return the int score of the player.
+   */
+  public int getPlayerScore(PenguinColor playerColor) {
     for(PlayerInfo playerInfo : allPlayerInfos){
       if (playerInfo.getPenguinColor().equals(playerColor)){
         return playerInfo.getTotalFish();
@@ -517,6 +519,11 @@ public class FishState {
   }
 
 
+  /**
+   * In the next state, remove the current PlayerInfo and its penguins ,set those previous occupied tiles to holes,
+   * and set the currentPlayerIndex to the index of the next available player.
+   * @return a new FishState where the player and its penguins are removed.
+   */
   public FishState removeCurrentPlayerInfo(){
     FishState newState = createNextState();
 

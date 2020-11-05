@@ -3,16 +3,25 @@
 ## General
 ### Roadmap:
     | Fish
+    | Admin
+    |   | manager-interface.java
+    |   | referee.java 
+    | Player
+    |   | player.java
+    |   | strategy.java
     | Planning
+    |   | self-1.md
+    |   | self-2.md
+    |   | self-3.md
+    |   | self-4.md
+    |   | self-5.md
     |   | milestons.pdf
     |   | system.pdf
-    |   | self-1.md
-    |   | game-state.md
-    |   | self-2.md
     |   | games.md
-    |   | self-3.md
+    |   | game-state.md
     |   | player-protocol.md
     |   | referee.md
+    |   | manager-protocol.md
     | Common
     |   | state.java 
     |   | player-interface.java   
@@ -22,23 +31,28 @@
     |   |   | Fish.png   
     |   |   | Pom.xml 
     |   |   | target/
-    |   |   | src
-    |   |   |   | Main.java  
+    |   |   | src  
     |   |   |   | xboard.java 
     |   |   |   | META-INF
+    |   |   |   | admin
+    |   |   |   |   | Referee
+    |   |   |   |   | GamePhase
+    |   |   |   |   | GameReport
     |   |   |   | common
+    |   |   |   |   | Main.java
     |   |   |   |   | controllers
     |   |   |   |   |   | FishController.java
     |   |   |   |   | models
     |   |   |   |   |   | Actions
     |   |   |   |   |   |   | IAction.java 
     |   |   |   |   |   |   | MovePenguinAction.java
-    |   |   |   |   |   |   | MiniMaxAction.java    
+    |   |   |   |   |   |   | PlacePenguinAction.java    
+    |   |   |   |   |   |   | SkipTurnAction.java   
     |   |   |   |   |   | FishGameTreeNode.java
     |   |   |   |   |   | FishGameState.java
     |   |   |   |   |   | FishModel.java 
     |   |   |   |   |   | Tile.java
-    |   |   |   |   |   | Player.java 
+    |   |   |   |   |   | PlayerInfo.java 
     |   |   |   |   |   | Penguin.java 
     |   |   |   |   |   | Position.java 
     |   |   |   |   |   | PenguinColor.java
@@ -46,8 +60,13 @@
     |   |   |   |   |   | FishView.java 
     |   |   |   |   |   | TilesPanel.java  
     |   |   |   | player
+    |   |   |   |   | IPlayer.java
+    |   |   |   |   | HousePlayer.java
     |   |   |   |   | Strategy.java
     |   |   | test
+    |   |   |   | admin
+    |   |   |   |   | CheatingPlayerMock.java 
+    |   |   |   |   | RefereeTest.java 
     |   |   |   | common
     |   |   |   |   | FishControllerMock.java 
     |   |   |   |   | FishControllerMockTest.java 
@@ -56,11 +75,15 @@
     |   |   |   |   | PositionTest.java
     |   |   |   |   | FishModelTest.java
     |   |   |   |   | TileTest.java 
-    |   |   |   |   | PlayerTest.java
+    |   |   |   |   | PlayerInfoTest.java
     |   |   |   |   | PenguinTest.java 
     |   |   |   |   | MovePenguinActionTest.java 
-    |   |   |   |   | MiniMaxActionTest.java 
+    |   |   |   |   | actions
+    |   |   |   |   |   | MovePenguinActionTest.java  
+    |   |   |   |   |   | PlacePenguinActionTest.java  
+    |   |   |   |   |   | SkipTurnActionTest.java  
     |   |   |   | player
+    |   |   |   |   | HousePlayer.java
     |   |   |   |   | StrategyTest.java
 
 ### Test
@@ -421,3 +444,62 @@ In console:
 Output:
 
     [[0,2][2,2]]
+
+
+### 6 - Game!
+
+#### Implementations
+
+    IPlayer
+An implementation of the interface will contain a PlayerInfo parameter, which contains age, color, score of the player. By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for placing a penguin. By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin movement or a SkipTurnAction when there is no more moves for the player's penguins.
+
+    HousePlayer
+A HousePlayer implements the IPlayer interface. It contains a infoCopy, which contains age, color and score. Also it is constructed with a nTurn variable, which will be used for finding minimax move in getMovePenguinAction method. The class utilize the strategy class for making the decision of penguin placement and movement.
+
+    Referee
+A referee class contains a list of IPlayers who will be player the game. Each referee handles a game from the beginning till the end. There will be four phases of a game, which are setup, placing, moving and over. During the setup phase, a referee will assign a different color for each players, and sort them by their age ascending. Then the referee can call setUpModel method to set up the board and createHole method to create holes on the board. Once the referee is done with the board setup, they can call setUpInitialState to create a initial game state, and then the game phase will be changed to placing. Then, referee can call startGameTillTheEnd method for running the entire game, and the game phase will be changed to moving when no more penguins should be placed, or it will changed to over when there is no more possible move for any of the penguins, any players who cheat or did not respond in 15 seconds will be removed from the game state and be recorded in the GameReport. Finally, it will output the game report.
+
+    GamePhase
+The enum represents four phases of a game, which are setup, placing, moving and over. This will be used in referee components for determining the phase of a game.
+
+    GameReport
+GameReport class stores all the winning, failing and cheating players on a game. It has getter and setter methods for getting and generating the game report.
+
+    PlacePenguinAction
+PlacePenguinAction is an action that knows the position to place a penguin, by calling the performAction(), it will produce a new state where the penguin is placed on the position, if the position is valid.
+
+    SkipTurnAction
+SkipTurnAction is an action that is used for skipping the turn of the current player. The performAction() will output the next state of the game for the next player.
+
+
+#### Test Harness
+he harness consumes its JSON input from STDIN and produces its results to STDOUT. The tests are formulated as pairs of files: \<n>-in.json, the input, and \<n>-out.json, the expected result, for an integer \<n> ranged from 1 to 6.
+
+Input
+
+    Depth-State is [D, State]
+
+     where D (short for depth) is a Natural in [1,2]
+
+Output
+
+    Its expected output is the best turn Action for the given depth D and State that the next (first in array)
+    player can take according to the strategy.PP component from 5 — The Strategy. As before false is used to 
+    signal that there is no feasible Action.
+
+Executable Location:
+
+    annetta/6/xstrategy
+
+Tests Files Location:
+
+    annetta/6/Tests/<n>-in.json, <n>-out.json
+
+##### Running example:
+In console:
+
+    cat ./Tests/1-in.json | ./xstrategy
+
+Output:
+
+    [[2,0],[4,1]]

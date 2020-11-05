@@ -6,10 +6,12 @@ import common.models.actions.IAction;
 import common.models.actions.PlacePenguinAction;
 import player.IPlayer;
 
+/**
+ * the class mock a cheating player, which will be used for testing purposes.
+ */
 public class CheatingPlayerMock implements IPlayer {
 
     private PlayerInfo infoCopy;
-
 
 
     public CheatingPlayerMock(PlayerInfo infoCopy){

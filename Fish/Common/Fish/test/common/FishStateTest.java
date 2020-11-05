@@ -573,17 +573,17 @@ public class FishStateTest {
 
   @Test
   public void getRedPlayerGain0(){
-    int gain = gameState1.getPlayerGain(PenguinColor.red);
+    int gain = gameState1.getPlayerScore(PenguinColor.red);
     assertEquals(0, gain);
   }
 
   @Test
   public void getRedPlayerGain1(){
-    int gain = gameState1.getPlayerGain(PenguinColor.red);
+    int gain = gameState1.getPlayerScore(PenguinColor.red);
     assertEquals(0, gain);
 
     FishState nextState = gameState1.placeInitPenguin(0, 0, playerInfoRed);
-    gain = nextState.getPlayerGain(PenguinColor.red);
+    gain = nextState.getPlayerScore(PenguinColor.red);
     assertEquals(1, gain);
   }
 
@@ -603,14 +603,14 @@ public class FishStateTest {
     playerInfoRed = players3.get(nextState3.getCurrentPlayerIndex());
     FishState nextState4 = nextState3.placeInitPenguin(0, 0, playerInfoRed);
 
-    int gain = nextState4.getPlayerGain(PenguinColor.red);
+    int gain = nextState4.getPlayerScore(PenguinColor.red);
     assertEquals(2, gain);
   }
 
   @Test
   public void getBrownPlayerGainInvalid(){
     try {
-      int gain = gameState1.getPlayerGain(PenguinColor.brown);
+      int gain = gameState1.getPlayerScore(PenguinColor.brown);
     }catch (IllegalArgumentException e){
       assertEquals("Error: No player found with the given color.", e.getMessage());
     }

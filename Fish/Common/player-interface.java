@@ -1,60 +1,50 @@
+package player;
+
+import common.models.actions.IAction;
+import common.models.actions.PlacePenguinAction;
+import common.models.FishState;
+import common.models.PlayerInfo;
+
 /**
- * The player interface is the API for a player component that has methods to communicate with the
- * game logic or the referee.
- **/
-public interface PlayerInterface {
+ * The player interface. An implementation of it will contain a PlayerInfo parameter, which contains age, color,
+ * score of the player. By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for
+ * placing a penguin. By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin
+ * movement or a SkipTurnAction when there is no more moves for the player's penguins.
+ */
+public interface IPlayer {
 
-  /**
-   * Sends the movement request by the player to the game logic or the referee and will return a
-   * JSON formatted string of the FishState. If the movement is illegal, the referee will send an
-   * error.
-   *
-   * @param jsonString is a movement that is formatted using as json values to determine the
-   * movement that they want to make.
-   * @return a JSON formatted string of the FishState
-   */
-  String sendMovementOfPenguin(String jsonString);
+    /**
+     * By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for placing a penguin base
+     * on the given FishState.
+     * @param fishState the FishState that will be used for checking the position to place a penguin.
+     * @return a PlacePenguinAction for placing a penguin.
+     * @throws IllegalArgumentException when the given fishState is invalid for finding a position to place penguin.
+     */
+    PlacePenguinAction getPlacePenguinAction(FishState fishState) throws IllegalArgumentException;
 
-  /**
-   * Sends the initial placement of the penguin request by the player to the game logic or the
-   * referee and will return a JSON formatted string of the FishState. If the placement is illegal,
-   * the referee will send an error.
-   *
-   * @param jsonString is the initial placement of their penguin using as json values to determine
-   * the initial position of their penguin.
-   * @return a JSON formatted string of the FishState
-   */
-  String sendPlacementOfPenguin(String jsonString);
+    /**
+     * By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin
+     * movement or a SkipTurnAction when there is no more moves for the player's penguins base on the given FishState.
+     * @param fishState the FishState that will be used for checking the position to move a penguin.
+     * @return a IACtion which can either be MovePenguinAction or SkipTurnAction.
+     * @throws IllegalArgumentException when the given fishState is invalid for finding a position to move a penguin.
+     */
+    IAction getMovePenguinAction(FishState fishState) throws IllegalArgumentException;
 
-  /**
-   * Generates a FishTree based on the currentState as JSON formatted string and outputs the fish
-   * tree in the form of a JSON string. FishTree is a tree that connects all the game states.
-   *
-   * @param currentState the current state of the fish board as a JSON formatted string.
-   * @return a JSON formatted string of the FishTree
-   */
-  String generateTree(String currentState);
+    /**
+     * get the PlayerInfo of the player, which contains age, color, score. Ideally, the playerInfo should always
+     * be a copy.
+     * @return the PlayerInfo of the player. 
+     */
+    PlayerInfo getInfoCopy();
 
-  /**
-   * Requests the referee to ask if its my turn as a JSON formatted string.
-   *
-   * @return a JSON formatted boolean indecating whether is my turn
-   */
-  String isMyTurn();
-
-  /**
-   * Request the referee about my current score as JSON formatted string.
-   *
-   * @return a JSON formatted string of the my current score.
-   */
-  String getMyScore();
+    /**
+     * set the PlayerInfo of the player with the given PlayerInfo. Ideally, the playerInfo should always
+     * be a copy.
+     * @param infoCopy the PlayerInfo what will be set to the player.
+     */
+    void setInfoCopy(PlayerInfo infoCopy);
 
 
-  /**
-   * Gets the current copy of the FishState as JSON formatted String from the Game Logic or the
-   * referee.
-   *
-   * @return a JSON formatted string of the FishState
-   */
-  String getCopyOfCurrentFishState();
+
 }
