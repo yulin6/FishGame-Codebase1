@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="common.FishModelTest" time="0.001" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="player.HousePlayerTest" time="0.008" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
     <property name="java.specification.version" value="12"/>
@@ -58,9 +58,14 @@
     <property name="library.jansi.path" value="/usr/local/Cellar/maven/3.6.1/libexec/lib/jansi-native"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="getBoardCopy" classname="common.FishModelTest" time="0.001"/>
-  <testcase name="possibleMoves" classname="common.FishModelTest" time="0"/>
-  <testcase name="getEmptyBoardCopy" classname="common.FishModelTest" time="0"/>
-  <testcase name="emptyTileValid1" classname="common.FishModelTest" time="0"/>
-  <testcase name="emptyTileValid2" classname="common.FishModelTest" time="0"/>
+  <testcase name="setInfoCopy" classname="player.HousePlayerTest" time="0"/>
+  <testcase name="getInfoCopy" classname="player.HousePlayerTest" time="0"/>
+  <testcase name="gotSkipTurnAction" classname="player.HousePlayerTest" time="0.001"/>
+  <testcase name="getPlacePenguinAction1" classname="player.HousePlayerTest" time="0"/>
+  <testcase name="getPlacePenguinAction" classname="player.HousePlayerTest" time="0"/>
+  <testcase name="gotSkipTurnAction1" classname="player.HousePlayerTest" time="0.002"/>
+  <testcase name="setNTurn" classname="player.HousePlayerTest" time="0"/>
+  <testcase name="gotMovePenguinAction1" classname="player.HousePlayerTest" time="0.001"/>
+  <testcase name="gotMovePenguinAction" classname="player.HousePlayerTest" time="0.002"/>
+  <testcase name="getNTurn" classname="player.HousePlayerTest" time="0"/>
 </testsuite>

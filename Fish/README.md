@@ -121,7 +121,7 @@ To run single/specific test(s):
 3. Locate the test files where you can run single tests or the entire classes of tests.
 
 #### Test Result:
-Tests run: 59, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 108, Failures: 0, Errors: 0, Skipped: 0
 
 ## Milestones
 ### 2 — The Game Pieces
@@ -454,7 +454,7 @@ Output:
 An implementation of the interface will contain a PlayerInfo parameter, which contains age, color, score of the player. By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for placing a penguin. By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin movement or a SkipTurnAction when there is no more moves for the player's penguins.
 
     HousePlayer
-A HousePlayer implements the IPlayer interface. It contains a infoCopy, which contains age, color and score. Also it is constructed with a nTurn variable, which will be used for finding minimax move in getMovePenguinAction method. The class utilize the strategy class for making the decision of penguin placement and movement.
+A HousePlayer implements the IPlayer interface. It contains a infoCopy, which contains age, color and score. Also it is constructed with a nTurn variable, which will be used for finding minimax move in getMovePenguinAction method. The class utilize the strategy class for making the decision of penguin placement and movement.When a game starts, a referee will call the methods in the player to get the actions accordingly.
 
     Referee
 A referee class contains a list of IPlayers who will be player the game. Each referee handles a game from the beginning till the end. There will be four phases of a game, which are setup, placing, moving and over. During the setup phase, a referee will assign a different color for each players, and sort them by their age ascending. Then the referee can call setUpModel method to set up the board and createHole method to create holes on the board. Once the referee is done with the board setup, they can call setUpInitialState to create a initial game state, and then the game phase will be changed to placing. Then, referee can call startGameTillTheEnd method for running the entire game, and the game phase will be changed to moving when no more penguins should be placed, or it will changed to over when there is no more possible move for any of the penguins, any players who cheat or did not respond in 15 seconds will be removed from the game state and be recorded in the GameReport. Finally, it will output the game report.

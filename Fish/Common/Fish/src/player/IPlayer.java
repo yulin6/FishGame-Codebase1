@@ -9,13 +9,14 @@ import common.models.PlayerInfo;
  * The player interface. An implementation of it will contain a PlayerInfo parameter, which contains age, color,
  * score of the player. By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for
  * placing a penguin. By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin
- * movement or a SkipTurnAction when there is no more moves for the player's penguins.
+ * movement or a SkipTurnAction when there is no more moves for the player's penguins. When a game starts, a referee
+ * will call the methods in the player to get the actions accordingly.
  */
 public interface IPlayer {
 
     /**
      * By calling the getPlacePenguinAction method, it will produce a PlacePenguinAction for placing a penguin base
-     * on the given FishState.
+     * on the given FishState. A house player implementation will rely on Strategy class for generating the action.
      * @param fishState the FishState that will be used for checking the position to place a penguin.
      * @return a PlacePenguinAction for placing a penguin.
      * @throws IllegalArgumentException when the given fishState is invalid for finding a position to place penguin.
@@ -25,6 +26,7 @@ public interface IPlayer {
     /**
      * By calling the getMovePenguinAction method, it will produce a MovePenguinAction for a penguin
      * movement or a SkipTurnAction when there is no more moves for the player's penguins base on the given FishState.
+     * A house player implementation will rely on Strategy class for generating the action.
      * @param fishState the FishState that will be used for checking the position to move a penguin.
      * @return a IACtion which can either be MovePenguinAction or SkipTurnAction.
      * @throws IllegalArgumentException when the given fishState is invalid for finding a position to move a penguin.

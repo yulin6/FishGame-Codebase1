@@ -7,7 +7,7 @@ import common.models.actions.PlacePenguinAction;
 import player.IPlayer;
 
 /**
- * the class mock a cheating player, which will be used for testing purposes.
+ * the class mocks a cheating player, which will be used for testing purposes.
  */
 public class CheatingPlayerMock implements IPlayer {
 

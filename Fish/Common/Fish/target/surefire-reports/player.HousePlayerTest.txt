@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: common.PenguinTest
+Test set: player.HousePlayerTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in common.PenguinTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in player.HousePlayerTest
